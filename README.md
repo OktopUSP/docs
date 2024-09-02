@@ -26,7 +26,7 @@ This site is in still in construction phase. Your help is very appreciated to en
 
 ## Contribute
 
-Oktopus Controller is Open Source as is this documentation. Fell free to make contributions to the [project](https://github.com/OktopUSP/oktopus) and this docs.&#x20;
+Oktopus Controller is Open Source as is this documentation. Fell free to make contributions to the [project](https://github.com/OktopUSP/oktopus) and this [docs](https://github.com/OktopUSP/docs).&#x20;
 
 ## Support
 
