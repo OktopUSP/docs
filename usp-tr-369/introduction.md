@@ -1,4 +1,24 @@
+---
+description: >-
+  USP (TR-369) is the evolution of the TR-069 standard, providing superior
+  network performance, security, virtualized applications, and device scaling in
+  multi-vendor, IoT-ready connected home.
+layout:
+  title:
+    visible: true
+  description:
+    visible: false
+  tableOfContents:
+    visible: true
+  outline:
+    visible: true
+  pagination:
+    visible: true
+---
+
 # Introduction
+
+> USP (TR-369) is the evolution of the TR-069 standard, providing superior network performance, security, virtualized applications, and device scaling in multi-vendor, IoT-ready connected home environments.
 
 The **User Services Platform** is a standardized **protocol for managing, monitoring, upgrading, and controlling connected devices**. USP allows service providers, consumer electronics manufacturers, and end users to:
 

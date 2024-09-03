@@ -21,7 +21,7 @@ Here you'll find helpfull content, tutorials and insights about the Oktopus Cont
 Our main goal is to provide one platform to manage multiple devices of different vendors. If they support USP or CWMP protocol, than Oktopus is the right choice.
 
 {% hint style="info" %}
-This site is in still in construction phase. Your help is very appreciated to enhance it and help us to provide high quality content about USP, CWMP and Oktopus Controller. If you wish to contribute, relate to the next section. &#x20;
+This site is in an alive document always in construction. Your help is very appreciated to improve it and help us to provide high quality content about USP, CWMP and Oktopus Controller. If you wish to contribute, relate to the next section. &#x20;
 {% endhint %}
 
 ## Contribute
