@@ -33,7 +33,6 @@
 
 * [Introduction](cwmp-tr-069/introduction.md)
 * [Architecture](cwmp-tr-069/architecture.md)
-* [Auto Configuration Server (ACS)](cwmp-tr-069/auto-configuration-server-acs.md)
 
 ## Reference
 

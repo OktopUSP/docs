@@ -1,2 +1,0 @@
-# Auto Configuration Server (ACS)
-
