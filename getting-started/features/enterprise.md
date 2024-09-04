@@ -10,7 +10,7 @@ The Enterprise Edition has everything that the Community Edition already comes w
 
 ## Multi Tenancy
 
-Oktopus can have it's core in the cloud or in a central server, with multiple instances of ACS, MQTT, Websockets and STOMP, so you ensure high availability in different nodes with very small latency, since the MTPs are deployed near the device and the control plane layer is placed in a central place for multiple users access.
+Oktopus can have it's core in the cloud or in a central server, with multiple instances of ACS, MQTT, Websockets and STOMP spreaded across a region, so you ensure high availability in different nodes with very small latency, since the MTPs are deployed near the device and the control plane layer is placed in a central place for multiple users access.
 
 <figure><img src="../../.gitbook/assets/image (15).png" alt=""><figcaption><p>Multiple MTPs instances RTT</p></figcaption></figure>
 
