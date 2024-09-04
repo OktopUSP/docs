@@ -78,3 +78,8 @@ Keep charge of the regions where you can expand your business, the places where 
 
 <figure><img src="../../.gitbook/assets/image (27).png" alt=""><figcaption><p>Plain Map Device Location View</p></figcaption></figure>
 
+## Custom UI Theme
+
+Fully customizable user interface, with your company's logo and theme. Increase your customers' confidence in your solution and the credibility of your brand, with the same functionalities as the standard web interface version.
+
+<figure><img src="../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
