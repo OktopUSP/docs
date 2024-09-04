@@ -18,22 +18,27 @@ The standalone mode installs all the software components into one server. It's p
 
 ## Requirements
 
+* docker
+* docker compose
+* wget
+* unzip
+
 Have the services ports available internally or public accordingly to Oktopus [network requirement section](../requirements/network.md). Keep in mind it's always advisable to have a firewall in front of your server and have controll of the traffic policies.
 
-To follow on with this installation tutorial, you need to have "Docker", and "Docker Compose" installed in your target server. This tutorial was tested against OS Ubuntu 24.04, but it must work for other linux systems too.
+This tutorial was tested against OS Ubuntu 24.04, but it must work for other linux systems too.
 
 ## Installation
 
-First of all, let's fetch Oktopus codebase:
+First of all, let's download Oktopus codebase:
 
 ```
-git clone https://github.com/OktopUSP/oktopus
+wget https://github.com/OktopUSP/oktopus/archive/refs/heads/main.zip && unzip main
 ```
 
 Then go into the deploy/compose folder:
 
 ```bash
-cd oktopus/deploy/compose
+cd oktopus-main/deploy/compose
 ```
 
 Edit ".env.controller" file last line with a secret value, this key will be used to sign JWTs used in Oktopus users authentication process.
