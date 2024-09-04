@@ -59,7 +59,7 @@ SECRET_API_KEY=<super-secret-key>
 ```
 {% endcode %}
 
-Once you've done the steps above, still inside "oktopus/deploy/compose" folder, run:
+Once you've done the steps above, still inside "oktopus-main/deploy/compose" folder, run:
 
 ```
 COMPOSE_PROFILES=nats,controller,cwmp,mqtt,stomp,ws,adapter,frontend,portainer docker compose up -d
