@@ -15,10 +15,9 @@
 * [Installation](getting-started/installation/README.md)
   * [Standalone](getting-started/installation/standalone.md)
   * [High Availability](getting-started/installation/high-availability.md)
-* [Features](getting-started/features.md)
-* [Features](getting-started/features-1/README.md)
-  * [Community](getting-started/features-1/community.md)
-  * [Enterprise](getting-started/features-1/enterprise.md)
+* [Features](getting-started/features/README.md)
+  * [Community](getting-started/features/community.md)
+  * [Enterprise](getting-started/features/enterprise.md)
 * [Comparisions](getting-started/comparisions.md)
 * [Integrations](getting-started/integrations.md)
 
