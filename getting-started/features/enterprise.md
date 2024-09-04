@@ -44,19 +44,17 @@ Get a list of all devices connected to the CPE, including their IP source, addre
 
 <figure><img src="https://lh7-rt.googleusercontent.com/slidesz/AGV_vUdzICps2-fo90VRB7iHqxbvFPurng50N3ROsKXnSNpfCjyC308qXUxleT_vi9-nBIp4Ye9D6U97CJNVTK4nGE9DueROgAfx_T3hwWDZmf4Xytz6d3QwlZ8WNHs2XcW2uN4mbaHxVptmgplEYzNMniGxGzy-8CZDHM7iW7-GdXs9Rg=s2048?key=jha3naML321i7bIkz896lw" alt=""><figcaption><p>Connected Devices List</p></figcaption></figure>
 
-### Diagnostic Tools
-
-Troubleshoot connectivity problems using day to-day tools as ping and traceroute. Easily identifying network configuration issues.
-
-<figure><img src="../../.gitbook/assets/image (24).png" alt=""><figcaption><p>Diagnostic Tools</p></figcaption></figure>
-
-
-
 ### Actions
 
 Tired of asking the customer to reboot the device or execute a factory reset and then suddenly things go wrong with a broken fiber cable, lost connection and/or physical problems? Than you're gonna love these options.
 
 <figure><img src="https://lh7-rt.googleusercontent.com/slidesz/AGV_vUe-nBj28KBmSncRu4WY18z411qdYas2MR-mbDiBQIMZNoqr3a62w07vk6MayPRCG6rjv7AqvDAKBII9serF3E4xXhwRZmdw1VfkA4dzwQzxEfEhT_TWJy1PBHg7SkmITTBXaoeQsT8P6loD47Q6_rmCsc4W92HFg2f1KPk0zuZr=s2048?key=jha3naML321i7bIkz896lw" alt=""><figcaption><p>Available Actions in the Device</p></figcaption></figure>
+
+### Diagnostic Tools
+
+Troubleshoot connectivity problems using day to-day tools as ping and traceroute. Easily identifying network configuration issues.
+
+<figure><img src="../../.gitbook/assets/image (24).png" alt=""><figcaption><p>Diagnostic Tools</p></figcaption></figure>
 
 ## Mass Actions
 
@@ -64,7 +62,7 @@ Operations to be applied in batch.
 
 ### Mass Firmware Update
 
-Execute a firmware update in multiple devices at the same time. Fiilter the devices you wish to update the firmware and solve the problem about having multiple deprecated firmware versions in your network containing security issues, bugs and no patches.
+Execute a firmware update in multiple devices at the same time. Filter the devices you wish to update the firmware and solve the problem about having multiple deprecated firmware versions in your network containing security issues, bugs and no patches.
 
 <figure><img src="../../.gitbook/assets/image (25).png" alt=""><figcaption><p>Mass Firmware Update Resume</p></figcaption></figure>
 
