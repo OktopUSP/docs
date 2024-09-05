@@ -31,3 +31,10 @@ Oktopus Controller is Open Source as is this documentation. Fell free to make co
 ## Support
 
 Our team is available to support Enterprise Edition clients through [email](mailto:support@oktopus.app.br). If you have further questions about the Community Edition we are available at [Slack](https://join.slack.com/t/oktopustr-369/shared\_invite/zt-1znmrbr52-3AXgOlSeQTPQW8\_Qhn3C4g), along with other members of the community.&#x20;
+
+## Roadmap
+
+The project goals are organized with milestones that have a due date, just like a sprint. Those issues grouped in milestones are done and have their status updated in a kanban board.
+
+* [Milestones](https://github.com/OktopUSP/oktopus/milestones)
+* [Kanban Board](https://github.com/orgs/OktopUSP/projects/1/views/2)
