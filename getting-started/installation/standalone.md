@@ -31,19 +31,19 @@ This tutorial was tested against OS Ubuntu 24.04, but it must work for other lin
 
 First of all, let's download Oktopus codebase:
 
-```
+```bash
 wget https://github.com/OktopUSP/oktopus/archive/refs/heads/main.zip && unzip main
 ```
 
 Then go into the deploy/compose folder:
 
-```
+```bash
 cd oktopus-main/deploy/compose
 ```
 
 Edit ".env.controller" file last line with a secret value, this key will be used to sign JWTs used in Oktopus users authentication process.
 
-```
+```bash
 nano .env.controller
 ```
 
@@ -61,7 +61,7 @@ SECRET_API_KEY=<super-secret-key>
 
 Once you've done the steps above, still inside "oktopus-main/deploy/compose" folder, run:
 
-```
+```bash
 COMPOSE_PROFILES=nats,controller,cwmp,mqtt,stomp,ws,adapter,frontend,portainer docker compose up -d
 ```
 
