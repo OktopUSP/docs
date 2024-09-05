@@ -37,7 +37,7 @@ wget https://github.com/OktopUSP/oktopus/archive/refs/heads/main.zip && unzip ma
 
 Then go into the deploy/compose folder:
 
-```bash
+```
 cd oktopus-main/deploy/compose
 ```
 
