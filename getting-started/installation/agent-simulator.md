@@ -10,7 +10,7 @@ Agent is a piece of software that runs on the CPE or IoT device and is responsab
 
 {% tabs %}
 {% tab title="MQTT" %}
-```bash
+```
 docker run -d -v $(pwd)/agent/oktopus-mqtt-obuspa.txt:/obuspa/oktopus-mqtt-obuspa.txt --network host --name obuspa-mqtt oktopusp/obuspa:latest obuspa -r /obuspa/oktopus-mqtt-obuspa.txt -p -v4 -i lo
 ```
 {% endtab %}

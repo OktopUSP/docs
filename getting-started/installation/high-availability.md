@@ -20,14 +20,14 @@ For deployments with failover and advanced container management/orchestration, K
 
 ### Download Files
 
-```bash
+```
 git clone https://github.com/OktopUSP/oktopus
 export DEPLOYMENT_PATH=oktopus/deploy/kubernetes
 ```
 
 ### HAProxy Ingress Controller
 
-```bash
+```
 helm install haproxy-kubernetes-ingress haproxytech/kubernetes-ingress \
   --create-namespace \
   --namespace haproxy-controller \
@@ -37,7 +37,7 @@ helm install haproxy-kubernetes-ingress haproxytech/kubernetes-ingress \
 
 ### MongoBD
 
-```bash
+```
 # Mongo DB Operator at mongodb namespace
 helm repo add mongodb https://mongodb.github.io/helm-charts
 
@@ -54,7 +54,7 @@ kubectl get pods -n mongodb
 
 ### NATS Server
 
-```bash
+```
 # Download the NATS charts
 helm repo add nats https://nats-io.github.io/k8s/helm/charts/
 
@@ -64,7 +64,7 @@ helm install nats nats/nats --set config.jetstream.enabled=true
 
 ### Oktopus
 
-```bash
+```
 kubectl apply -f $DEPLOYMENT_PATH/mqtt.yaml
 kubectl apply -f $DEPLOYMENT_PATH/mqtt-adapter.yaml
 kubectl apply -f $DEPLOYMENT_PATH/adapter.yaml
