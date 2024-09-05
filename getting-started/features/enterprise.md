@@ -4,7 +4,7 @@ description: Suited for production usage, critical workloads and commercial use.
 
 # Enterprise
 
-Find flexible pricing and resources tailored to fit your unique needs and usecase. Email us: [sales@oktopus.app.br](mailto:sales@oktopus.app.br) to get a quote or [schedule a meeting](https://oktopus.app.br/schedule-meeting) with our ~~sales team~~ CEO so we can better understand your needs and find the best solution.
+Find flexible pricing and resources tailored to fit your unique needs and usecase. Email us: [sales@oktopus.app.br](mailto:sales@oktopus.app.br) to get a quote or [schedule a meeting](https://oktopus.app.br/schedule-meeting) with our ~~sales team~~ Founders so we can better understand your needs and find the best solution.
 
 The Enterprise Edition has everything that the Community Edition already comes with, plus:
 

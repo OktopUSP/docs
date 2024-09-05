@@ -15,6 +15,7 @@
 * [Installation](getting-started/installation/README.md)
   * [Standalone](getting-started/installation/standalone.md)
   * [High Availability](getting-started/installation/high-availability.md)
+  * [Agent Simulator](getting-started/installation/agent-simulator.md)
 * [Features](getting-started/features/README.md)
   * [Community](getting-started/features/community.md)
   * [Enterprise](getting-started/features/enterprise.md)
