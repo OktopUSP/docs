@@ -16,6 +16,12 @@ Oktopus can have it's core in the cloud or in a central server, with multiple in
 
 Redundant connections are achieved with Oktopus USP multi-Controller support and load balancing configuration in front of ACSs, so we ensure a stable operation with enterprise-level SLA and fail-over in case of servers interruption at the edge.
 
+## RBAC
+
+Each user has a role with a collection of permissions, ensuring fine grained access to the software based on each user role capabilities.
+
+<figure><img src="../../.gitbook/assets/image (29).png" alt=""><figcaption><p>Role with Grained Permissions</p></figcaption></figure>
+
 ## Device Management
 
 Enterprise-grade clients have their devices homologated into the Oktopus platform, which makes possible to have a rich experience with each device having it's particular data model extracted and studied to have custom capabilites, extracting the maximum of capabilities and possible configurations.
@@ -82,4 +88,4 @@ Keep charge of the regions where you can expand your business, the places where 
 
 Fully customizable user interface, with your company's logo and theme. Increase your customers' confidence in your solution and the credibility of your brand, with the same functionalities as the standard web interface version.
 
-<figure><img src="../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image.png" alt=""><figcaption><p>Custom Theme and Logo</p></figcaption></figure>
