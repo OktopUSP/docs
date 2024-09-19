@@ -18,7 +18,7 @@ Oktopus Controller backend is made up of some microservices written in [Go](http
 
 The frontend is made with the most modern frameworks and design system available in the market. It has the [Material UI ](https://mui.com/material-ui/getting-started/)components lib integrated with [NextJS](https://nextjs.org/), which ensures a smooth single page app experience.&#x20;
 
-<figure><img src="../.gitbook/assets/image (1) (1) (1).png" alt=""><figcaption><p>High-Level Components</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/Oktopus-Core.png" alt=""><figcaption><p>High-Level Components</p></figcaption></figure>
 
 All the different protocols used to manage the devices are abstracted to NATS message system, this allow us to have different components/services deployed in different servers, and locations, as long as the connection to NATS cluster is maintained.
 
