@@ -50,6 +50,12 @@ Get a list of all devices connected to the CPE, including their IP source, addre
 
 <figure><img src="https://lh7-rt.googleusercontent.com/slidesz/AGV_vUdzICps2-fo90VRB7iHqxbvFPurng50N3ROsKXnSNpfCjyC308qXUxleT_vi9-nBIp4Ye9D6U97CJNVTK4nGE9DueROgAfx_T3hwWDZmf4Xytz6d3QwlZ8WNHs2XcW2uN4mbaHxVptmgplEYzNMniGxGzy-8CZDHM7iW7-GdXs9Rg=s2048?key=jha3naML321i7bIkz896lw" alt=""><figcaption><p>Connected Devices List</p></figcaption></figure>
 
+### Ports
+
+Physical ports statistics, IPv4, IPv6 and LAN/WAN status.
+
+<figure><img src="../../.gitbook/assets/image (1).png" alt=""><figcaption><p>Ports Overview</p></figcaption></figure>
+
 ### Actions
 
 Tired of asking the customer to reboot the device or execute a factory reset and then suddenly things go wrong with a broken fiber cable, lost connection and/or physical problems? Than you're gonna love these options.
@@ -88,4 +94,4 @@ Keep charge of the regions where you can expand your business, the places where 
 
 Fully customizable user interface, with your company's logo and theme. Increase your customers' confidence in your solution and the credibility of your brand, with the same functionalities as the standard web interface version.
 
-<figure><img src="../../.gitbook/assets/image.png" alt=""><figcaption><p>Custom Theme and Logo</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (2).png" alt=""><figcaption><p>Custom Theme and Logo</p></figcaption></figure>
