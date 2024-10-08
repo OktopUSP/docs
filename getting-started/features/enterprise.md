@@ -15,9 +15,12 @@ Find flexible pricing and resources tailored to fit your unique needs and usecas
 | WS5203-20        | Huawei    | TR-069   |
 | WS7001-40        | Huawei    | TR-069   |
 | DG6450A/CH       | Arris     | USP      |
-| Wifiber AX 3000  | Intelbras | USP      |
-| Wifiber AX 3000V | Intelbras | USP      |
-| Wifiber AX 1800  | Intelbras | USP      |
+| WiFiber AX 3000  | Intelbras | USP      |
+| WiFiber AX 3000V | Intelbras | USP      |
+| WiFiber AX 1800  | Intelbras | USP      |
+| WiFIber 121AC    | Intelbras | TR-069   |
+| WiFiber 120AC    | Intelbras | TR-069   |
+| WiFiber 1200R    | Intelbras | TR-069   |
 
 {% hint style="info" %}
 In case your devices are not in that list, we take one week to homologate it.&#x20;
