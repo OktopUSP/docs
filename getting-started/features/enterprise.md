@@ -19,7 +19,11 @@ Find flexible pricing and resources tailored to fit your unique needs and usecas
 | Wifiber AX 3000V | Intelbras | USP      |
 | Wifiber AX 1800  | Intelbras | USP      |
 
-**In case your devices are not in that list, we take one week to homologate new ones.** Moreover, even though your devices might not be homologated, it's still possible to connect them to Oktopus and do some operations.
+{% hint style="info" %}
+In case your devices are not in that list, we take one week to homologate it.&#x20;
+{% endhint %}
+
+***
 
 ## Resources
 
