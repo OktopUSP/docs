@@ -18,7 +18,7 @@ Welcome to Oktopus Controller official documentation site.
 
 Here you'll find helpfull content, tutorials and insights about the Oktopus Controller, along with that we also want to dive deep into the details of the [USP](broken-reference) and [CWMP](broken-reference) protocols.
 
-Our main goal is to provide one platform to manage multiple devices of different vendors. If they support USP or CWMP protocol, than Oktopus is the right choice.
+The main goal is to provide one platform to manage multiple devices of different vendors. If they support USP or CWMP protocol, than Oktopus is the right choice.
 
 {% hint style="info" %}
 This site is in an alive document always in construction. Your help is very appreciated to improve it and help us to provide high quality content about USP, CWMP and Oktopus Controller. If you wish to contribute, relate to the next section. &#x20;

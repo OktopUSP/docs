@@ -4,7 +4,7 @@ description: Suited for production usage, critical workloads and commercial use.
 
 # Enterprise
 
-Find flexible pricing and resources tailored to fit your unique needs and usecase. Email us: [sales@oktopus.app.br](mailto:sales@oktopus.app.br) to get a quote or [schedule a meeting](https://oktopus.app.br/schedule-meeting) with our ~~sales team~~ Founders so we can better understand your needs and find the best solution.
+Find flexible pricing and resources tailored to fit your unique needs and usecase. Email us: [sales@oktopus.app.br](mailto:sales@oktopus.app.br) to get a quote or [schedule a meeting](https://oktopus.app.br/schedule-meeting) so we can better understand your needs and find the best solution.
 
 The Enterprise Edition has everything that the Community Edition already comes with, plus:
 
@@ -58,7 +58,7 @@ Physical ports statistics, IPv4, IPv6 and LAN/WAN status.
 
 ### Actions
 
-Tired of asking the customer to reboot the device or execute a factory reset and then suddenly things go wrong with a broken fiber cable, lost connection and/or physical problems? Than you're gonna love these options.
+Tired of asking the customer to reboot the device or execute a factory reset and then suddenly things go wrong with a broken fiber cable, lost connection and/or physical problems? Execute multiple commands in your device and have no need of customers action.
 
 <figure><img src="https://lh7-rt.googleusercontent.com/slidesz/AGV_vUe-nBj28KBmSncRu4WY18z411qdYas2MR-mbDiBQIMZNoqr3a62w07vk6MayPRCG6rjv7AqvDAKBII9serF3E4xXhwRZmdw1VfkA4dzwQzxEfEhT_TWJy1PBHg7SkmITTBXaoeQsT8P6loD47Q6_rmCsc4W92HFg2f1KPk0zuZr=s2048?key=jha3naML321i7bIkz896lw" alt=""><figcaption><p>Available Actions in the Device</p></figcaption></figure>
 
@@ -82,7 +82,7 @@ Execute a firmware update in multiple devices at the same time. Filter the devic
 
 ## Geolocation
 
-Automatic discovery of devices geolocation. You don't need to manually insert the location of the device, based on it's wifi signal data we get it's geolocation.
+Automatic discovery of devices geolocation.&#x20;
 
 Keep charge of the regions where you can expand your business, the places where you have more customers and troubleshoot issues related to an area, maybe caused by physical infrastructure damage, or other factors.
 
