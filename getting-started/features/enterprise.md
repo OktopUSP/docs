@@ -6,9 +6,26 @@ description: Suited for production usage, critical workloads and commercial use.
 
 Find flexible pricing and resources tailored to fit your unique needs and usecase. Email us: [sales@oktopus.app.br](mailto:sales@oktopus.app.br) to get a quote or [schedule a meeting](https://oktopus.app.br/schedule-meeting) so we can better understand your needs and find the best solution.
 
+## Homologated Devices
+
+| Model            | Vendor    | Protocol |
+| ---------------- | --------- | -------- |
+| EG8145X6         | Huawei    | TR-069   |
+| EG8145X6-10      | Huawei    | TR-069   |
+| WS5203-20        | Huawei    | TR-069   |
+| WS7001-40        | Huawei    | TR-069   |
+| DG6450A/CH       | Arris     | USP      |
+| Wifiber AX 3000  | Intelbras | USP      |
+| Wifiber AX 3000V | Intelbras | USP      |
+| Wifiber AX 1800  | Intelbras | USP      |
+
+**In case your devices are not in that list, we take one week to homologate new ones.** Moreover, even though your devices might not be homologated, it's still possible to connect them to Oktopus and do some operations.
+
+## Resources
+
 The Enterprise Edition has everything that the Community Edition already comes with, plus:
 
-## Multi Tenancy
+### Multi Tenancy
 
 Oktopus can have it's core in the cloud or in a central server, with multiple instances of ACS, MQTT, Websockets and STOMP spreaded across a region, so you ensure high availability in different nodes with very small latency, since the MTPs are deployed near the device and the control plane layer is placed in a central place for multiple users access.
 
@@ -16,13 +33,13 @@ Oktopus can have it's core in the cloud or in a central server, with multiple in
 
 Redundant connections are achieved with Oktopus USP multi-Controller support and load balancing configuration in front of ACSs, so we ensure a stable operation with enterprise-level SLA and fail-over in case of servers interruption at the edge.
 
-## RBAC
+### RBAC
 
 Each user has a role with a collection of permissions, ensuring fine grained access to the software based on each user role capabilities.
 
 <figure><img src="../../.gitbook/assets/image (29).png" alt=""><figcaption><p>Role with Grained Permissions</p></figcaption></figure>
 
-## Device Management
+### Device Management
 
 Enterprise-grade clients have their devices homologated into the Oktopus platform, which makes possible to have a rich experience with each device having it's particular data model extracted and studied to have custom capabilites, extracting the maximum of capabilities and possible configurations.
 
@@ -30,7 +47,7 @@ Enterprise-grade clients have their devices homologated into the Oktopus platfor
 The capabilites showed below are dependent on the device capabilites created by the vendor and exposed through CWMP and USP standards.
 {% endhint %}
 
-### Wi-Fi
+#### Wi-Fi
 
 Manage the SSID, Password, Channel, Transmit Rate, Bandwidth and Standards of the WLAN interface.
 
@@ -38,41 +55,41 @@ Manage the SSID, Password, Channel, Transmit Rate, Bandwidth and Standards of th
 
 <figure><img src="../../.gitbook/assets/Screenshot from 2024-08-10 14-47-40 (1).png" alt=""><figcaption><p>Advanced Wi-Fi Management</p></figcaption></figure>
 
-### Site Survey
+#### Site Survey
 
 Scan the Wi-Fi spectrum to find the most polluted and clean channels, to configure your network in the  channel with less interference.
 
 <figure><img src="../../.gitbook/assets/image (22).png" alt=""><figcaption><p>Site Survey</p></figcaption></figure>
 
-### Connected Devices List
+#### Connected Devices List
 
 Get a list of all devices connected to the CPE, including their IP source, address, MAC, hostname and RSSI. This way you can check if a connection problem is because of a too old device Wi-Fi negotiation standard, bad Wi-Fi signal or other subject.  &#x20;
 
 <figure><img src="https://lh7-rt.googleusercontent.com/slidesz/AGV_vUdzICps2-fo90VRB7iHqxbvFPurng50N3ROsKXnSNpfCjyC308qXUxleT_vi9-nBIp4Ye9D6U97CJNVTK4nGE9DueROgAfx_T3hwWDZmf4Xytz6d3QwlZ8WNHs2XcW2uN4mbaHxVptmgplEYzNMniGxGzy-8CZDHM7iW7-GdXs9Rg=s2048?key=jha3naML321i7bIkz896lw" alt=""><figcaption><p>Connected Devices List</p></figcaption></figure>
 
-### Ports
+#### Ports
 
 Physical ports statistics, IPv4, IPv6 and LAN/WAN status.
 
 <figure><img src="../../.gitbook/assets/image (1).png" alt=""><figcaption><p>Ports Overview</p></figcaption></figure>
 
-### Actions
+#### Actions
 
 Tired of asking the customer to reboot the device or execute a factory reset and then suddenly things go wrong with a broken fiber cable, lost connection and/or physical problems? Execute multiple commands in your device and have no need of customers action.
 
 <figure><img src="https://lh7-rt.googleusercontent.com/slidesz/AGV_vUe-nBj28KBmSncRu4WY18z411qdYas2MR-mbDiBQIMZNoqr3a62w07vk6MayPRCG6rjv7AqvDAKBII9serF3E4xXhwRZmdw1VfkA4dzwQzxEfEhT_TWJy1PBHg7SkmITTBXaoeQsT8P6loD47Q6_rmCsc4W92HFg2f1KPk0zuZr=s2048?key=jha3naML321i7bIkz896lw" alt=""><figcaption><p>Available Actions in the Device</p></figcaption></figure>
 
-### Diagnostic Tools
+#### Diagnostic Tools
 
 Troubleshoot connectivity problems using day to-day tools as ping and traceroute. Easily identifying network configuration issues.
 
 <figure><img src="../../.gitbook/assets/image (24).png" alt=""><figcaption><p>Diagnostic Tools</p></figcaption></figure>
 
-## Mass Actions
+### Mass Actions
 
 Operations to be applied in batch.
 
-### Mass Firmware Update
+#### Mass Firmware Update
 
 Execute a firmware update in multiple devices at the same time. Filter the devices you wish to update the firmware and solve the problem about having multiple deprecated firmware versions in your network containing security issues, bugs and no patches.
 
@@ -80,7 +97,7 @@ Execute a firmware update in multiple devices at the same time. Filter the devic
 
 <figure><img src="../../.gitbook/assets/Screenshot from 2024-09-04 17-25-44.png" alt=""><figcaption><p>Mass Firmware Update Overview</p></figcaption></figure>
 
-## Geolocation
+### Geolocation
 
 Automatic discovery of devices geolocation.&#x20;
 
@@ -90,8 +107,11 @@ Keep charge of the regions where you can expand your business, the places where 
 
 <figure><img src="../../.gitbook/assets/image (27).png" alt=""><figcaption><p>Plain Map Device Location View</p></figcaption></figure>
 
-## Custom UI Theme
+### Custom UI Theme
 
 Fully customizable user interface, with your company's logo and theme. Increase your customers' confidence in your solution and the credibility of your brand, with the same functionalities as the standard web interface version.
 
 <figure><img src="../../.gitbook/assets/image (2).png" alt=""><figcaption><p>Custom Theme and Logo</p></figcaption></figure>
+
+
+
