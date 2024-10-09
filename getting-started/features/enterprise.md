@@ -6,6 +6,8 @@ description: Suited for production usage, critical workloads and commercial use.
 
 Find flexible pricing and resources tailored to fit your unique needs and usecase. Email us: [sales@oktopus.app.br](mailto:sales@oktopus.app.br) to get a quote or [schedule a meeting](https://oktopus.app.br/schedule-meeting) so we can better understand your needs and find the best solution.
 
+Check our standard pricing plans:  [https://oktopus.app.br/#offer](https://oktopus.app.br/#offer).
+
 ## Homologated Devices
 
 | Model            | Vendor    | Protocol |
