@@ -28,4 +28,4 @@ wget https://github.com/OktopUSP/oktopus/archive/refs/heads/main.zip && unzip ma
 
 The web interface will become accessible at port 80:
 
-<figure><img src="../../.gitbook/assets/image (1) (1) (1).png" alt=""><figcaption><p>Oktopus web first acces</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1) (1) (1).png" alt=""><figcaption><p>Oktopus web first acces</p></figcaption></figure>

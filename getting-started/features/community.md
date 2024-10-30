@@ -8,7 +8,7 @@ Dashboard
 
 Check the overall performance of the system, and get insights about the devices as their type, total quantity and status.
 
-<figure><img src="../../.gitbook/assets/image (3) (1).png" alt=""><figcaption><p>Overview Section</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (3) (1) (1).png" alt=""><figcaption><p>Overview Section</p></figcaption></figure>
 
 ## Devices
 
@@ -30,11 +30,11 @@ This feature is only available for USP devices.
 
 Send custom USP or CWMP native packets, It is possible to create and save messages templates to be used later, according to each protocol specification.
 
-<figure><img src="../../.gitbook/assets/image.png" alt=""><figcaption><p>Message Template Saved</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (3).png" alt=""><figcaption><p>Message Template Saved</p></figcaption></figure>
 
-<figure><img src="../../.gitbook/assets/image (1).png" alt=""><figcaption><p>Create New Template</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1).png" alt=""><figcaption><p>Create Message Template</p></figcaption></figure>
 
-## Credentials
+### Credentials
 
 This section defines credentials to be used by the devices to connect to Oktopus Controller, those credentials are going to be attached to the ACS, MQTT, STOMP and Websockets instances that will now check if the device has the correct keys.
 

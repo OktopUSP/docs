@@ -57,7 +57,7 @@ Each user has a role with a collection of permissions, ensuring fine grained acc
 
 Store firmware images and apps to be downloaded by CPEs and used at firmware update and lifecycle container management (LCM).
 
-<figure><img src="../../.gitbook/assets/image (4).png" alt=""><figcaption><p>Firmware and Apps Store</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (2).png" alt=""><figcaption><p>Firmware Images and App Store</p></figcaption></figure>
 
 ## Device Management
 
@@ -103,7 +103,7 @@ Time series information  about connection speed, consumed data rate, latency, be
 
 Physical ports statistics, IPv4, IPv6 and LAN/WAN status.
 
-<figure><img src="../../.gitbook/assets/image (1) (1).png" alt=""><figcaption><p>Ports Overview</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1) (1).png" alt=""><figcaption><p>Ports Overview</p></figcaption></figure>
 
 ### Actions
 
@@ -133,7 +133,7 @@ Execute a firmware update in multiple devices at the same time. Filter the devic
 
 Generate custom CWMP and USP messages to be applied in multiple devices at the same time. Create complex requests tailored to multiple use cases.
 
-<figure><img src="../../.gitbook/assets/image (3).png" alt=""><figcaption><p>Mass Custom Message</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (3) (1).png" alt=""><figcaption><p>Mass Custom Message</p></figcaption></figure>
 
 ### Geolocation
 
@@ -141,13 +141,13 @@ Automatic discovery of devices geolocation.&#x20;
 
 Keep charge of the regions where you can expand your business, the places where you have more customers and troubleshoot issues related to an area, maybe caused by physical infrastructure damage, or other factors.
 
-<figure><img src="../../.gitbook/assets/image (2).png" alt=""><figcaption><p>Device Geolocation View</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (2) (1).png" alt=""><figcaption><p>Device Geolocation View</p></figcaption></figure>
 
 ### Custom UI Theme
 
 Fully customizable user interface, with your company's logo and theme. Increase your customers' confidence in your solution and the credibility of your brand, with the same functionalities as the standard web interface version.
 
-<figure><img src="../../.gitbook/assets/image (2) (1).png" alt=""><figcaption><p>Custom Theme and Logo</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (2) (1) (1).png" alt=""><figcaption><p>Custom Theme and Logo</p></figcaption></figure>
 
 
 
