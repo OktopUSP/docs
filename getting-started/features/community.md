@@ -34,6 +34,16 @@ Send custom USP or CWMP native packets, It is possible to create and save messag
 
 <figure><img src="../../.gitbook/assets/image (1).png" alt=""><figcaption><p>Create New Template</p></figcaption></figure>
 
+<details>
+
+<summary></summary>
+
+
+
+</details>
+
+
+
 ## Credentials
 
 This section defines credentials to be used by the devices to connect to Oktopus Controller, those credentials are going to be attached to the ACS, MQTT, STOMP and Websockets instances that will now check if the device has the correct keys.
