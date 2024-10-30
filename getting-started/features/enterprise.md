@@ -43,9 +43,9 @@ Oktopus can have it's core in the cloud or in a central server, with multiple in
 
 Redundant connections are achieved with Oktopus USP multi-Controller/multi-MTP support and advanced configuration for ACSs, so we ensure a stable operation with enterprise-level SLA and fail-over in case of servers interruption at the edge.
 
-### Overview Dashbaord
+### Overview Dashboard
 
-<figure><img src="../../.gitbook/assets/image (9).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (33).png" alt=""><figcaption></figcaption></figure>
 
 ### RBAC
 

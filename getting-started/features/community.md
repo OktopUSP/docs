@@ -4,7 +4,7 @@ description: Suited for DIY people, developers and enthusiasts
 
 # Community
 
-Dashboard
+## Dashboard
 
 Check the overall performance of the system, and get insights about the devices as their type, total quantity and status.
 
