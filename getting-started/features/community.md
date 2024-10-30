@@ -4,7 +4,7 @@ description: Suited for DIY people, developers and enthusiasts
 
 # Community
 
-## Dashboard
+Dashboard
 
 Check the overall performance of the system, and get insights about the devices as their type, total quantity and status.
 
@@ -33,16 +33,6 @@ Send custom USP or CWMP native packets, It is possible to create and save messag
 <figure><img src="../../.gitbook/assets/image.png" alt=""><figcaption><p>Message Template Saved</p></figcaption></figure>
 
 <figure><img src="../../.gitbook/assets/image (1).png" alt=""><figcaption><p>Create New Template</p></figcaption></figure>
-
-<details>
-
-<summary></summary>
-
-
-
-</details>
-
-
 
 ## Credentials
 
