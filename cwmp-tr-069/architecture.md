@@ -16,7 +16,7 @@ layout:
 
 The CPE communicates to a HTTP server, also called Auto Configuration Server (ACS), because instead of a normal client-server relationship between the device and the HTTP server, what happens is that the  connection can be initiated from the server to the device.
 
-<figure><img src="../.gitbook/assets/image (2) (1).png" alt=""><figcaption><p>TR-069 Issue Amendment 6 Corrigendum 1 - Section 3.7.3 - FIgure 3</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (2) (1) (1).png" alt=""><figcaption><p>TR-069 Issue Amendment 6 Corrigendum 1 - Section 3.7.3 - FIgure 3</p></figcaption></figure>
 
 As you can see above, the ACS and the CPE are at the same time a HTTP client and server, it's needed to exchange messages according to the CWMP protocol and because they're both a client and a server, must not exist [NAT](https://en.wikipedia.org/wiki/Network\_address\_translation) between the CPE and the ACS, they need to be directly accessible to each other.
 

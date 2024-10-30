@@ -30,7 +30,7 @@ Oktopus Controller is Open Source as is this documentation. Fell free to make co
 
 ## Support
 
-Our team is available to support Enterprise Edition clients through [email](mailto:support@oktopus.app.br). If you have further questions about the Community Edition we are available at [Slack](https://join.slack.com/t/oktopustr-369/shared\_invite/zt-1znmrbr52-3AXgOlSeQTPQW8\_Qhn3C4g), along with other members of the community.&#x20;
+Our team is available to support Enterprise Edition clients through [email](mailto:support@oktopus.app.br). If you have further questions about the Community Edition **we are available at** [**Slack**](https://join.slack.com/t/oktopustr-369/shared\_invite/zt-1znmrbr52-3AXgOlSeQTPQW8\_Qhn3C4g)**, along with other members of the community**.&#x20;
 
 ## Roadmap
 

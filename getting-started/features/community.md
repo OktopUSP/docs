@@ -8,13 +8,13 @@ description: Suited for DIY people, developers and enthusiasts
 
 Check the overall performance of the system, and get insights about the devices as their type, total quantity and status.
 
-<figure><img src="../../.gitbook/assets/image (3).png" alt=""><figcaption><p>Overview Section</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (3) (1).png" alt=""><figcaption><p>Overview Section</p></figcaption></figure>
 
 ## Devices
 
 Table list with all the devices connected to Oktopus, independent of the protocol used for management, all of them will appear in this list, with options to filter for specific devices characteristics, and remove or add table fields to view.
 
-<figure><img src="../../.gitbook/assets/image (8).png" alt=""><figcaption><p>Devices Section</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (8) (1).png" alt=""><figcaption><p>Devices Section</p></figcaption></figure>
 
 ### Parameters Discovery
 
@@ -28,9 +28,11 @@ This feature is only available for USP devices.
 
 ### Custom Messages
 
-Send custom USP or CWMP native packets, in this section you can create custom protocols messages according to the specification. The available actions are to create, read, update and delete (CRUD).
+Send custom USP or CWMP native packets, It is possible to create and save messages templates to be used later, according to each protocol specification.
 
-<figure><img src="../../.gitbook/assets/image (19).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image.png" alt=""><figcaption><p>Message Template Saved</p></figcaption></figure>
+
+<figure><img src="../../.gitbook/assets/image (1).png" alt=""><figcaption><p>Create New Template</p></figcaption></figure>
 
 ## Credentials
 
@@ -51,4 +53,4 @@ There are two levels of users availables in the Community Edition:
 * _Admin_: Have access to the hole software platform, including the rights to remove/add users and devices credentials.
 * _User_: Can access devices and configure the same, view users, dashboard information and credentials, but is not allowed to remove/add other users and devices credentials.
 
-<figure><img src="../../.gitbook/assets/image (14).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (14).png" alt=""><figcaption><p>Users Management Page</p></figcaption></figure>
