@@ -97,7 +97,7 @@ Time series information  about connection speed, consumed data rate, latency, be
 
 <figure><img src="../../.gitbook/assets/image (7).png" alt=""><figcaption><p>Latency Data</p></figcaption></figure>
 
-<figure><img src="../../.gitbook/assets/image (8).png" alt=""><figcaption><p>Connected Devices RSSI</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (34).png" alt=""><figcaption><p>Wi-FI Connected Devices RSSI historic</p></figcaption></figure>
 
 ### Ports
 
