@@ -6,7 +6,7 @@ description: Simulate an USP agent, based on OBUSPA.
 
 Agent is a piece of software that runs on the CPE or IoT device and is responsable for connecting it to the Controller (Oktopus) through USP. To simulate the behavior of a real device we can use [OBUSPA](../../usp-tr-369/architecture.md#obuspa-open-broadband-user-services-platfrom-agent) encapsulated in a docker container for better portability.
 
-[OBUSPA](../../usp-tr-369/architecture.md#obuspa-open-broadband-user-services-platfrom-agent) based agent simulator utility packaged by Oktopus depends on initial configuration files available at [/agent](https://github.com/OktopUSP/oktopus/tree/main/agent) folder. You can edit those files to simulate more complex environments. Run the commands below inside[ /agent](https://github.com/OktopUSP/oktopus/tree/main/agent) folder, each tab shows how to connect to a different MTP:
+[OBUSPA](../../usp-tr-369/architecture.md#obuspa-open-broadband-user-services-platfrom-agent) based agent simulator utility packaged by Oktopus depends on initial configuration files available at [/agent](https://github.com/OktopUSP/oktopus/tree/main/agent) folder. You can edit those files to simulate more complex environments. Run the commands below inside[ ](https://github.com/OktopUSP/oktopus/tree/main/agent)[root folder](https://github.com/OktopUSP/oktopus/tree/main), each tab shows how to connect to a different MTP:
 
 {% tabs %}
 {% tab title="MQTT" %}
