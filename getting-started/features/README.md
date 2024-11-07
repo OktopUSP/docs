@@ -24,7 +24,7 @@ Here you still have the possibility to execute any CWMP or USP message. It's pos
 
 If you want to use Oktopus Controller at your company in a production environment, then we suggest to use our enterprise-grade solution. We provide you and end-to-end software platform with a flexible pricing, commercial SLA, support of specialists, and resources customized to your use case.&#x20;
 
-Access our [demo](https://demo.oktopus.app.br).
+Access software [demo](https://demo.oktopus.app.br).
 
 ## Comparision
 
