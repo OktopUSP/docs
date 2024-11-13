@@ -8,7 +8,7 @@ description: Suited for DIY people, developers and enthusiasts
 
 Check the overall performance of the system, and get insights about the devices as their type, total quantity and status.
 
-<figure><img src="../../.gitbook/assets/image (3) (1) (1).png" alt=""><figcaption><p>Overview Section</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (3) (1) (1) (1).png" alt=""><figcaption><p>Overview Section</p></figcaption></figure>
 
 ## Devices
 
@@ -30,9 +30,9 @@ This feature is only available for USP devices.
 
 Send custom USP or CWMP native packets, It is possible to create and save messages templates to be used later, according to each protocol specification.
 
-<figure><img src="../../.gitbook/assets/image (3).png" alt=""><figcaption><p>Message Template Saved</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (3) (1).png" alt=""><figcaption><p>Message Template Saved</p></figcaption></figure>
 
-<figure><img src="../../.gitbook/assets/image (1).png" alt=""><figcaption><p>Create Message Template</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1).png" alt=""><figcaption><p>Create Message Template</p></figcaption></figure>
 
 ### Credentials
 

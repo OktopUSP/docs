@@ -24,5 +24,5 @@ All the different protocols used to manage the devices are abstracted to NATS me
 
 Software components are deployed within [Docker](https://www.docker.com/) containers. The most straigthforward way to install Oktopus Controller is using docker compose. For high availability production environments we suggest to use Kubernetes.
 
-<figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1).png" alt=""><figcaption><p>Microservices Overview</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1) (1).png" alt=""><figcaption><p>Microservices Overview</p></figcaption></figure>
 
