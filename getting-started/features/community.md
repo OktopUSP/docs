@@ -20,10 +20,6 @@ Table list with all the devices connected to Oktopus, independent of the protoco
 
 Acces the device you wish and discover the data model dinamically.
 
-{% hint style="info" %}
-This feature is only available for USP devices.
-{% endhint %}
-
 <figure><img src="../../.gitbook/assets/image (21).png" alt=""><figcaption><p>Data Model Discovery</p></figcaption></figure>
 
 ### Custom Messages
@@ -39,10 +35,6 @@ Send custom USP or CWMP native packets, It is possible to create and save messag
 This section defines credentials to be used by the devices to connect to Oktopus Controller, those credentials are going to be attached to the ACS, MQTT, STOMP and Websockets instances that will now check if the device has the correct keys.
 
 For this to work you need to enable this feature through environment variables in each server/broker protocol you want to have authentication enabled.&#x20;
-
-{% hint style="info" %}
-The only protocol that still don't have support to this authentication process is STOMP, which follows another authentication mechanism in the moment.
-{% endhint %}
 
 <figure><img src="../../.gitbook/assets/image (12).png" alt=""><figcaption><p>Credentials Section</p></figcaption></figure>
 
