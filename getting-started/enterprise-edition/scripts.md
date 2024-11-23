@@ -29,6 +29,118 @@ The "custom functions" will be detailed above in the next topics as just "functi
 
 ## Functions
 
+### send\_usp\_message()
+
+#### Params:
+
+1.  Serial Number \[string]
+
+    The CPE unique identifier.
+2.  JSON payload \[string]
+
+    Request body to be sent to the CPE.\
+    Current supported bodies are : \
+    \- Get\
+    \- Set
+
+Return:
+
+* If the usp message generates an error:
+
+```json
+{
+"error_message": "error to set param test.software",
+"error_code: "500"
+}
+```
+
+* In the case of a successful transaction each key of the _table_ will correspond to one of the parameters requested in the payload.
+
+Example:
+
+{% tabs %}
+{% tab title="Get" %}
+```lua
+local uspMsg = [[
+{
+    "header": {
+        "msg_id": "b7dc38ea-aefb-4761-aa55-edaa97adb2f0",
+        "msg_type": 1
+    },
+    "body": {
+        "request": {
+            "get": {
+                "paramPaths": [
+                    "Device.STOMP."
+                ],
+                "maxDepth": 2
+            }
+        }
+    }
+}
+]]
+
+local serial_number = "oktopus-0-stomp"
+
+local uspMessageResult = send_usp_message(serial_number, uspMsg)
+if uspMessageResult["error_message"] ~= nil then
+    print("SN: " .. serial_number .. " | Error Message: " .. uspMessageResult["error_message"] .. " | Code: " .. uspMessageResult["error_code"])
+else
+    for key, value in pairs(uspMessageResult) do
+      print(key .. ": " .. value)
+    end
+end
+```
+
+
+{% endtab %}
+
+{% tab title="Set" %}
+```lua
+local uspMsg = [[
+{
+    "header": {
+        "msg_id": "b7dc38ea-aefb-4761-aa55-edaa97adb2f0",
+        "msg_type": 4
+    },
+    "body": {
+        "request": {
+            "set": {
+                "allow_partial":true,
+                "update_objs":[
+                    {
+                        "obj_path":"Device.LocalAgent.",
+                        "param_settings":[
+                            {
+                            "param":"X_VANTIVA-COM_PreConnectTimeout",
+                            "value": "55",
+                            "required":true
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    }
+}
+]]
+
+local serial_number = "oktopus-0-stomp"
+
+local uspMessageResult = send_usp_message(serial_number, uspMsg)
+if uspMessageResult["error_message"] ~= nil then
+    print("SN: " .. serial_number .. " | Error Message: " .. uspMessageResult["error_message"] .. " | Code: " .. uspMessageResult["error_code"])
+else
+    for key, value in pairs(uspMessageResult) do
+      print(key .. ": " .. value)
+    end
+end
+```
+
+
+{% endtab %}
+{% endtabs %}
+
 ### send\_cwmp\_message()
 
 #### Params:
@@ -47,38 +159,41 @@ The "custom functions" will be detailed above in the next topics as just "functi
 
 Return:
 
-The data returned depends on the TR-069 message type. If it is a read operation as "getParameterValues" than the function will return a table. If it is a create/delete/set operation the data returned will be a boolean indicating if the result was a success or failure.
+The data returned depends on the TR-069 message type:
+
+* If it is a read operation as "getParameterValues" than the function will return a _table_.&#x20;
+* If it is a create/delete/set operation the data returned will be a _boolean_ indicating if the result was a success or failure.
+* In case the device doesn't exist, is offline or an error has happened, the returned value is _nil_.
 
 Example:
 
 {% tabs %}
 {% tab title="GetParameterValues" %}
-```lua
-local getParameterValuesType = 0
+<pre class="language-lua"><code class="lang-lua">local getParameterValuesType = 0
 
 local xmlContentGet = [[
-<?xml version="1.0" encoding="UTF-8"?>
-<soap:Envelope xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:cwmp="urn:dslforum-org:cwmp-1-0" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:schemaLocation="urn:dslforum-org:cwmp-1-0 ..\schemas\wt121.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <soap:Header/>
-  <soap:Body soap:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
-    <cwmp:GetParameterValues>
-      <ParameterNames>
-        <string>InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.</string>
-       </ParameterNames>
-    </cwmp:GetParameterValues>
-  </soap:Body>
-</soap:Envelope>
+&#x3C;?xml version="1.0" encoding="UTF-8"?>
+&#x3C;soap:Envelope xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:cwmp="urn:dslforum-org:cwmp-1-0" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:schemaLocation="urn:dslforum-org:cwmp-1-0 ..\schemas\wt121.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  &#x3C;soap:Header/>
+  &#x3C;soap:Body soap:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+    &#x3C;cwmp:GetParameterValues>
+      &#x3C;ParameterNames>
+        &#x3C;string>InternetGatewayDevice.LANDevice.1.WLANConfiguration.1.&#x3C;/string>
+       &#x3C;/ParameterNames>
+    &#x3C;/cwmp:GetParameterValues>
+  &#x3C;/soap:Body>
+&#x3C;/soap:Envelope>
 ]]
 
-local getTest = send_cwmp_message("HUAWNFYC-35454645", xmlContentGet, getParameterValuesType)
-if getTest ~= nil then
+<strong>local getTest = send_cwmp_message("HUAWNFYC-35454645", xmlContentGet, getParameterValuesType)
+</strong>if getTest ~= nil then
   for key, value in pairs(getTest) do
     print(key .. ": " .. value)
   end
 else
   print("GetParameterValues failed")
 end
-```
+</code></pre>
 {% endtab %}
 
 {% tab title="SetParameterValues" %}
@@ -113,6 +228,8 @@ end
 {% endtabs %}
 
 ### listen\_to\_cwmp\_event()
+
+Listen to TR-069 events as defined in the standard.
 
 Params:
 
@@ -159,6 +276,8 @@ end
 
 ### get\_device()
 
+Get device attributes from its unique identifier.
+
 #### Params:
 
 1.  Serial Number \[string]
@@ -195,7 +314,34 @@ else
 end
 ```
 
+### listen\_to\_new\_device()
 
+Receive all new device attributes that connect to Oktopus, independent of the protocol.
+
+Return:
+
+```json
+{
+    "sn": "HUAWNFYC-35454645",
+    "model": "WS7001-40",
+    "vendor": "Huawei Technologies Co., Ltd.",
+    "version": "",
+    "product_class": "Huawei",
+    "alias": "",
+    "status": 2
+}
+```
+
+Example:
+
+```lua
+while true do
+  local new_device = listen_to_new_device()
+  for key, value in pairs(new_device) do
+    print(key .. ": " .. value)
+  end
+end
+```
 
 
 
