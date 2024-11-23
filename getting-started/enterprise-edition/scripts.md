@@ -49,8 +49,8 @@ Return:
 
 ```json
 {
-"error_message": "error to set param test.software",
-"error_code: "500"
+    "error_message": "error to set param test.software",
+    "error_code: "500"
 }
 ```
 
@@ -161,9 +161,17 @@ Return:
 
 The data returned depends on the TR-069 message type:
 
+* If the CWMP message generates an error:
+
+```json
+{
+    "error_message": "error to set param test.software",
+    "error_code: "500"
+}
+```
+
 * If it is a read operation as "getParameterValues" than the function will return a _table_.&#x20;
 * If it is a create/delete/set operation the data returned will be a _boolean_ indicating if the result was a success or failure.
-* In case the device doesn't exist, is offline or an error has happened, the returned value is _nil_.
 
 Example:
 
@@ -184,14 +192,15 @@ local xmlContentGet = [[
   &#x3C;/soap:Body>
 &#x3C;/soap:Envelope>
 ]]
+local serial_number = "HUAWNFYC-35454645"
 
-<strong>local getTest = send_cwmp_message("HUAWNFYC-35454645", xmlContentGet, getParameterValuesType)
-</strong>if getTest ~= nil then
+<strong>local getTest = send_cwmp_message(serial_number, xmlContentGet, getParameterValuesType)
+</strong>if getTest["error_message"] ~= nil then
+   print("SN: " .. serial_number .. " | Error Message: " .. getTest["error_message"] .. " | Code: " .. getTest["error_code"])
+else
   for key, value in pairs(getTest) do
     print(key .. ": " .. value)
   end
-else
-  print("GetParameterValues failed")
 end
 </code></pre>
 {% endtab %}
@@ -216,12 +225,13 @@ local xmlContentSet = [[
   </soap:Body>
 </soap:Envelope>
 ]]
+local serial_number = "HUAWNFYC-35454645"
 
-local setTest = send_cwmp_message("HUAWNFYC-35454645", xmlContentSet, setParameterValuesType)
-if setTest then
-  print("SetParameterValues worked")
+local setTest = send_cwmp_message(serial_number, xmlContentSet, setParameterValuesType)
+if type(setTest) == "table" then
+   print("SN: " .. serial_number .. " | Error Message: " .. setTest["error_message"] .. " | Code: " .. setTest["error_code"])
 else
-  print("SetParameterValues failed")
+  print("SetParameterValues worked")
 end
 ```
 {% endtab %}
