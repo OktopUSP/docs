@@ -16,9 +16,9 @@ layout:
 
 The CPE communicates to a HTTP server, also called Auto Configuration Server (ACS), because instead of a normal client-server relationship between the device and the HTTP server, what happens is that the  connection can be initiated from the server to the device.
 
-<figure><img src="../.gitbook/assets/image (2) (1) (1) (1) (1).png" alt=""><figcaption><p>TR-069 Issue Amendment 6 Corrigendum 1 - Section 3.7.3 - FIgure 3</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (2) (1) (1) (1) (1) (1).png" alt=""><figcaption><p>TR-069 Issue Amendment 6 Corrigendum 1 - Section 3.7.3 - FIgure 3</p></figcaption></figure>
 
-As you can see above, the ACS and the CPE are at the same time a HTTP client and server, it's needed to exchange messages according to the CWMP protocol and because they're both a client and a server, must not exist [NAT](https://en.wikipedia.org/wiki/Network\_address\_translation) between the CPE and the ACS, they need to be directly accessible to each other.
+As you can see above, the ACS and the CPE are at the same time a HTTP client and server, it's needed to exchange messages according to the CWMP protocol and because they're both a client and a server, must not exist [NAT](https://en.wikipedia.org/wiki/Network_address_translation) between the CPE and the ACS, they need to be directly accessible to each other.
 
 Although there are some workarounds for the NAT problem as to use [XMPP](https://app.gitbook.com/s/ys3ycSw4qx1SjsJeAo2N/) or [STUN](https://en.wikipedia.org/wiki/STUN), the best option is still to install the ACS with direct connection to the CPE, this simplifies your deployment and ensures a smooth solution.
 
@@ -39,5 +39,5 @@ The first Data Model created to be used with CWMP was the [TR-098](https://cwmp-
 
 ## Encoding
 
-The messages between the CPE and the ACS are exchanged using [SOAP](https://www.geeksforgeeks.org/basics-of-soap-simple-object-access-protocol/), that transfer messages in the format of [XML](https://en.wikipedia.org/wiki/XML), and contains structured data with [RPC](https://en.wikipedia.org/wiki/Remote\_procedure\_call) information.
+The messages between the CPE and the ACS are exchanged using [SOAP](https://www.geeksforgeeks.org/basics-of-soap-simple-object-access-protocol/), that transfer messages in the format of [XML](https://en.wikipedia.org/wiki/XML), and contains structured data with [RPC](https://en.wikipedia.org/wiki/Remote_procedure_call) information.
 

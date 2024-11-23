@@ -61,10 +61,6 @@ It is possible to perform commands remotely on the product, such as: firmware up
 
 ## IoT
 
-\
-\
-
-
 <figure><img src="https://github.com/leandrofars/oktopus/assets/83298718/73e2e360-d53e-494e-9a50-60c83dae75df" alt=""><figcaption><p>Figure 34 – IoT proxied device model</p></figcaption></figure>
 
 <figure><img src="https://github.com/leandrofars/oktopus/assets/83298718/91a87f43-3de7-42bd-a689-a4e14eecf5c0" alt=""><figcaption><p>Figure 33 – IoT individual device models</p></figcaption></figure>

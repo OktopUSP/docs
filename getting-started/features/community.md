@@ -28,7 +28,7 @@ Send custom USP or CWMP native packets, It is possible to create and save messag
 
 <figure><img src="../../.gitbook/assets/image (3) (1).png" alt=""><figcaption><p>Message Template Saved</p></figcaption></figure>
 
-<figure><img src="../../.gitbook/assets/image (1) (1).png" alt=""><figcaption><p>Create Message Template</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1) (1).png" alt=""><figcaption><p>Create Message Template</p></figcaption></figure>
 
 ### Credentials
 

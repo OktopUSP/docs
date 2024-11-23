@@ -18,7 +18,8 @@
   * [Agent Simulator](getting-started/installation/agent-simulator.md)
 * [Features](getting-started/features/README.md)
   * [Community](getting-started/features/community.md)
-  * [Enterprise](getting-started/features/enterprise.md)
+  * [Enterprise](getting-started/features/enterprise/README.md)
+    * [Scripts](getting-started/features/enterprise/scripts.md)
 * [Comparisions](getting-started/comparisions.md)
 * [Integrations](getting-started/integrations.md)
 
