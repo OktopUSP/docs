@@ -353,6 +353,26 @@ while true do
 end
 ```
 
+### sleep()
+
+Blocks the code execution for certain time.
+
+Params:
+
+1. Time duration \[integer]\
+   Seconds of blocking the code execution.
+
+Example:
+
+```lua
+while true do
+  print("I'm going to appear again after 20 seconds")
+  sleep(20)
+end
+```
+
+
+
 
 
 
