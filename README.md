@@ -21,7 +21,7 @@ Here you'll find helpfull content, tutorials and insights about the Oktopus Cont
 The main goal is to provide one platform to manage multiple devices of different vendors. If they support USP or CWMP protocol, than Oktopus is the right choice.
 
 {% hint style="info" %}
-This site is in an alive document always in construction. Your help is very appreciated to improve it and help us to provide high quality content about USP, CWMP and Oktopus Controller. If you wish to contribute, relate to the next section. &#x20;
+This site is a document always in construction. Your help is very appreciated to improve it and help us to provide high quality content about USP, CWMP and Oktopus Controller. If you wish to contribute, relate to the next section. &#x20;
 {% endhint %}
 
 ## Contribute
@@ -30,7 +30,7 @@ Oktopus Controller is Open Source as is this documentation. Fell free to make co
 
 ## Support
 
-Our team is available to support Enterprise Edition clients through [email](mailto:support@oktopus.app.br). If you have further questions about the Community Edition **we are available at** [**Slack**](https://join.slack.com/t/oktopustr-369/shared\_invite/zt-1znmrbr52-3AXgOlSeQTPQW8\_Qhn3C4g)**, along with other members of the community**.&#x20;
+Our team is available to support Enterprise Edition clients through [email](mailto:support@oktopus.app.br). If you have further questions about the Community Edition **we are available at** [**Slack**](https://join.slack.com/t/oktopustr-369/shared_invite/zt-1znmrbr52-3AXgOlSeQTPQW8_Qhn3C4g)**, along with other members of the community**.&#x20;
 
 ## Roadmap
 
