@@ -15,12 +15,20 @@
 * [Installation](getting-started/installation/README.md)
   * [Standalone](getting-started/installation/standalone.md)
   * [High Availability](getting-started/installation/high-availability.md)
-  * [Agent Simulator](getting-started/installation/agent-simulator.md)
 * [Community Edition](getting-started/community-edition.md)
 * [Enterprise Edition](getting-started/enterprise-edition/README.md)
   * [Scripts](getting-started/enterprise-edition/scripts.md)
 * [Comparisions](getting-started/comparisions.md)
 * [Integrations](getting-started/integrations.md)
+
+## Device Configuration
+
+* [Simulators](device-configuration/simulators/README.md)
+  * [(USP) Agent Simulator](device-configuration/simulators/usp-agent-simulator.md)
+* [Open Source Platforms](device-configuration/open-source-platforms/README.md)
+  * [PrplOS](device-configuration/open-source-platforms/prplos.md)
+  * [RDK-B](device-configuration/open-source-platforms/rdk-b.md)
+* [OEM](device-configuration/oem.md)
 
 ## USP (TR-369)
 
