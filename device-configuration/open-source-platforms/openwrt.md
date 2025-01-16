@@ -115,3 +115,5 @@ vi /etc/config/easycwmp
 Controller View:
 
 <figure><img src="../../.gitbook/assets/OpenWRT_Device.png" alt=""><figcaption><p>OpenWRT Device Online</p></figcaption></figure>
+
+Author: [Leonardo Henrique Meres](https://www.linkedin.com/in/leonardo-henrique-meres-silva-28241b2b/)
