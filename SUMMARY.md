@@ -27,6 +27,7 @@
   * [(USP) Agent Simulator](device-configuration/simulators/usp-agent-simulator.md)
 * [Open Source Platforms](device-configuration/open-source-platforms/README.md)
   * [PrplOS](device-configuration/open-source-platforms/prplos.md)
+  * [OpenWRT](device-configuration/open-source-platforms/openwrt.md)
   * [RDK-B](device-configuration/open-source-platforms/rdk-b.md)
 * [OEM](device-configuration/oem.md)
 
