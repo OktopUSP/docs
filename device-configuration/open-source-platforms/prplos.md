@@ -102,7 +102,7 @@ usp set Device.LocalAgent.MTP.1.MQTT.ResponseTopicConfigured oktopus/usp/v1/cont
 ```
 
 ```shell
-usp set Device.LocalAgent.Controller.1.MTP.1.MQTT.Topic oktopus/usp/v1/controller
+usp set Device.LocalAgent.Controller.1.MTP.1.MQTT.Topic oktopus/usp/v1/agent
 ```
 
 Enable MQTT client connection:
