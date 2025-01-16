@@ -55,7 +55,7 @@ root@OpenWrt:~# apk add easycwmp-1.8.6.apk
 OK: 16 MiB in 131 packages
 ```
 
-Check if EastCwmp is working:
+Check if EasyCwmp is working:
 
 ```shell
 root@OpenWrt:~# /etc/init.d/easycwmpd start
