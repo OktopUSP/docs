@@ -1,17 +1,19 @@
 # OpenWRT
+
 The OpenWrt Project is a Linux operating system targeting embedded devices. Instead of trying to create a single, static firmware, OpenWrt provides a fully writable filesystem with package management. This frees you from the application selection and configuration provided by the vendor and allows you to customize the device through the use of packages to suit any application. For developers, OpenWrt is the framework to build an application without having to build a complete firmware around it; for users this means the ability for full customization, to use the device in ways never envisioned.
 
-For more details go to the OpenWRT oficial Website at: https://openwrt.org/
+For more details go to the OpenWRT oficial Website at: [https://openwrt.org/](https://easycwmp.org/get/)
 
 ## Installation
-TR069 client is not available by default in OpenWRT images. Most users use EasyCwmp (https://easycwmp.org/) to have CWMP management capabilities. It's possible to build easycwmp package and install in your OpenWRT system or compile the entire system with EasyCwmp enabled.
+
+TR069 client is not available by default in OpenWRT images. Most users use [EasyCwmp](https://easycwmp.org/) to have CWMP management capabilities. It's possible to build easycwmp package and install in your OpenWRT system or compile the entire system with EasyCwmp enabled.
 
 ### Build Package
-Download the OpenWRT SDK. It's available in the same page as OpenWRT images. After that download MicroXML and EasyCwmp and put them under the packages folder from the SDK:
 
-**EasyCwmp download:** https://easycwmp.org/get/
+Download the OpenWRT SDK. It's available in the same page as OpenWRT images. After that, download MicroXML and EasyCwmp and put them under the packages folder from the SDK:
 
-**MicroXML download:** https://easycwmp.org/download/libmicroxml.tar.gz
+* [EasyCwmp download](https://easycwmp.org/get/) :arrow\_down:
+* [MicroXML download](https://easycwmp.org/download/libmicroxml.tar.gz) :arrow\_down:
 
 ```shell
 cd openwrt-sdk-23.05.5-x86-64_gcc-12.3.0_musl.Linux-x86_64
@@ -23,18 +25,20 @@ easycwmp  kernel  libmicroxml  Makefile  toolchain
 ┌[user@linux] [/dev/pts/2]
 └[~/Documents/GitHub/openwrt-sdk-23.05.5-x86-64_gcc-12.3.0_musl.Linux-x86_64/package]>
 ```
+
 Build both packages:
 
 ```shell
 make menuconfig
 ```
+
 Navigate to libmicroxml and easycwmp and check both of them.
 
 ```shell
 make package/easycwmp/compile
 ```
 
-After compilation is finished both packages will be available at the folder **bin/packages/x86_64/base/**
+After compilation is finished both packages will be available at the folder **bin/packages/x86\_64/base/**
 
 Copy both files to inside the OpenWRT system and install them using the apk utility:
 
