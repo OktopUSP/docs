@@ -42,7 +42,7 @@ This diagram applies only to MQTTv5.
 
 ### mTLS **(Mutual Transport Layer Security)**
 
-\*Available only in the commercial version
+**\***&#x41;vailable only in the commercial version
 
 Is an extension of the TLS protocol that ensures both parties in a connection—client and server—authenticate each other. The client presents its certificate to the server after verifying the server's certificate, creating a bidirectional trust relationship. This enhances security by verifying both endpoints, making it commonly used in systems where trust between all communicating entities is crucial.
 
