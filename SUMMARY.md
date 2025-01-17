@@ -6,9 +6,6 @@
 
 * [About](getting-started/about.md)
 * [Architecture](getting-started/architecture.md)
-* [Architecture](getting-started/architecture-1/README.md)
-  * [Core](getting-started/architecture-1/core.md)
-  * [Edge](getting-started/architecture-1/edge.md)
 * [Requirements](getting-started/requirements/README.md)
   * [Network](getting-started/requirements/network.md)
   * [Hardware](getting-started/requirements/hardware.md)
