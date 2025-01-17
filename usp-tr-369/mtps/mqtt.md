@@ -34,7 +34,7 @@ The features mentioned above are important to allow a scalable and automated USP
 This diagram applies only to MQTTv5.
 {% endhint %}
 
-<figure><img src="../../.gitbook/assets/mqtt-flow.png" alt=""><figcaption><p>Messages Flow</p></figcaption></figure>
+<div data-full-width="true"><figure><img src="../../.gitbook/assets/mqtt-flow.png" alt=""><figcaption><p>Messages Flow</p></figcaption></figure></div>
 
 ## Security
 
