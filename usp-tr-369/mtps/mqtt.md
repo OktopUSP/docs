@@ -44,7 +44,7 @@ This diagram applies only to MQTTv5.
 
 **\***&#x41;vailable only in the commercial version
 
-Is an extension of the TLS protocol that ensures both parties in a connection—client and server—authenticate each other. The client presents its certificate to the server after verifying the server's certificate, creating a bidirectional trust relationship. This enhances security by verifying both endpoints, making it commonly used in systems where trust between all communicating entities is crucial.
+Is an extension of the TLS protocol that ensures both parties in a connection, client and server authenticate each other. The client presents its certificate to the server after verifying the server's certificate, creating a bidirectional trust relationship. This enhances security by verifying both endpoints, making it commonly used in systems where trust between all communicating entities is crucial.
 
 ### Username and Password
 
@@ -56,7 +56,7 @@ Although this method is straightforward and widely used, it has limitations in t
 
 ### Topics ACL (Access Control List)
 
-Restrict and control access to specific topics for MQTT clients. By defining permissions—such as publish, subscribe, or both—on a per-topic basis, ACLs ensure that clients can only interact with topics they are authorized to use. This enhances security by preventing unauthorized access, mitigating risks like data leakage or malicious topic misuse.
+Restrict and control access to specific topics for MQTT clients. By defining permissions such as publish, subscribe, or both on a per-topic basis, ACLs ensure that clients can only interact with topics they are authorized to use. This enhances security by preventing unauthorized access, mitigating risks like data leakage or malicious topic misuse.
 
 Oktopus uses this mechanism to ensure a malicious device or attacker can't forge messages as another device or send messages to control other devices. This way, only the USP Controller has permissions to publish to device topics and communicate with it.
 
@@ -66,4 +66,4 @@ Oktopus uses [Mochi](https://github.com/mochi-mqtt/server); which is a fully com
 
 ### Configuring an Alternative Broker
 
-While Mochi is a strong choice, you can use any MQTT broker that suits your preferences or infrastructure requirements, such as Mosquitto, EMQX, or HiveMQ. The key is to configure the broker to align with [Oktopus's message flow](mqtt.md#oktopus-mqtt-flow)—including topics, authentication, headers, metadata and [user properties](mqtt.md#user-properties).
+While Mochi is a strong choice, you can use any MQTT broker that suits your preferences or infrastructure requirements, such as Mosquitto, EMQX, or HiveMQ. The key is to configure the broker to align with [Oktopus's message flow](mqtt.md#oktopus-mqtt-flow), including topics, authentication, headers, metadata and [user properties](mqtt.md#user-properties).
