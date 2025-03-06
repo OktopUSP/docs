@@ -243,7 +243,7 @@ end
 
 Listen to TR-069 events as defined in the standard.
 
-Params:
+#### Params:
 
 1.  Event \[string] (optional)\
     Possible events:
@@ -359,7 +359,7 @@ end
 
 Blocks the code execution for certain time.
 
-Params:
+#### Params:
 
 1. Time duration \[integer]\
    Seconds of blocking the code execution.
@@ -375,10 +375,14 @@ end
 
 ### create\_or\_update\_device\_credential()
 
-Params:
+#### Params:
 
 1. Username \[string]
 2. Password \[string]
+
+Return:
+
+_Bool_ value indicating _true_ if the operation was successfull or _false_ if there was an error.
 
 Example:
 
@@ -392,6 +396,32 @@ else
   print("error")
 end
 ```
+
+### generate\_random\_string()
+
+#### Params:
+
+1. Length \[int]\
+   Size of the string to be generated
+
+Example:
+
+```lua
+local username = "deviceX"
+local password = generate_random_string(10)
+
+if create_or_update_device_credential(username, password) then
+  print("success")
+else
+  print("error")
+end
+```
+
+
+
+
+
+
 
 
 
