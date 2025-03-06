@@ -308,7 +308,9 @@ If the CPE was not found in the database the function returns a boolean with fal
     "version": "",
     "product_class": "Huawei",
     "alias": "",
-    "status": 2
+    "status": 2,
+    "cwmp": true,
+    "usp": false
 }
 ```
 
@@ -321,7 +323,7 @@ if type(deviceAttributes) == "boolean" then
   print("device " .. SERIAL_NUMBER .. " not found")
 else
   for key, value in pairs(deviceAttributes) do
-    print(key .. ": " .. value)
+    print(key .. ": " .. tostring(value))
   end
 end
 ```
