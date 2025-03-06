@@ -350,7 +350,7 @@ Example:
 while true do
   local new_device = listen_to_new_device()
   for key, value in pairs(new_device) do
-    print(key .. ": " .. value)
+    print(key .. ": " .. tostring(value))
   end
 end
 ```
