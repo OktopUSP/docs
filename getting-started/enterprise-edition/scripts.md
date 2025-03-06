@@ -373,6 +373,28 @@ while true do
 end
 ```
 
+### create\_or\_update\_device\_credential()
+
+Params:
+
+1. Username \[string]
+2. Password \[string]
+
+Example:
+
+```lua
+local username = "test"
+local password = "test"
+
+if create_or_update_device_credential(username, password) then
+  print("success")
+else
+  print("error")
+end
+```
+
+
+
 
 
 
