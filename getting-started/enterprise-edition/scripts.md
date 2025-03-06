@@ -417,6 +417,35 @@ else
 end
 ```
 
+### delete\_device()
+
+Remove device from database.
+
+#### Params:
+
+1.  Serial Number \[string]
+
+    The unique identifier of the CPE to be removed.
+
+Return:
+
+&#x20;_Bool_ value indicating _true_ if the operation was successfull and the device was removed from database or _false_ if there was an error.
+
+Example:
+
+```lua
+local sn = "mqtt_client_92"
+if delete_device(sn) then
+  print("device " .. sn .. " successfully deleted")
+else
+  print("error to delete device ".. sn)
+end
+```
+
+
+
+
+
 
 
 
