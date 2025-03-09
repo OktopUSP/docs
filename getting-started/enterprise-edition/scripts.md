@@ -332,7 +332,9 @@ end
 
 Receive all new device attributes that connect to Oktopus, independent of the protocol.
 
-Return:
+#### Params:
+
+1. Callback function with new device data
 
 ```json
 {
@@ -349,12 +351,12 @@ Return:
 Example:
 
 ```lua
-while true do
-  local new_device = listen_to_new_device()
+function listen_to_new_device_callback(new_device)
   for key, value in pairs(new_device) do
     print(key .. ": " .. tostring(value))
   end
 end
+listen_to_new_device(listen_to_new_device_callback)
 ```
 
 ### sleep()
