@@ -165,7 +165,7 @@ Keep charge of the regions where you can expand your business, the places where 
 
 Standardized framework for managing functional components that can be independently added and orchestrated within the network architecture, facilitating more agile service delivery. This approach allows operators to install/uninstall/start/stop "apps" at the CPE, maintain device uptime, and rapidly introduce new services while maintaining compatibility with existing broadband standards and ensuring seamless integration across multi-vendor environments throughout the entire software lifecycle without the need for a firmware upgrade.
 
-
+<figure><img src="../../.gitbook/assets/Screenshot from 2024-12-06 13-40-55.png" alt=""><figcaption><p>Lifecycle Container Management</p></figcaption></figure>
 
 ### Custom UI Theme
 
