@@ -161,6 +161,12 @@ Keep charge of the regions where you can expand your business, the places where 
 
 <figure><img src="../../.gitbook/assets/image (2) (1) (1) (1).png" alt=""><figcaption><p>Device Geolocation View</p></figcaption></figure>
 
+### LCM / Software Modules
+
+Standardized framework for managing functional components that can be independently added and orchestrated within the network architecture, facilitating more agile service delivery. This approach allows operators to install/uninstall/start/stop "apps" at the CPE, maintain device uptime, and rapidly introduce new services while maintaining compatibility with existing broadband standards and ensuring seamless integration across multi-vendor environments throughout the entire software lifecycle without the need for a firmware upgrade.
+
+
+
 ### Custom UI Theme
 
 Fully customizable user interface, with your company's logo and theme. Increase your customers' confidence in your solution and the credibility of your brand, with the same functionalities as the standard web interface version.
