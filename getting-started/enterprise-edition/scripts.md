@@ -295,7 +295,7 @@ if type(deleteTest) == "table" then
 ```
 {% endtab %}
 
-{% tab title="GetParameternames" %}
+{% tab title="GetParameterNames" %}
 ```lua
 local getParameterNamesType = 4
 
