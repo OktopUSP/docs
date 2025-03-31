@@ -157,7 +157,9 @@ end
 
     CWMP message type. \
     0 = getParameterValues\
-    1 = setParameterValues
+    1 = setParameterValues\
+    2 = addObject\
+    3 = deleteObject
 
 Return:
 
@@ -207,6 +209,33 @@ end
 </code></pre>
 {% endtab %}
 
+{% tab title="AddObject" %}
+<pre class="language-lua"><code class="lang-lua">local addObjectType = 2
+
+<strong>local xmlContentAdd = [[
+</strong>&#x3C;?xml version="1.0" encoding="UTF-8"?>
+&#x3C;soap:Envelope xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:cwmp="urn:dslforum-org:cwmp-1-0" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:schemaLocation="urn:dslforum-org:cwmp-1-0 ..\schemas\wt121.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  &#x3C;soap:Header/>
+  &#x3C;soap:Body soap:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+    &#x3C;cwmp:AddObject>
+      &#x3C;ObjectName>InternetGatewayDevice.LANDevice.1.WLANConfiguration.&#x3C;/ObjectName>
+      &#x3C;ParameterKey>&#x3C;/ParameterKey>
+    &#x3C;/cwmp:AddObject>
+  &#x3C;/soap:Body>
+&#x3C;/soap:Envelope>
+]]
+local serial_number = "HUAWNFYC-OPA123-0"
+
+local addTest = send_cwmp_message(serial_number, xmlContentAdd, addObjectType)
+if addTest["error_message"] ~= nil then
+    print("SN: " .. serial_number .. " | Error Message: " .. addTest["error_message"] .. " | Code: " .. addTest["error_code"])
+ else
+    print("instance_number: " .. addTest.instance_number)
+    print("status: " .. addTest.status)
+end
+</code></pre>
+{% endtab %}
+
 {% tab title="SetParameterValues" %}
 ```lua
 local setParameterValuesType = 1
@@ -238,31 +267,31 @@ end
 ```
 {% endtab %}
 
-{% tab title="AddObject" %}
-<pre class="language-lua"><code class="lang-lua">local addObjectType = 2
+{% tab title="DeleteObject" %}
+```lua
+local deleteObjectType = 3
 
-<strong>local xmlContentAdd = [[
-</strong>&#x3C;?xml version="1.0" encoding="UTF-8"?>
-&#x3C;soap:Envelope xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:cwmp="urn:dslforum-org:cwmp-1-0" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:schemaLocation="urn:dslforum-org:cwmp-1-0 ..\schemas\wt121.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  &#x3C;soap:Header/>
-  &#x3C;soap:Body soap:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
-    &#x3C;cwmp:AddObject>
-      &#x3C;ObjectName>InternetGatewayDevice.LANDevice.1.WLANConfiguration.&#x3C;/ObjectName>
-      &#x3C;ParameterKey>&#x3C;/ParameterKey>
-    &#x3C;/cwmp:AddObject>
-  &#x3C;/soap:Body>
-&#x3C;/soap:Envelope>
+local xmlContentDelete = [[
+<?xml version="1.0" encoding="UTF-8"?>
+<soap:Envelope xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:cwmp="urn:dslforum-org:cwmp-1-0" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:schemaLocation="urn:dslforum-org:cwmp-1-0 ..\schemas\wt121.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <soap:Header/>
+  <soap:Body soap:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+    <cwmp:DeleteObject>
+      <ObjectName>InternetGatewayDevice.LANDevice.1.WLANConfiguration.8.</ObjectName>
+      <ParameterKey></ParameterKey>
+    </cwmp:DeleteObject>
+  </soap:Body>
+</soap:Envelope>
 ]]
 local serial_number = "HUAWNFYC-OPA123-0"
 
-local addTest = send_cwmp_message(serial_number, xmlContentAdd, addObjectType)
-if addTest["error_message"] ~= nil then
-    print("SN: " .. serial_number .. " | Error Message: " .. addTest["error_message"] .. " | Code: " .. addTest["error_code"])
+local deleteTest = send_cwmp_message(serial_number, xmlContentDelete, deleteObjectType)
+if type(deleteTest) == "table" then
+    print("SN: " .. serial_number .. " | Error Message: " .. deleteTest["error_message"] .. " | Code: " .. deleteTest["error_code"])
  else
-    print("instance_number: " .. addTest.instance_number)
-    print("status: " .. addTest.status)
-end
-</code></pre>
+   print("DeleteObject worked")
+ end
+```
 {% endtab %}
 {% endtabs %}
 
