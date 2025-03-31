@@ -172,8 +172,8 @@ The data returned depends on the TR-069 message type:
 }
 ```
 
-* If it is a read operation as "getParameterValues" than the function will return a _table_.&#x20;
-* If it is a create/delete/set operation the data returned will be a _boolean_ indicating if the result was a success or failure.
+* If it is a read or add operation the function will return a _table_.&#x20;
+* If it is a delete or set operation the data returned will be a _boolean_ indicating if the result was a success or failure.
 
 Example:
 
@@ -236,6 +236,33 @@ else
   print("SetParameterValues worked")
 end
 ```
+{% endtab %}
+
+{% tab title="AddObject" %}
+<pre class="language-lua"><code class="lang-lua">local addObjectType = 2
+
+<strong>local xmlContentAdd = [[
+</strong>&#x3C;?xml version="1.0" encoding="UTF-8"?>
+&#x3C;soap:Envelope xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:cwmp="urn:dslforum-org:cwmp-1-0" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:schemaLocation="urn:dslforum-org:cwmp-1-0 ..\schemas\wt121.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  &#x3C;soap:Header/>
+  &#x3C;soap:Body soap:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+    &#x3C;cwmp:AddObject>
+      &#x3C;ObjectName>InternetGatewayDevice.LANDevice.1.WLANConfiguration.&#x3C;/ObjectName>
+      &#x3C;ParameterKey>&#x3C;/ParameterKey>
+    &#x3C;/cwmp:AddObject>
+  &#x3C;/soap:Body>
+&#x3C;/soap:Envelope>
+]]
+local serial_number = "HUAWNFYC-OPA123-0"
+
+local addTest = send_cwmp_message(serial_number, xmlContentAdd, addObjectType)
+if addTest["error_message"] ~= nil then
+    print("SN: " .. serial_number .. " | Error Message: " .. addTest["error_message"] .. " | Code: " .. addTest["error_code"])
+ else
+    print("instance_number: " .. addTest.instance_number)
+    print("status: " .. addTest.status)
+end
+</code></pre>
 {% endtab %}
 {% endtabs %}
 
