@@ -159,7 +159,8 @@ end
     0 = getParameterValues\
     1 = setParameterValues\
     2 = addObject\
-    3 = deleteObject
+    3 = deleteObject\
+    4 = getParameterNames
 
 Return:
 
@@ -291,6 +292,34 @@ if type(deleteTest) == "table" then
  else
    print("DeleteObject worked")
  end
+```
+{% endtab %}
+
+{% tab title="GetParameternames" %}
+```lua
+local getParameterNamesType = 4
+
+local xmlContentGetParameterNames = [[<?xml version="1.0" encoding="UTF-8"?>
+<soap:Envelope xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:cwmp="urn:dslforum-org:cwmp-1-0" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:schemaLocation="urn:dslforum-org:cwmp-1-0 ..schemaswt121.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <soap:Header/>
+  <soap:Body soap:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+    <cwmp:GetParameterNames>
+      <ParameterPath>InternetGatewayDevice.LANDevice.1.WLANConfiguration.</ParameterPath>
+      <NextLevel>1</NextLevel>
+    </cwmp:GetParameterNames>
+  </soap:Body>
+</soap:Envelope>
+]]
+local serial_number = "HUAWNFYC-OPA123-0"
+
+local getParameternames = send_cwmp_message(serial_number, xmlContentGetParameterNames, getParameterNamesType)
+if getParameternames["error_message"] ~= nil then
+    print("SN: " .. serial_number .. " | Error Message: " .. getParameternames["error_message"] .. " | Code: " .. getParameternames["error_code"])
+ else
+  for _, value in pairs(getParameternames) do
+    print("Parameter Name" .. value)
+  end
+end
 ```
 {% endtab %}
 {% endtabs %}
