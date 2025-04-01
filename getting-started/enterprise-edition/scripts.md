@@ -429,7 +429,9 @@ Receive all new device attributes that connect to Oktopus, independent of the pr
     "version": "",
     "product_class": "Huawei",
     "alias": "",
-    "status": 2
+    "status": 2,
+    "cwmp": true,
+    "usp": false
 }
 ```
 
