@@ -141,6 +141,108 @@ end
 
 
 {% endtab %}
+
+{% tab title="Delete" %}
+```lua
+local uspMsg = [[
+{
+    "header": {
+        "msg_id": "b7dc38ea-aefb-4761-aa55-edaa97adb2f0",
+        "msg_type": 10
+    },
+    "body": {
+        "request": {
+            "delete": {
+                "allow_partial": true,
+                "obj_paths": [
+                    "Device.LocalAgent.Subscription.*."
+                ]
+            }
+        }
+    }
+}
+]]
+
+local serial_number = "oktopus-0-mqtt"
+
+local uspMessageResult = send_usp_message(serial_number, uspMsg)
+if uspMessageResult["error_message"] ~= nil then
+    print("SN: " .. serial_number .. " | Error Message: " .. uspMessageResult["error_message"] .. " | Code: " .. uspMessageResult["error_code"])
+else
+    for key, _ in pairs(uspMessageResult) do
+      print(key)
+    end
+end
+```
+{% endtab %}
+
+{% tab title="Add" %}
+```lua
+local uspMsg =[[
+{
+    "header": {
+        "msg_id": "b7dc38ea-aefb-4761-aa55-edaa97adb2f0",
+        "msg_type": 8
+    },
+    "body": {
+        "request": {
+            "add": {
+                "allow_partial": true,
+                "create_objs": [
+                    {
+                        "obj_path": "Device.LocalAgent.Subscription.",
+                        "param_settings": [
+                            {
+                                "param": "NotifType",
+                                "value": "OperationComplete",
+                                "required": true
+                            },
+                            {
+                                "param": "Persistent",
+                                "value": "1",
+                                "required": true
+                            },
+                            {
+                                "param": "ReferenceList",
+                                "value": "Device.IP.Diagnostics.DownloadDiagnostics(),Device.IP.Diagnostics.UploadDiagnostics()",
+                                "required": true
+                            },
+                            {
+                                "param": "NotifRetry",
+                                "value": "0",
+                                "required": true
+                            },
+                            {
+                                "param": "Enable",
+                                "value": "1",
+                                "required": true
+                            },
+                          	{
+                                "param": "Recipient",
+                                "value": "Device.LocalAgent.Controller.1",
+                                "required": true
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    }
+}
+]]
+
+local serial_number = "oktopus-0-mqtt"
+
+local uspMessageResult = send_usp_message(serial_number, uspMsg)
+if uspMessageResult["error_message"] ~= nil then
+    print("SN: " .. serial_number .. " | Error Message: " .. uspMessageResult["error_message"] .. " | Code: " .. uspMessageResult["error_code"])
+else
+    for key, _ in pairs(uspMessageResult) do
+      print(key)
+    end
+end
+```
+{% endtab %}
 {% endtabs %}
 
 ### send\_cwmp\_message()
