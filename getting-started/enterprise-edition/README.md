@@ -24,6 +24,7 @@ Check the standard pricing plans:  [https://www.oktopus.app.br/pricing](https://
 | WiFiber 120AC    | Intelbras | TR-069   |
 | WiFiber 1200R    | Intelbras | TR-069   |
 | Raspberry Pi     | RDK-B     | USP      |
+| EX230V           | TP-Link   | USP      |
 
 {% hint style="info" %}
 In case your devices are not in that list, we take one week to homologate it.&#x20;
