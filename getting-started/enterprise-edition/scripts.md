@@ -468,10 +468,10 @@ Return:
 Example:
 
 ```lua
-function listen_to_cwmp_event(cwmp_event)
-  for key, value in pairs(cwmp_event) do
-    print(key .. ": " .. tostring(value))
-  end
+function listen_to_cwmp_event_callback(cwmp_event)
+    for key, value in pairs(cwmp_event) do
+        print(key .. ": " .. tostring(value))
+    end
 end
 listen_to_cwmp_event(listen_to_cwmp_event_callback)
 ```
