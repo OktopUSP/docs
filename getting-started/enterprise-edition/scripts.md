@@ -451,9 +451,10 @@ Listen to TR-069 events as defined in the standard.
     "12"- AUTONOMOUS DU STATE CHANGE COMPLETE
     ```
 
-    If no value is set, than it listens to all events.
+    If no value is set or the value is "\*", than it listens to all events.
 2. Serial Number \[string] (optional)\
-   CPE unique identifier. If it's not set then it listens to all CPEs event(s).
+   CPE unique identifier. If it's not set or the value is "\*", then it listens to all CPEs event(s).
+3. Callback function (required)
 
 Return:
 
@@ -467,10 +468,12 @@ Return:
 Example:
 
 ```lua
-while true do
-  local cwmp_event = listen_to_cwmp_event("2")
-  print("CWMP event " .. cwmp_event.event .. ", triggered by device: " .. cwmp_event.serial_number)
+function listen_to_cwmp_event(cwmp_event)
+  for key, value in pairs(cwmp_event) do
+    print(key .. ": " .. tostring(value))
+  end
 end
+listen_to_cwmp_event(listen_to_cwmp_event_callback)
 ```
 
 ### get\_device()
