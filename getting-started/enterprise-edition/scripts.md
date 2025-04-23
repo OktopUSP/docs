@@ -548,7 +548,7 @@ function listen_to_new_device_callback(new_device)
     print(key .. ": " .. tostring(value))
   end
 end
-listen_to_new_device(listen_to_new_device_callback)
+listen_to_new_device("*", "*", listen_to_new_device_callback)
 ```
 
 ### sleep()
