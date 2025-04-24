@@ -455,7 +455,7 @@ Listen to TR-069 events as defined in the standard.
 2. Serial Number \[string] (optional)\
    CPE unique identifier. If it's not set or the value is "\*", then it listens to all CPEs event(s).
 3. Callback function (required)
-4. Number of events to process in parallel (optional)
+4. Number of events to process in parallel \[integer] (optional)
 
 Return:
 
