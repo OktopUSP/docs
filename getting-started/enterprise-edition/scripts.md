@@ -639,21 +639,51 @@ else
 end
 ```
 
+### get\_all\_devices()
 
+Retrieve all devices saved on the database.
 
+Return:
 
+List of device objects.
 
+<pre class="language-json"><code class="lang-json"><strong>[
+</strong><strong>    {
+</strong>        "sn": "HUAWNFYC-35454645",
+        "model": "WS7001-40",
+        "vendor": "Huawei Technologies Co., Ltd.",
+        "version": "",
+        "product_class": "Huawei",
+        "alias": "",
+        "status": 2,
+        "cwmp": true,
+        "usp": false
+    },
+    {
+        "sn": "HUAWNFYC-test",
+        "model": "WS7001-40",
+        "vendor": "Huawei Technologies Co., Ltd.",
+        "version": "",
+        "product_class": "Huawei",
+        "alias": "",
+        "status": 2,
+        "cwmp": true,
+        "usp": false
+    },
+    ...
+]
+</code></pre>
 
+Example:
 
+```lua
+local devices = get_all_devices()
 
-
-
-
-
-
-
-
-
+for i = 1, #devices do
+    local device = devices[i]
+    print("  SN: " .. device.sn)
+end
+```
 
 
 
