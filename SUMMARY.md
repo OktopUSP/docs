@@ -12,6 +12,7 @@
 * [Installation](getting-started/installation/README.md)
   * [Standalone](getting-started/installation/standalone.md)
   * [High Availability](getting-started/installation/high-availability.md)
+  * [FAQ](getting-started/installation/faq.md)
 * [Community Edition](getting-started/community-edition.md)
 * [Enterprise Edition](getting-started/enterprise-edition/README.md)
   * [Scripts](getting-started/enterprise-edition/scripts.md)

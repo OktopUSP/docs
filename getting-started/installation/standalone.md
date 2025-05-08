@@ -65,4 +65,4 @@ Once you've done the steps above, still inside "oktopus-main/deploy/compose" fol
 COMPOSE_PROFILES=nats,controller,cwmp,mqtt,stomp,ws,adapter,frontend,portainer docker compose up -d
 ```
 
-Congratulations! Oktopus Web interface will be available at port 80.
+Congratulations! Oktopus Web interface will be available at **port 80**.

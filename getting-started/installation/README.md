@@ -26,6 +26,6 @@ If you're a developer or someone who just wants to try Oktopus and get a better 
 wget https://github.com/OktopUSP/oktopus/archive/refs/heads/main.zip && unzip main && cd oktopus-main/deploy/compose && COMPOSE_PROFILES=nats,controller,cwmp,mqtt,stomp,ws,adapter,frontend docker compose up -d
 ```
 
-The web interface will become accessible at port 80:
+The web interface will become accessible at **port 80**:
 
 <figure><img src="../../.gitbook/assets/image (1) (1) (1) (1) (1) (1).png" alt=""><figcaption><p>Oktopus web first acces</p></figcaption></figure>
