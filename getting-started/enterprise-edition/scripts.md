@@ -426,6 +426,10 @@ end
 {% endtab %}
 {% endtabs %}
 
+### send\_cwmp\_async\_message()
+
+Works the same way as the[ send\_cwmp\_message()](scripts.md#send_cwmp_message) function, but does not use the CWMP Connection Request mechanism, which means this RPC will only reach the CPE in the next Inform event of it. This allows to reach CPEs behind NAT, although it takes longer for the RPC to reach and be processed by the device.
+
 ### listen\_to\_cwmp\_event()
 
 Listen to TR-069 events as defined in the standard.
