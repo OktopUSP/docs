@@ -685,7 +685,26 @@ for i = 1, #devices do
 end
 ```
 
+### refresh\_device\_parameters()
 
+Sync device saved parameters, as PPPoE user, IP address and WAN MAC.
+
+Params:
+
+1. Serial number / USP agent endpoint id \[string]\
+   The unique identifier of the CPE to be removed.
+
+Return: _Bool_ value indicating f the operation was successfully executed ot not.
+
+Example:
+
+```lua
+if refresh_device_parameters("sn-test-1") == false then
+    print("Failed to refresh device parameters")
+else
+    print("Device parameters refreshed successfully")
+end
+```
 
 
 
