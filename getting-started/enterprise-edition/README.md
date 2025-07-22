@@ -31,7 +31,9 @@ Check the standard pricing plans:  [https://www.oktopus.app.br/pricing](https://
 | FAST5672                    | Sagemcom  | USP      |
 | EE6510-10                   | Zyxel     | USP      |
 | FastMile 5G Receiver 5G14-B | Nokia     | USP      |
-| FRITZ!Box                   | AVM       | TR-069   |
+| FRITZ!Box 5530 Fiber        | AVM       | TR-069   |
+| Raspberry Pi                | PrplOS    | USP      |
+| HX30, HX40                  | Heimgard  | USP      |
 
 {% hint style="info" %}
 In case your devices are not in that list, our team will promptly homologate it.&#x20;
