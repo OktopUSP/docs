@@ -4,9 +4,11 @@ description: Suited for production usage, critical workloads and commercial use.
 
 # Enterprise Edition
 
-Find flexible pricing and resources tailored to fit your unique needs and usecase. Email us: [sales@oktopus.app.br](mailto:sales@oktopus.app.br) to get a quote or[ schedule a meeting](https://app.apollo.io/#/meet/leandro_machado) so we can better understand your needs and find the best solution.
+Find flexible pricing and resources tailored to fit your unique needs and use case. Email us: [sales@oktopus.app.br](mailto:sales@oktopus.app.br) to get a quote or[ schedule a meeting](https://app.apollo.io/#/meet/leandro_machado) so we can better understand your needs and find the best solution.
 
 Check the standard pricing plans:  [https://www.oktopus.app.br/pricing](https://www.oktopus.app.br/pricing).
+
+Create an account: [https://oktopus.app.br/auth/register](https://oktopus.app.br/auth/register).
 
 ## Homologated Devices
 
