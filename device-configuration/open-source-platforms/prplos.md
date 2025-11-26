@@ -153,7 +153,7 @@ logread -f | grep -i obuspa
 
 ### Clean all
 
-In case you get stuck with an issue or misconfiguration clean up your environment.
+In case you get stuck with an issue or misconfiguration, clean up your environment.
 
 {% hint style="info" %}
 **CAUTION**: This action will factory reset all the TR-181 datamodel.
