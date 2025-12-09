@@ -42,7 +42,7 @@ For this to work you need to enable this feature through environment variables i
 
 There are two levels of users availables in the Community Edition:
 
-* _Admin_: Have access to the hole software platform, including the rights to remove/add users and devices credentials.
+* _Admin_: Have access to the whole software platform, including the rights to remove/add users and devices credentials.
 * _User_: Can access devices and configure the same, view users, dashboard information and credentials, but is not allowed to remove/add other users and devices credentials.
 
 <figure><img src="../.gitbook/assets/image (14).png" alt=""><figcaption><p>Users Management Page</p></figcaption></figure>
