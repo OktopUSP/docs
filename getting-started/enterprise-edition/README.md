@@ -2,6 +2,8 @@
 
 Create an account today, for free: [https://oktopus.app.br/auth/register](https://oktopus.app.br/auth/register).
 
+{% embed url="https://youtu.be/tYkFt5WT4nI?si=mnhuMC39sWn4xmw0" %}
+
 ## Homologated Devices
 
 | Model                                   | Vendor    | Protocol |
