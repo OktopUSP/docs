@@ -46,6 +46,7 @@ Create an account today, for free: [https://oktopus.app.br/auth/register](https:
 | FAST5670                                | Sagemcom  | TR-069   |
 | FAST5657                                | Sagemcom  | TR-069   |
 | FAST3895                                | Sagemcom  | TR-069   |
+| Elite HX30                              | Genexis   | TR-369   |
 
 {% hint style="info" %}
 In case your device is not in this list, our team will promptly homologate it.&#x20;
