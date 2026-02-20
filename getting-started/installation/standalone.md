@@ -1,17 +1,3 @@
----
-layout:
-  title:
-    visible: true
-  description:
-    visible: false
-  tableOfContents:
-    visible: true
-  outline:
-    visible: true
-  pagination:
-    visible: true
----
-
 # Standalone
 
 The standalone mode installs all the software components into one server. It's pretty straighforward, but becomes a single point of failure. Anyway, it should be enough for small-medium sized workloads.

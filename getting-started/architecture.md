@@ -1,17 +1,3 @@
----
-layout:
-  title:
-    visible: true
-  description:
-    visible: false
-  tableOfContents:
-    visible: true
-  outline:
-    visible: true
-  pagination:
-    visible: true
----
-
 # Architecture
 
 Oktopus Controller backend is made up of some microservices written in [Go](https://go.dev/) because of the language versatility, speed, and small resource usage footprint. All the microservices communicate with each other through [NATS](https://nats.io/), which is a robust message system, really fast, built for IoT and edge applications. The database picked is [MongoDB](https://www.mongodb.com/), which makes possible to have flexible data, saved in the right manner based on our needs.&#x20;
@@ -25,4 +11,3 @@ All the different protocols used to manage the devices are abstracted to NATS me
 Software components are deployed within [Docker](https://www.docker.com/) containers. The most straigthforward way to install Oktopus Controller is using docker compose. For high availability production environments we suggest to use Kubernetes.
 
 <figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1) (1) (1).png" alt=""><figcaption><p>Microservices Overview</p></figcaption></figure>
-

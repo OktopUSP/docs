@@ -1,17 +1,3 @@
----
-layout:
-  title:
-    visible: true
-  description:
-    visible: false
-  tableOfContents:
-    visible: true
-  outline:
-    visible: true
-  pagination:
-    visible: true
----
-
 # Requirements
 
 For small deployments with 10 \~ 50 thousand devices, the standalone mode might be a good deal. If you want to manage more than 50 thousand devices or own a business critical operation, than you should consider to go with the high availability mode.

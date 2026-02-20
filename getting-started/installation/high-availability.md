@@ -1,17 +1,3 @@
----
-layout:
-  title:
-    visible: true
-  description:
-    visible: false
-  tableOfContents:
-    visible: true
-  outline:
-    visible: true
-  pagination:
-    visible: true
----
-
 # High Availability
 
 For deployments with failover and advanced container management/orchestration, Kubernetes and it's flavors are the go-to option. This section aims to provide a example deployment that may need to be changed according to your environment specifics, as hardware/software Load Balancers, cluster nodes,  firewall, bare-metal or cloud environment.
