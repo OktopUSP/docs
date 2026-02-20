@@ -1,6 +1,6 @@
 ---
 layout:
-  width: default
+  width: wide
   title:
     visible: true
   description:
@@ -25,4 +25,38 @@ Learn about the [architecture](community-edition/architecture.md) first, get fam
 
 ### Community vs Enterprise
 
-todo
+This table compares the features available in Oktopus Community Edition versus Enterprise Edition.
+
+| Feature                                       | Community | Enterprise |
+| --------------------------------------------- | --------- | ---------- |
+| **Core Device Management**                    |           |            |
+| USP (TR-369) & CWMP (TR-069) Protocols        | ✅         | ✅          |
+| Multiple Transports (MQTT, STOMP, WebSockets) | ✅         | ✅          |
+| Device Discovery & Configuration              | ✅         | ✅          |
+| Custom Message Templates                      | ✅         | ✅          |
+| Overview Dashboard                            | ✅         | ✅          |
+| Basic User Management                         | ✅         | ✅          |
+| REST API                                      | ✅         | ✅          |
+| **Automation & Scripting**                    |           |            |
+| Lua Scripting Engine                          | ❌         | ✅          |
+| Event-Driven Workflows                        | ❌         | ✅          |
+| Scheduled Jobs                                | ❌         | ✅          |
+| Bulk Operations Automation                    | ❌         | ✅          |
+| Custom Integration Scripts                    | ❌         | ✅          |
+| **Enterprise Features**                       |           |            |
+| Audit Trails                                  | ❌         | ✅          |
+| Granular Permissions (RBAC)                   | ❌         | ✅          |
+| Multi-Tenancy                                 | ❌         | ✅          |
+| Abstracted Device Management UI               | ❌         | ✅          |
+| Mass Actions (Firmware, Messages)             | ❌         | ✅          |
+| Device Geolocation & Mapping                  | ❌         | ✅          |
+| QoE Analysis                                  | ❌         | ✅          |
+| AI Assistant                                  | ❌         | ✅          |
+| **Support & Services**                        |           |            |
+| Community Support (Slack)                     | ✅         | ✅          |
+| Email Support                                 | ❌         | ✅          |
+| Device Homologation                           | ❌         | ✅          |
+| Professional Services                         | ❌         | ✅          |
+| **License**                                   |           |            |
+| Open Source                                   | ✅         | ❌          |
+| Cost                                          | Free      | Paid       |
