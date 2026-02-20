@@ -37,18 +37,13 @@ This table compares the features available in Oktopus Community Edition versus E
 | Overview Dashboard                            | ✅         | ✅          |
 | Basic User Management                         | ✅         | ✅          |
 | REST API                                      | ✅         | ✅          |
-| **Automation & Scripting**                    |           |            |
-| Lua Scripting Engine                          | ❌         | ✅          |
-| Event-Driven Workflows                        | ❌         | ✅          |
-| Scheduled Jobs                                | ❌         | ✅          |
-| Bulk Operations Automation                    | ❌         | ✅          |
-| Custom Integration Scripts                    | ❌         | ✅          |
 | **Enterprise Features**                       |           |            |
 | Audit Trail                                   | ❌         | ✅          |
 | Granular Permissions (RBAC)                   | ❌         | ✅          |
 | Multi-Tenancy                                 | ❌         | ✅          |
 | Abstracted Device Management UI               | ❌         | ✅          |
 | Zero Touch Provisioning                       | ❌         | ✅          |
+| Network Automation                            | ❌         | ✅          |
 | Mass Actions                                  | ❌         | ✅          |
 | Devices Geolocation                           | ❌         | ✅          |
 | QoE Analysis                                  | ❌         | ✅          |
