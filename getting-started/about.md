@@ -44,12 +44,13 @@ This table compares the features available in Oktopus Community Edition versus E
 | Bulk Operations Automation                    | ❌         | ✅          |
 | Custom Integration Scripts                    | ❌         | ✅          |
 | **Enterprise Features**                       |           |            |
-| Audit Trails                                  | ❌         | ✅          |
+| Audit Trail                                   | ❌         | ✅          |
 | Granular Permissions (RBAC)                   | ❌         | ✅          |
 | Multi-Tenancy                                 | ❌         | ✅          |
 | Abstracted Device Management UI               | ❌         | ✅          |
-| Mass Actions (Firmware, Messages)             | ❌         | ✅          |
-| Device Geolocation & Mapping                  | ❌         | ✅          |
+| Zero Touch Provisioning                       |           |            |
+| Mass Actions                                  | ❌         | ✅          |
+| Devices Geolocation                           | ❌         | ✅          |
 | QoE Analysis                                  | ❌         | ✅          |
 | AI Assistant                                  | ❌         | ✅          |
 | **Support & Services**                        |           |            |
