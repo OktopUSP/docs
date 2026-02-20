@@ -27,32 +27,32 @@ Learn about the [architecture](community-edition/architecture.md) first, get fam
 
 This table compares the features available in Oktopus Community Edition versus Enterprise Edition.
 
-| Feature                                       | Community | Enterprise |
-| --------------------------------------------- | --------- | ---------- |
-| **Core Device Management**                    |           |            |
-| USP (TR-369) & CWMP (TR-069) Protocols        | ✅         | ✅          |
-| Multiple Transports (MQTT, STOMP, WebSockets) | ✅         | ✅          |
-| Device Discovery & Configuration              | ✅         | ✅          |
-| Custom Message Templates                      | ✅         | ✅          |
-| Overview Dashboard                            | ✅         | ✅          |
-| Basic User Management                         | ✅         | ✅          |
-| REST API                                      | ✅         | ✅          |
-| **Enterprise Features**                       |           |            |
-| Audit Trail                                   | ❌         | ✅          |
-| Granular Permissions (RBAC)                   | ❌         | ✅          |
-| Multi-Tenancy                                 | ❌         | ✅          |
-| Abstracted Device Management UI               | ❌         | ✅          |
-| Zero Touch Provisioning                       | ❌         | ✅          |
-| Network Automation                            | ❌         | ✅          |
-| Mass Actions                                  | ❌         | ✅          |
-| Devices Geolocation                           | ❌         | ✅          |
-| QoE Analysis                                  | ❌         | ✅          |
-| AI Assistant                                  | ❌         | ✅          |
-| **Support & Services**                        |           |            |
-| Community Support (Slack)                     | ✅         | ✅          |
-| Email Support                                 | ❌         | ✅          |
-| Device Homologation                           | ❌         | ✅          |
-| Professional Services                         | ❌         | ✅          |
-| **License**                                   |           |            |
-| Open Source                                   | ✅         | ❌          |
-| Cost                                          | Free      | Paid       |
+| Feature                                       | Community | Enterprise         |
+| --------------------------------------------- | --------- | ------------------ |
+| **Core Device Management**                    |           |                    |
+| USP (TR-369) & CWMP (TR-069) Protocols        | ✅         | ✅                  |
+| Multiple Transports (MQTT, STOMP, WebSockets) | ✅         | ✅                  |
+| Device Discovery & Configuration              | ✅         | ✅                  |
+| Custom Message Templates                      | ✅         | ✅                  |
+| Overview Dashboard                            | ✅         | ✅ (wiht more data) |
+| Basic User Management                         | ✅         | ✅                  |
+| REST API                                      | ✅         | ✅                  |
+| **Enterprise Features**                       |           |                    |
+| Audit Trail                                   | ❌         | ✅                  |
+| Granular Permissions (RBAC)                   | ❌         | ✅                  |
+| Multi-Tenancy                                 | ❌         | ✅                  |
+| Abstracted Device Management UI               | ❌         | ✅                  |
+| Zero Touch Provisioning                       | ❌         | ✅                  |
+| Network Automation                            | ❌         | ✅                  |
+| Mass Actions                                  | ❌         | ✅                  |
+| Devices Geolocation                           | ❌         | ✅                  |
+| QoE Analysis                                  | ❌         | ✅                  |
+| AI Assistant                                  | ❌         | ✅                  |
+| **Support & Services**                        |           |                    |
+| Community Support (Slack)                     | ✅         | ✅                  |
+| Email Support                                 | ❌         | ✅                  |
+| Device Homologation                           | ❌         | ✅                  |
+| Professional Services                         | ❌         | ✅                  |
+| **License**                                   |           |                    |
+| Open Source                                   | ✅         | ❌                  |
+| Cost                                          | Free      | Paid               |
