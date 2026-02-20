@@ -48,7 +48,7 @@ This table compares the features available in Oktopus Community Edition versus E
 | Granular Permissions (RBAC)                   | ❌         | ✅          |
 | Multi-Tenancy                                 | ❌         | ✅          |
 | Abstracted Device Management UI               | ❌         | ✅          |
-| Zero Touch Provisioning                       |           |            |
+| Zero Touch Provisioning                       | ❌         | ✅          |
 | Mass Actions                                  | ❌         | ✅          |
 | Devices Geolocation                           | ❌         | ✅          |
 | QoE Analysis                                  | ❌         | ✅          |
