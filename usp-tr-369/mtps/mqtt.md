@@ -52,7 +52,7 @@ The credentials are sent as part of the connection request and are validated by 
 
 Although this method is straightforward and widely used, it has limitations in terms of security. The credentials are transmitted in plain text unless encryption is enabled to protect the communication. To ensure secure authentication, it’s strongly recommended to use **TLS** to encrypt the connection and protect sensitive credentials from being exposed.
 
-[Credentials Configuration](../../getting-started/community-edition.md#credentials) :link:
+[Credentials Configuration](../../getting-started/community-edition/#credentials) :link:
 
 ### Topics ACL (Access Control List)
 

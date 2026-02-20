@@ -1,17 +1,3 @@
----
-layout:
-  title:
-    visible: true
-  description:
-    visible: false
-  tableOfContents:
-    visible: true
-  outline:
-    visible: true
-  pagination:
-    visible: true
----
-
 # Architecture
 
 The CPE communicates to a HTTP server, also called Auto Configuration Server (ACS), because instead of a normal client-server relationship between the device and the HTTP server, what happens is that the  connection can be initiated from the server to the device.

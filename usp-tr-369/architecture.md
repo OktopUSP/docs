@@ -69,8 +69,7 @@ It is possible to perform commands remotely on the product, such as: firmware up
 
 ## Software Modules
 
-Currently, telecommunications giants and startups, publishing new software daily, slow delivery cycles and manual and time-consuming quality assurance processes make it difficult for integrators and service providers to compete. USP "Software Module Management" allows a containerized approach to the development of software for embedded devices, making it possible to drastically reduce the chance of error in software updates, it also facilitates the integration of third parties in a device, still keeping the firmware part isolated from Vendor.\
-
+Currently, telecommunications giants and startups, publishing new software daily, slow delivery cycles and manual and time-consuming quality assurance processes make it difficult for integrators and service providers to compete. USP "Software Module Management" allows a containerized approach to the development of software for embedded devices, making it possible to drastically reduce the chance of error in software updates, it also facilitates the integration of third parties in a device, still keeping the firmware part isolated from Vendor.<br>
 
 <figure><img src="https://github.com/leandrofars/oktopus/assets/83298718/64664b0e-81cd-4a29-bbc5-b4186a04dfa2" alt=""><figcaption><p>Figure 28 – Possible Multi-Execution Environment Implementation</p></figcaption></figure>
 

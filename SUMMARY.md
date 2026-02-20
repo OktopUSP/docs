@@ -5,20 +5,18 @@
 ## Getting Started
 
 * [About](getting-started/about.md)
-* [Architecture](getting-started/architecture.md)
-* [Requirements](getting-started/requirements/README.md)
-  * [Network](getting-started/requirements/network.md)
-  * [Hardware](getting-started/requirements/hardware.md)
-* [Installation](getting-started/installation/README.md)
-  * [Standalone](getting-started/installation/standalone.md)
-  * [High Availability](getting-started/installation/high-availability.md)
-  * [FAQ](getting-started/installation/faq.md)
+* [Community Edition](getting-started/community-edition/README.md)
+  * [Installation](getting-started/community-edition/installation/README.md)
+    * [Standalone](getting-started/community-edition/installation/standalone.md)
+    * [High Availability](getting-started/community-edition/installation/high-availability.md)
+    * [FAQ](getting-started/community-edition/installation/faq.md)
+  * [Architecture](getting-started/community-edition/architecture.md)
+  * [Network](getting-started/community-edition/network.md)
+  * [Developer Guide](getting-started/community-edition/developer-guide.md)
 * [Enterprise Edition](getting-started/enterprise-edition/README.md)
   * [Scripts](getting-started/enterprise-edition/scripts.md)
-* [Community Edition](getting-started/community-edition.md)
 * [Comparisions](getting-started/comparisions.md)
 * [Integrations](getting-started/integrations.md)
-* [Developer Guide](getting-started/developer-guide.md)
 
 ## Device Configuration
 
@@ -44,7 +42,6 @@
 * [Introduction](cwmp-tr-069/introduction.md)
 * [Architecture](cwmp-tr-069/architecture.md)
 
-## Reference
+***
 
-* [FAQ](reference/faq.md)
-* [Bibliography](reference/bibliography.md)
+* [Bibliography](bibliography.md)

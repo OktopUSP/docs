@@ -9,7 +9,7 @@ The standalone mode installs all the software components into one server. It's p
 * wget
 * unzip
 
-Have the services ports available internally or public accordingly to Oktopus [network requirement section](../requirements/network.md). Keep in mind it's always advisable to have a firewall in front of your server and have controll of the traffic policies.
+Have the services ports available internally or public accordingly to Oktopus [network requirement section](../network.md). Keep in mind it's always advisable to have a firewall in front of your server and have controll of the traffic policies.
 
 This tutorial was tested against OS Ubuntu 24.04, but it must work for other linux systems too.
 

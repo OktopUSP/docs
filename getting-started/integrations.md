@@ -1,8 +1,8 @@
 # Integrations
 
-Alright, you've just setup Oktopus to manage all your multi-vendor devices, hoping it to be a one platform, with one UI to solve all your problems, but then suddenly you realize that you have other systems and software for different purposes but you wish all those solutions to converge into a coesive ecosystem.
+Alright, you've just set up Oktopus to manage all your multi-vendor devices, hoping it to be a one platform, with one UI to solve all your problems, but then suddenly you realize that you have other systems and software for different purposes, but you wish all those solutions to converge into a cohesive ecosystem.
 
-For this matter Oktopus provides two alternatives:
+For this matter, Oktopus provides two alternatives:
 
 ### REST API
 

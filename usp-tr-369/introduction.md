@@ -3,17 +3,6 @@ description: >-
   USP (TR-369) is the evolution of the TR-069 standard, providing superior
   network performance, security, virtualized applications, and device scaling in
   multi-vendor, IoT-ready connected home.
-layout:
-  title:
-    visible: true
-  description:
-    visible: false
-  tableOfContents:
-    visible: true
-  outline:
-    visible: true
-  pagination:
-    visible: true
 ---
 
 # Introduction
@@ -37,7 +26,7 @@ USP represents the natural evolution of the Broadband Forum’s [CPE WAN Managem
 
 ## CWMP Evolution to USP&#x20;
 
-The advent of the Internet of Things brings countless opportunities and challenges for service providers, with over a billion devices across the globe today making use of [TR-069](https://www.broadband-forum.org/download%20/TR-069\_Amendment-2.pdf), what is the future of the protocol and what can we expect ahead?
+The advent of the Internet of Things brings countless opportunities and challenges for service providers, with over a billion devices across the globe today making use of [TR-069](https://www.broadband-forum.org/download%20/TR-069_Amendment-2.pdf), what is the future of the protocol and what can we expect ahead?
 
 The CWMP (CPE Wan Management Protocol), better known as TR-069, opened many doors for the ecosystem of providers, through which it is possible to deliver services with agility, which meet or exceed customer expectations, with proactive management and secure network, also bearing in mind the lower cost and greater efficiency for service providers.
 
