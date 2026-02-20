@@ -197,7 +197,7 @@ make build
     ```
 
     * Built from: `cmd/http-bulk-collector/main.go`
-    * Collects bulk data from devices
+    * Collects bulk data from devices \[WIP]
 
 **Building the Frontend**
 
