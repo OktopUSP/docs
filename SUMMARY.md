@@ -15,6 +15,7 @@
   * [Developer Guide](getting-started/community-edition/developer-guide.md)
 * [Enterprise Edition](getting-started/enterprise-edition/README.md)
   * [Scripts](getting-started/enterprise-edition/scripts.md)
+  * [Device Profile Script](getting-started/enterprise-edition/device-profile.md)
 * [Comparisions](getting-started/comparisions.md)
 * [Integrations](getting-started/integrations.md)
 
