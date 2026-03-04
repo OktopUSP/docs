@@ -416,24 +416,20 @@ Return:
 - `value`: `string`
 - `err`: `nil` or `string`
 
-Example(TODO):
+Example:
 
 ```lua
 function set_site_survey_diagnostic_state()
-  return usp_msg.Set{
-		UpdateObjs: []*usp_msg.Set_UpdateObject{
-			{
-				ObjPath: "Device.WiFi.NeighboringWiFiDiagnostic.",
-				ParamSettings: []*usp_msg.Set_UpdateParamSetting{
-					{
-						Param:    "DiagnosticsState",
-						Value:    "Requested",
-						Required: true,
-					},
-				},
-			},
-		},
-	}, nil
+  return {
+    update_objs = {
+      {
+        obj_path = "Device.WiFi.NeighboringWiFiDiagnostic.",
+        param_settings = {
+          { param = "DiagnosticsState", value = "Requested", required = true }
+        }
+      }
+    }
+  }, nil
 end
 ```
 
@@ -470,7 +466,7 @@ Parses site survey result set.
 
 #### Protocol:
 
-CWMP
+CWMP e USP
 
 #### Params:
 
@@ -485,35 +481,6 @@ Example:
 
 ```lua
 function parse_get_site_survey(response)
-  return {
-    ["2.4GHz"] = {
-      { ssid = "AP-1", channel = 1, signal_strength = -45 },
-    }
-  }, nil
-end
-```
-
-### parse_site_survey(response) TODO
-
-Parses site survey result set.
-
-#### Protocol:
-
-USP
-
-#### Params:
-
-1. `response` `[table]`
-
-Return:
-
-- `value`: `table` (`map[string][]NeighborSites`)
-- `err`: `nil` or `string`
-
-Example:
-
-```lua
-function parse_site_survey(response)
   return {
     ["2.4GHz"] = {
       { ssid = "AP-1", channel = 1, signal_strength = -45 },
@@ -555,7 +522,7 @@ Parses connected devices response.
 
 #### Protocol:
 
-CWMP
+CWMP and USP
 
 #### Params:
 
@@ -570,36 +537,6 @@ Example:
 
 ```lua
 function parse_get_connected_devices(response)
-  return {
-    ethernet = {
-      { host_name = "desktop", ip = "192.168.1.10", mac = "AA:BB:CC:DD:EE:FF" }
-    },
-    wifi = {}
-  }, nil
-end
-```
-
-### parse_connected_devices(response) TODO
-
-Parses connected devices response.
-
-#### Protocol:
-
-USP
-
-#### Params:
-
-1. `response` `[table]`
-
-Return:
-
-- `value`: `table` (`ConnectedDevices`)
-- `err`: `nil` or `string`
-
-Example:
-
-```lua
-function parse_connected_devices(response)
   return {
     ethernet = {
       { host_name = "desktop", ip = "192.168.1.10", mac = "AA:BB:CC:DD:EE:FF" }
@@ -668,7 +605,7 @@ Parses speed test result.
 
 #### Protocol:
 
-CWMP
+CWMP and USP
 
 #### Params:
 
@@ -684,36 +621,6 @@ Example:
 
 ```lua
 function parse_get_speed_test_result(speed_test_type, response)
-  return {
-    diagnostic_state = "Completed",
-    type = speed_test_type,
-    download_speed = "900 Mbps",
-    upload_speed = "450 Mbps",
-  }, nil
-end
-```
-
-### parse_speed_test(response) TODO
-
-Parses speed test result.
-
-#### Protocol:
-
-USP
-
-#### Params:
-
-1. `response` `[table]`
-
-Return: TODO
-
-- `value`: `table` (`Speedtest`)
-- `err`: `nil` or `string`
-
-Example: TODO
-
-```lua
-function parse_speed_test(response)
   return {
     diagnostic_state = "Completed",
     type = speed_test_type,
@@ -982,7 +889,7 @@ None.
 
 Return:
 
-- `value`: `string` (CWMP XML)
+- `value`: `string` (XML)
 - `err`: `nil` or `string`
 
 Example:
@@ -993,13 +900,13 @@ function get_port()
 end
 ```
 
-### parse_get_port(response) TODO
+### parse_get_port(response)
 
 Parses TR-098/TR-181 ports response.
 
 #### Protocol:
 
-CWMP
+CWMP and USP
 
 #### Params:
 
@@ -1014,37 +921,6 @@ Example:
 
 ```lua
 function parse_get_port(response)
-  return {
-    ["Device.Ethernet.Interface.1."] = {
-      alias = "LAN1",
-      up = true,
-      type = "ethernet",
-    }
-  }, nil
-end
-```
-
-### parse_ports(response) TODO
-
-Parses TR-098/TR-181 ports response.
-
-#### Protocol:
-
-USP
-
-#### Params:
-
-1. `response` `[table]`
-
-Return:
-
-- `value`: `table` (`map[string]Port`)
-- `err`: `nil` or `string`
-
-Example:
-
-```lua
-function parse_ports(response)
   return {
     ["Device.Ethernet.Interface.1."] = {
       alias = "LAN1",
@@ -1105,13 +981,13 @@ function add_port(port)
 end
 ```
 
-### get_bridge() TODO
+### get_bridge()
 
 Builds payload to fetch bridge data.
 
 #### Protocol:
 
-CWMP
+CWMP and USP
 
 #### Params:
 
@@ -1130,38 +1006,13 @@ function get_bridge()
 end
 ```
 
-### get_bridges() TODO
-
-Builds payload to fetch bridge data.
-
-#### Protocol:
-
-USP
-
-#### Params:
-
-None.
-
-Return:
-
-- `value`: `string` (XML)
-- `err`: `nil` or `string`
-
-Example:
-
-```lua
-function get_bridges()
-  return cwmp_get_params({"Device.Bridging.Bridge."}), nil
-end
-```
-
-### parse_get_bridge(response) TODO
+### parse_get_bridge(response)
 
 Parses bridge response.
 
 #### Protocol:
 
-CWMP
+CWMP and USP
 
 #### Params:
 
@@ -1176,33 +1027,6 @@ Example:
 
 ```lua
 function parse_get_bridge(response)
-  return {
-    { path = "Device.Bridging.Bridge.1.", enable = { writable = true, value = true } }
-  }, nil
-end
-```
-
-### parse_bridges(response) TODO
-
-Parses bridge response.
-
-#### Protocol:
-
-USP
-
-#### Params:
-
-1. `response` `[table]`
-
-Return:
-
-- `value`: `table` (`[]Bridge`)
-- `err`: `nil` or `string`
-
-Example:
-
-```lua
-function parse_bridges(response)
   return {
     { path = "Device.Bridging.Bridge.1.", enable = { writable = true, value = true } }
   }, nil
@@ -1259,13 +1083,13 @@ function get_ping()
 end
 ```
 
-### parse_get_ping(response) TODO
+### parse_get_ping(response)
 
 Parses ping diagnostics config.
 
 #### Protocol:
 
-CWMP
+CWMP and USP
 
 #### Params:
 
@@ -1280,35 +1104,6 @@ Example:
 
 ```lua
 function parse_get_ping(response)
-  return {
-    host = { writable = true, value = "8.8.8.8" },
-    repetitions = { writable = true, value = 4 },
-    timeout = { writable = true, value = 5 },
-  }, nil
-end
-```
-
-### parse_ping(response) TODO
-
-Parses ping diagnostics config.
-
-#### Protocol:
-
-USP
-
-#### Params:
-
-1. `response` `[table]`
-
-Return:
-
-- `value`: `table` (`Ping`)
-- `err`: `nil` or `string`
-
-Example:
-
-```lua
-function parse_ping(response)
   return {
     host = { writable = true, value = "8.8.8.8" },
     repetitions = { writable = true, value = 4 },
@@ -1392,13 +1187,13 @@ function get_ping_result()
 end
 ```
 
-### parse_get_ping_result(response) TODO
+### parse_get_ping_result(response)
 
 Parses ping result response.
 
 #### Protocol:
 
-CWMP
+CWMP and USP
 
 #### Params:
 
@@ -1413,36 +1208,6 @@ Example:
 
 ```lua
 function parse_get_ping_result(response)
-  return {
-    diagnostic_state = "Complete",
-    success_count = 4,
-    failure_count = 0,
-    average_response_time = 12,
-  }, nil
-end
-```
-
-### parse_ping_result(response) TODO
-
-Parses ping result response.
-
-#### Protocol:
-
-USP
-
-#### Params:
-
-1. `response` `[table]`
-
-Return:
-
-- `value`: `table` (`PingResult`)
-- `err`: `nil` or `string`
-
-Example:
-
-```lua
-function parse_ping_result(response)
   return {
     diagnostic_state = "Complete",
     success_count = 4,
@@ -1477,13 +1242,13 @@ function get_traceroute()
 end
 ```
 
-### parse_get_traceroute(response) TODO
+### parse_get_traceroute(response)
 
 Parses traceroute diagnostics config.
 
 #### Protocol:
 
-CWMP
+CWMP and USP
 
 #### Params:
 
@@ -1498,35 +1263,6 @@ Example:
 
 ```lua
 function parse_get_traceroute(response)
-  return {
-    host = { writable = true, value = "8.8.8.8" },
-    max_hop_count = { writable = true, value = 30 },
-    timeout = { writable = true, value = 5 },
-  }, nil
-end
-```
-
-### parse_traceroute(response) TODO
-
-Parses traceroute diagnostics config.
-
-#### Protocol:
-
-USP
-
-#### Params:
-
-1. `response` `[table]`
-
-Return:
-
-- `value`: `table` (`Traceroute`)
-- `err`: `nil` or `string`
-
-Example:
-
-```lua
-function parse_traceroute(response)
   return {
     host = { writable = true, value = "8.8.8.8" },
     max_hop_count = { writable = true, value = 30 },
@@ -1635,13 +1371,13 @@ function get_traceroute_result(number_of_hops)
 end
 ```
 
-### parse_get_traceroute_result(response) TODO
+### parse_get_traceroute_result(response)
 
 Parses traceroute result response.
 
 #### Protocol:
 
-CWMP
+CWMP and USP
 
 #### Params:
 
@@ -1656,37 +1392,6 @@ Example:
 
 ```lua
 function parse_get_traceroute_result(response)
-  return {
-    diagnostic_state = "Complete",
-    hops = {
-      { hop_host = "192.168.1.1", hop_error_code = 0, hop_rtt_times = { 1, 1, 2 } },
-      { hop_host = "8.8.8.8", hop_error_code = 0, hop_rtt_times = { 10, 11, 12 } },
-    }
-  }, nil
-end
-```
-
-### parse_set_traceroute_result(response) TODO
-
-Parses traceroute result response.
-
-#### Protocol:
-
-USP
-
-#### Params:
-
-1. `response` `[table]`
-
-Return:
-
-- `value`: `table` (`TracerouteResult`)
-- `err`: `nil` or `string`
-
-Example:
-
-```lua
-function parse_set_traceroute_result(response)
   return {
     diagnostic_state = "Complete",
     hops = {
@@ -1724,7 +1429,7 @@ function get_hwinfo()
 end
 ```
 
-### parse_get_hwinfo(response) TODO
+### parse_get_hwinfo(response)
 
 Parses hardware information response.
 
@@ -1745,36 +1450,6 @@ Example:
 
 ```lua
 function parse_get_hwinfo(response)
-  return {
-    manufacturer = "Huawei",
-    model_name = "WS7001-40",
-    serial_number = sn,
-    software_version = "1.0.0",
-  }, nil
-end
-```
-
-### parse_hwinfo(response) TODO
-
-Parses hardware information response.
-
-#### Protocol:
-
-USP
-
-#### Params:
-
-1. `response` `[table]`
-
-Return:
-
-- `value`: `table` (`Hwinfo`)
-- `err`: `nil` or `string`
-
-Example:
-
-```lua
-function parse_hwinfo(response)
   return {
     manufacturer = "Huawei",
     model_name = "WS7001-40",
