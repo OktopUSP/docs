@@ -1,11 +1,10 @@
 ---
 description: >-
-Vendor Lua hooks for devices manager (CWMP and USP models).
-Limitless capabilities with custom resources to fit your needs.
+  Vendor Lua hooks for devices manager (CWMP and USP models).
+  Limitless capabilities with custom resources to fit your needs.
 cover: >-
-https://images.unsplash.com/photo-1515879218367-8466d910aaa4?crop=entropy&cs=srgb&fm=jpg&ixid=M3wxOTcwMjR8MHwxfHNlYXJjaHwxfHxjb2RlfGVufDB8fHx8MTczMjI5NjY0OXww&ixlib=rb-4.0.3&q=85
+  https://images.unsplash.com/photo-1515879218367-8466d910aaa4?crop=entropy&cs=srgb&fm=jpg&ixid=M3wxOTcwMjR8MHwxfHNlYXJjaHwxfHxjb2RlfGVufDB8fHx8MTczMjI5NjY0OXww&ixlib=rb-4.0.3&q=85
 coverY: 0
-
 ---
 
 # Device Profile Script
