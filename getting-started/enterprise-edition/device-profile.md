@@ -1,33 +1,13 @@
 ---
-description: >-
-  Vendor Lua hooks for devices manager (CWMP and USP models).
-  Limitless capabilities with custom resources to fit your needs.
+description: Vendor Lua hooks for devices manager (TR-069 and USP CPEs).
 cover: >-
   https://images.unsplash.com/photo-1515879218367-8466d910aaa4?crop=entropy&cs=srgb&fm=jpg&ixid=M3wxOTcwMjR8MHwxfHNlYXJjaHwxfHxjb2RlfGVufDB8fHx8MTczMjI5NjY0OXww&ixlib=rb-4.0.3&q=85
 coverY: 0
 ---
 
-# Device Profile Script
+# Profiles
 
-## Introduction
-
-Code is wrritten in **Lua**, which is a lightweight, high-level programming language designed for embedded use, known for its simplicity and efficiency. Created in Brazil in 1993, it features dynamic typing, first-class functions, and a powerful table data structure, making it versatile for various applications. Lua is widely used in game development for scripting game logic, as well as in embedded systems and applications due to its **extensibility and small footprint**, allowing developers to easily integrate it with other languages and platforms.
-
-[LUA 5.1 Manual](https://www.lua.org/manual/5.1/)&#x20;
-
-### How It Works
-
-To extend Oktopus capabilities and adress the most diverse possible use cases we opted to use a scripting language on top of the actual code, so the [gopher-lua](https://github.com/yuin/gopher-lua) library provides Go APIs that allows to easily embed LUA scripts to Go programs.
-
-The Go software can interact to the LUA script and vice-versa. That way, it's possible to pass functions, parameters and events through both USP Controller/ACS and the user created automations.
-
-### Core Concepts
-
-A "custom function", is as a function called from LUA which translates to a Go function that can interact with NATS, MongoDB, USP Controller, TR-069 ACS and all the other components of the software stack.
-
-<figure><img src="../../.gitbook/assets/lua-interaction.png" alt=""><figcaption><p>Diagram of Lua Scripts</p></figcaption></figure>
-
-The "custom functions" will be detailed above in the next topics as just "functions" and separated into domain areas. We hope to provide usefull examples, and the limitation is on each person creativity.&#x20;
+Introduction to how Lua scripts are executed by Oktopus: [scripts.md](scripts.md "mention")&#x20;
 
 ## Function Contract
 
@@ -43,9 +23,9 @@ return nil, "error message"
 
 Notes:
 
-- For `get_*` payload builders, return CWMP XML as `string`.
-- For `parse_*`, return a Lua table compatible with expected Go resource structs.
-- For metadata/capabilities, return string/boolean/table depending on function.
+* For `get_*` payload builders, return CWMP XML as `string`.
+* For `parse_*`, return a Lua table compatible with expected Go resource structs.
+* For metadata/capabilities, return string/boolean/table depending on function.
 
 ## Shared Helper (optional)
 
@@ -61,7 +41,7 @@ end
 
 ## Functions
 
-### get_vendor()
+### get\_vendor()
 
 Returns the vendor label used by the API.
 
@@ -75,8 +55,8 @@ None.
 
 Return:
 
-- `value`: `string`
-- `err`: `nil` or `string`
+* `value`: `string`
+* `err`: `nil` or `string`
 
 Example:
 
@@ -86,7 +66,7 @@ function get_vendor()
 end
 ```
 
-### get_data_model()
+### get\_data\_model()
 
 Returns the data model handled by the script.
 
@@ -100,8 +80,8 @@ None.
 
 Return:
 
-- `value`: `string` (for example: `TR-098`, `TR-181`)
-- `err`: `nil` or `string`
+* `value`: `string` (for example: `TR-098`, `TR-181`)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -111,7 +91,7 @@ function get_data_model()
 end
 ```
 
-### get_device_capabilities()
+### get\_device\_capabilities()
 
 Defines which resources/features are enabled for this model.
 
@@ -125,8 +105,8 @@ None.
 
 Return:
 
-- `value`: `table` with capability keys
-- `err`: `nil` or `string`
+* `value`: `table` with capability keys
+* `err`: `nil` or `string`
 
 Example:
 
@@ -150,7 +130,7 @@ function get_device_capabilities()
 end
 ```
 
-### get_device_specs()
+### get\_device\_specs()
 
 Defines device behavior details (for example traceroute wait time).
 
@@ -164,8 +144,8 @@ None.
 
 Return:
 
-- `value`: `table`
-- `err`: `nil` or `string`
+* `value`: `table`
+* `err`: `nil` or `string`
 
 Example:
 
@@ -178,7 +158,7 @@ function get_device_specs()
 end
 ```
 
-### is_real_time()
+### is\_real\_time()
 
 Indicates whether this model should be treated as real-time for operations.
 
@@ -192,8 +172,8 @@ None.
 
 Return:
 
-- `value`: `boolean`
-- `err`: `nil` or `string`
+* `value`: `boolean`
+* `err`: `nil` or `string`
 
 Example:
 
@@ -203,7 +183,7 @@ function is_real_time()
 end
 ```
 
-### get_radio()
+### get\_radio()
 
 Builds CWMP payload to fetch radio data.
 
@@ -217,8 +197,8 @@ None.
 
 Return:
 
-- `value`: `string` (CWMP XML)
-- `err`: `nil` or `string`
+* `value`: `string` (CWMP XML)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -230,7 +210,7 @@ function get_radio()
 end
 ```
 
-### parse_radio(response)
+### parse\_radio(response)
 
 Parses CWMP response into radio resource list.
 
@@ -244,8 +224,8 @@ CWMP and USP
 
 Return:
 
-- `value`: `table` (`[]Radio`)
-- `err`: `nil` or `string`
+* `value`: `table` (`[]Radio`)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -263,7 +243,7 @@ function parse_radio(response)
 end
 ```
 
-### set_radio(radios)
+### set\_radio(radios)
 
 Builds CWMP payload to update radio configuration.
 
@@ -277,8 +257,8 @@ CWMP and USP
 
 Return:
 
-- `value`: `string` (CWMP XML)
-- `err`: `nil` or `string`
+* `value`: `string` (CWMP XML)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -289,7 +269,7 @@ function set_radio(radios)
 end
 ```
 
-### get_ssid()
+### get\_ssid()
 
 Builds CWMP payload to fetch SSID data.
 
@@ -303,8 +283,8 @@ None.
 
 Return:
 
-- `value`: `string` (CWMP XML)
-- `err`: `nil` or `string`
+* `value`: `string` (CWMP XML)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -316,7 +296,7 @@ function get_ssid()
 end
 ```
 
-### parse_ssid(response)
+### parse\_ssid(response)
 
 Parses CWMP response into SSID resource list.
 
@@ -330,8 +310,8 @@ CWMP and USP
 
 Return:
 
-- `value`: `table` (`[]Ssid`)
-- `err`: `nil` or `string`
+* `value`: `table` (`[]Ssid`)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -348,7 +328,7 @@ function parse_ssid(response)
 end
 ```
 
-### set_ssid(ssids)
+### set\_ssid(ssids)
 
 Builds CWMP payload to update SSID configuration.
 
@@ -362,8 +342,8 @@ CWMP and USP
 
 Return:
 
-- `value`: `string` (CWMP XML)
-- `err`: `nil` or `string`
+* `value`: `string` (CWMP XML)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -373,7 +353,7 @@ function set_ssid(ssids)
 end
 ```
 
-### get_site_survey_diagnostic_state()
+### get\_site\_survey\_diagnostic\_state()
 
 Returns site survey diagnostic state.
 
@@ -387,8 +367,8 @@ None.
 
 Return:
 
-- `value`: `string`
-- `err`: `nil` or `string`
+* `value`: `string`
+* `err`: `nil` or `string`
 
 Example:
 
@@ -398,7 +378,7 @@ function get_site_survey_diagnostic_state()
 end
 ```
 
-### set_site_survey_diagnostic_state()
+### set\_site\_survey\_diagnostic\_state()
 
 Sets site survey diagnostic state to Requested.
 
@@ -412,8 +392,8 @@ None.
 
 Return:
 
-- `value`: `string`
-- `err`: `nil` or `string`
+* `value`: `string`
+* `err`: `nil` or `string`
 
 Example:
 
@@ -432,7 +412,7 @@ function set_site_survey_diagnostic_state()
 end
 ```
 
-### get_site_survey_results()
+### get\_site\_survey\_results()
 
 Builds payload to fetch site survey results.
 
@@ -446,8 +426,8 @@ None.
 
 Return:
 
-- `value`: `string` (XML)
-- `err`: `nil` or `string`
+* `value`: `string` (XML)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -459,7 +439,7 @@ function get_site_survey_results()
 end
 ```
 
-### parse_get_site_survey(response)
+### parse\_get\_site\_survey(response)
 
 Parses site survey result set.
 
@@ -473,8 +453,8 @@ CWMP e USP
 
 Return:
 
-- `value`: `table` (`map[string][]NeighborSites`)
-- `err`: `nil` or `string`
+* `value`: `table` (`map[string][]NeighborSites`)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -488,7 +468,7 @@ function parse_get_site_survey(response)
 end
 ```
 
-### get_connected_devices()
+### get\_connected\_devices()
 
 Builds payload to fetch connected devices.
 
@@ -502,8 +482,8 @@ None.
 
 Return:
 
-- `value`: `string` (XML)
-- `err`: `nil` or `string`
+* `value`: `string` (XML)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -515,7 +495,7 @@ function get_connected_devices()
 end
 ```
 
-### parse_get_connected_devices(response)
+### parse\_get\_connected\_devices(response)
 
 Parses connected devices response.
 
@@ -529,8 +509,8 @@ CWMP and USP
 
 Return:
 
-- `value`: `table` (`ConnectedDevices`)
-- `err`: `nil` or `string`
+* `value`: `table` (`ConnectedDevices`)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -545,7 +525,7 @@ function parse_get_connected_devices(response)
 end
 ```
 
-### set_speed_test(test)
+### set\_speed\_test(test)
 
 Builds payload to configure speed test.
 
@@ -559,8 +539,8 @@ CWMP and USP
 
 Return:
 
-- `value`: `string` (XML)
-- `err`: `nil` or `string`
+* `value`: `string` (XML)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -570,7 +550,7 @@ function set_speed_test(test)
 end
 ```
 
-### get_speed_test_result(speed_test_type)
+### get\_speed\_test\_result(speed\_test\_type)
 
 Builds payload to fetch speed test result.
 
@@ -584,8 +564,8 @@ CWMP and USP
 
 Return:
 
-- `value`: `string` (XML)
-- `err`: `nil` or `string`
+* `value`: `string` (XML)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -598,7 +578,7 @@ function get_speed_test_result(speed_test_type)
 end
 ```
 
-### parse_get_speed_test_result(speed_test_type, response)
+### parse\_get\_speed\_test\_result(speed\_test\_type, response)
 
 Parses speed test result.
 
@@ -613,8 +593,8 @@ CWMP and USP
 
 Return:
 
-- `value`: `table` (`Speedtest`)
-- `err`: `nil` or `string`
+* `value`: `table` (`Speedtest`)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -629,7 +609,7 @@ function parse_get_speed_test_result(speed_test_type, response)
 end
 ```
 
-### get_download_diagnostic_state()
+### get\_download\_diagnostic\_state()
 
 Returns download diagnostic state path or state marker for the model.
 
@@ -643,8 +623,8 @@ None.
 
 Return:
 
-- `value`: `string`
-- `err`: `nil` or `string`
+* `value`: `string`
+* `err`: `nil` or `string`
 
 Example:
 
@@ -654,7 +634,7 @@ function get_download_diagnostic_state()
 end
 ```
 
-### get_upload_diagnostic_state()
+### get\_upload\_diagnostic\_state()
 
 Returns upload diagnostic state path or state marker for the model.
 
@@ -668,8 +648,8 @@ None.
 
 Return:
 
-- `value`: `string`
-- `err`: `nil` or `string`
+* `value`: `string`
+* `err`: `nil` or `string`
 
 Example:
 
@@ -679,7 +659,7 @@ function get_upload_diagnostic_state()
 end
 ```
 
-### get_statistics()
+### get\_statistics()
 
 Builds payload to fetch statistics.
 
@@ -693,8 +673,8 @@ None.
 
 Return:
 
-- `value`: `string` (XML)
-- `err`: `nil` or `string`
+* `value`: `string` (XML)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -707,7 +687,7 @@ function get_statistics()
 end
 ```
 
-### parse_get_statistics(response)
+### parse\_get\_statistics(response)
 
 Parses statistics response.
 
@@ -721,8 +701,8 @@ CWMP
 
 Return:
 
-- `value`: `table` (`map[string][]Stats`)
-- `err`: `nil` or `string`
+* `value`: `table` (`map[string][]Stats`)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -738,7 +718,7 @@ function parse_get_statistics(response)
 end
 ```
 
-### get_interface_wan()
+### get\_interface\_wan()
 
 Builds payload to fetch WAN interfaces.
 
@@ -752,8 +732,8 @@ None.
 
 Return:
 
-- `value`: `string` (XML)
-- `err`: `nil` or `string`
+* `value`: `string` (XML)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -763,7 +743,7 @@ function get_interface_wan()
 end
 ```
 
-### get_interface_lan()
+### get\_interface\_lan()
 
 Builds payload to fetch LAN interfaces.
 
@@ -777,8 +757,8 @@ None.
 
 Return:
 
-- `value`: `string` (XML)
-- `err`: `nil` or `string`
+* `value`: `string` (XML)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -788,7 +768,7 @@ function get_interface_lan()
 end
 ```
 
-### parse_get_interface_wan(response)
+### parse\_get\_interface\_wan(response)
 
 Parses WAN interfaces response.
 
@@ -798,8 +778,8 @@ Parses WAN interfaces response.
 
 Return:
 
-- `value`: `table` (`map[string]Port`)
-- `err`: `nil` or `string`
+* `value`: `table` (`map[string]Port`)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -815,7 +795,7 @@ function parse_get_interface_wan(response)
 end
 ```
 
-### parse_get_interface_lan(response)
+### parse\_get\_interface\_lan(response)
 
 Parses LAN interfaces response.
 
@@ -829,8 +809,8 @@ CWMP
 
 Return:
 
-- `value`: `table` (`map[string]Port`)
-- `err`: `nil` or `string`
+* `value`: `table` (`map[string]Port`)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -846,7 +826,7 @@ function parse_get_interface_lan(response)
 end
 ```
 
-### get_wan_options()
+### get\_wan\_options()
 
 Returns WAN configuration options supported by the model.
 
@@ -860,8 +840,8 @@ None.
 
 Return:
 
-- `value`: `table` (`[]WanOptions`)
-- `err`: `nil` or `string`
+* `value`: `table` (`[]WanOptions`)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -874,7 +854,7 @@ function get_wan_options()
 end
 ```
 
-### get_port()
+### get\_port()
 
 Builds payload to fetch TR-098/TR-181 ports.
 
@@ -888,8 +868,8 @@ None.
 
 Return:
 
-- `value`: `string` (XML)
-- `err`: `nil` or `string`
+* `value`: `string` (XML)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -899,7 +879,7 @@ function get_port()
 end
 ```
 
-### parse_get_port(response)
+### parse\_get\_port(response)
 
 Parses TR-098/TR-181 ports response.
 
@@ -913,8 +893,8 @@ CWMP and USP
 
 Return:
 
-- `value`: `table` (`map[string]Port`)
-- `err`: `nil` or `string`
+* `value`: `table` (`map[string]Port`)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -930,7 +910,7 @@ function parse_get_port(response)
 end
 ```
 
-### set_port(ports)
+### set\_port(ports)
 
 Builds payload to update port configuration.
 
@@ -944,8 +924,8 @@ CWMP and USP
 
 Return:
 
-- `value`: `string` (XML)
-- `err`: `nil` or `string`
+* `value`: `string` (XML)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -955,7 +935,7 @@ function set_port(ports)
 end
 ```
 
-### add_port(port)
+### add\_port(port)
 
 Builds payload to add a new port/object.
 
@@ -969,8 +949,8 @@ CWMP
 
 Return:
 
-- `value`: `string` (XML)
-- `err`: `nil` or `string`
+* `value`: `string` (XML)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -980,7 +960,7 @@ function add_port(port)
 end
 ```
 
-### get_bridge()
+### get\_bridge()
 
 Builds payload to fetch bridge data.
 
@@ -994,8 +974,8 @@ None.
 
 Return:
 
-- `value`: `string` (XML)
-- `err`: `nil` or `string`
+* `value`: `string` (XML)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -1005,7 +985,7 @@ function get_bridge()
 end
 ```
 
-### parse_get_bridge(response)
+### parse\_get\_bridge(response)
 
 Parses bridge response.
 
@@ -1019,8 +999,8 @@ CWMP and USP
 
 Return:
 
-- `value`: `table` (`[]Bridge`)
-- `err`: `nil` or `string`
+* `value`: `table` (`[]Bridge`)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -1032,7 +1012,7 @@ function parse_get_bridge(response)
 end
 ```
 
-### set_bridge(bridges)
+### set\_bridge(bridges)
 
 Builds payload to update bridge configuration.
 
@@ -1046,8 +1026,8 @@ CWMP and USP
 
 Return:
 
-- `value`: `string` (XML)
-- `err`: `nil` or `string`
+* `value`: `string` (XML)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -1057,7 +1037,7 @@ function set_bridge(bridges)
 end
 ```
 
-### get_ping()
+### get\_ping()
 
 Builds payload to fetch ping diagnostics config.
 
@@ -1071,8 +1051,8 @@ None.
 
 Return:
 
-- `value`: `string` (XML)
-- `err`: `nil` or `string`
+* `value`: `string` (XML)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -1082,7 +1062,7 @@ function get_ping()
 end
 ```
 
-### parse_get_ping(response)
+### parse\_get\_ping(response)
 
 Parses ping diagnostics config.
 
@@ -1096,8 +1076,8 @@ CWMP and USP
 
 Return:
 
-- `value`: `table` (`Ping`)
-- `err`: `nil` or `string`
+* `value`: `table` (`Ping`)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -1111,7 +1091,7 @@ function parse_get_ping(response)
 end
 ```
 
-### get_ping_diagnostic_state()
+### get\_ping\_diagnostic\_state()
 
 Returns ping diagnostic state path/state.
 
@@ -1125,8 +1105,8 @@ None.
 
 Return:
 
-- `value`: `string`
-- `err`: `nil` or `string`
+* `value`: `string`
+* `err`: `nil` or `string`
 
 Example:
 
@@ -1136,7 +1116,7 @@ function get_ping_diagnostic_state()
 end
 ```
 
-### set_ping(ping)
+### set\_ping(ping)
 
 Builds payload to execute/update ping diagnostics.
 
@@ -1150,8 +1130,8 @@ CWMP and USP
 
 Return:
 
-- `value`: `string` (XML)
-- `err`: `nil` or `string`
+* `value`: `string` (XML)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -1161,7 +1141,7 @@ function set_ping(ping)
 end
 ```
 
-### get_ping_result()
+### get\_ping\_result()
 
 Builds payload to fetch ping result.
 
@@ -1175,8 +1155,8 @@ None.
 
 Return:
 
-- `value`: `string` (XML)
-- `err`: `nil` or `string`
+* `value`: `string` (XML)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -1186,7 +1166,7 @@ function get_ping_result()
 end
 ```
 
-### parse_get_ping_result(response)
+### parse\_get\_ping\_result(response)
 
 Parses ping result response.
 
@@ -1200,8 +1180,8 @@ CWMP and USP
 
 Return:
 
-- `value`: `table` (`PingResult`)
-- `err`: `nil` or `string`
+* `value`: `table` (`PingResult`)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -1216,7 +1196,7 @@ function parse_get_ping_result(response)
 end
 ```
 
-### get_traceroute()
+### get\_traceroute()
 
 Builds payload to fetch traceroute diagnostics config.
 
@@ -1230,8 +1210,8 @@ None.
 
 Return:
 
-- `value`: `string` (XML)
-- `err`: `nil` or `string`
+* `value`: `string` (XML)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -1241,7 +1221,7 @@ function get_traceroute()
 end
 ```
 
-### parse_get_traceroute(response)
+### parse\_get\_traceroute(response)
 
 Parses traceroute diagnostics config.
 
@@ -1255,8 +1235,8 @@ CWMP and USP
 
 Return:
 
-- `value`: `table` (`Traceroute`)
-- `err`: `nil` or `string`
+* `value`: `table` (`Traceroute`)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -1270,7 +1250,7 @@ function parse_get_traceroute(response)
 end
 ```
 
-### get_traceroute_diagnostic_state()
+### get\_traceroute\_diagnostic\_state()
 
 Returns traceroute diagnostic state path/state.
 
@@ -1284,8 +1264,8 @@ None.
 
 Return:
 
-- `value`: `string`
-- `err`: `nil` or `string`
+* `value`: `string`
+* `err`: `nil` or `string`
 
 Example:
 
@@ -1295,7 +1275,7 @@ function get_traceroute_diagnostic_state()
 end
 ```
 
-### set_traceroute(traceroute)
+### set\_traceroute(traceroute)
 
 Builds payload to execute/update traceroute diagnostics.
 
@@ -1309,8 +1289,8 @@ CWMP and USP
 
 Return:
 
-- `value`: `string` (XML)
-- `err`: `nil` or `string`
+* `value`: `string` (XML)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -1320,7 +1300,7 @@ function set_traceroute(traceroute)
 end
 ```
 
-### get_traceroute_result_number_of_hops()
+### get\_traceroute\_result\_number\_of\_hops()
 
 Returns the parameter path/state used to read hop count.
 
@@ -1334,8 +1314,8 @@ None.
 
 Return:
 
-- `value`: `string`
-- `err`: `nil` or `string`
+* `value`: `string`
+* `err`: `nil` or `string`
 
 Example:
 
@@ -1345,7 +1325,7 @@ function get_traceroute_result_number_of_hops()
 end
 ```
 
-### get_traceroute_result(number_of_hops)
+### get\_traceroute\_result(number\_of\_hops)
 
 Builds payload to fetch traceroute hop details.
 
@@ -1359,8 +1339,8 @@ CWMP and USP
 
 Return:
 
-- `value`: `string` (XML)
-- `err`: `nil` or `string`
+* `value`: `string` (XML)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -1370,7 +1350,7 @@ function get_traceroute_result(number_of_hops)
 end
 ```
 
-### parse_get_traceroute_result(response)
+### parse\_get\_traceroute\_result(response)
 
 Parses traceroute result response.
 
@@ -1384,8 +1364,8 @@ CWMP and USP
 
 Return:
 
-- `value`: `table` (`TracerouteResult`)
-- `err`: `nil` or `string`
+* `value`: `table` (`TracerouteResult`)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -1401,7 +1381,7 @@ function parse_get_traceroute_result(response)
 end
 ```
 
-### get_hwinfo()
+### get\_hwinfo()
 
 Builds payload to fetch hardware information.
 
@@ -1415,8 +1395,8 @@ None.
 
 Return:
 
-- `value`: `string` (XML)
-- `err`: `nil` or `string`
+* `value`: `string` (XML)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -1428,7 +1408,7 @@ function get_hwinfo()
 end
 ```
 
-### parse_get_hwinfo(response)
+### parse\_get\_hwinfo(response)
 
 Parses hardware information response.
 
@@ -1442,8 +1422,8 @@ CWMP
 
 Return:
 
-- `value`: `table` (`Hwinfo`)
-- `err`: `nil` or `string`
+* `value`: `table` (`Hwinfo`)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -1458,7 +1438,7 @@ function parse_get_hwinfo(response)
 end
 ```
 
-### get_pon()
+### get\_pon()
 
 Builds payload to fetch PON information.
 
@@ -1472,8 +1452,8 @@ None.
 
 Return:
 
-- `value`: `string` (XML)
-- `err`: `nil` or `string`
+* `value`: `string` (XML)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -1485,7 +1465,7 @@ function get_pon()
 end
 ```
 
-### parse_get_pon(response)
+### parse\_get\_pon(response)
 
 Parses PON information response.
 
@@ -1499,8 +1479,8 @@ CWMP
 
 Return:
 
-- `value`: `table` (`Pon`)
-- `err`: `nil` or `string`
+* `value`: `table` (`Pon`)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -1514,7 +1494,7 @@ function parse_get_pon(response)
 end
 ```
 
-### get_voice()
+### get\_voice()
 
 Builds payload to fetch voice accounts/lines.
 
@@ -1528,8 +1508,8 @@ None.
 
 Return:
 
-- `value`: `string` (XML)
-- `err`: `nil` or `string`
+* `value`: `string` (XML)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -1539,7 +1519,7 @@ function get_voice()
 end
 ```
 
-### parse_get_voice(response)
+### parse\_get\_voice(response)
 
 Parses voice data response.
 
@@ -1553,8 +1533,8 @@ CWMP
 
 Return:
 
-- `value`: `table` (`[]Voice`)
-- `err`: `nil` or `string`
+* `value`: `table` (`[]Voice`)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -1571,7 +1551,7 @@ function parse_get_voice(response)
 end
 ```
 
-### set_voice(voice)
+### set\_voice(voice)
 
 Builds payload to update voice profile settings.
 
@@ -1585,8 +1565,8 @@ CWMP
 
 Return:
 
-- `value`: `string` (XML)
-- `err`: `nil` or `string`
+* `value`: `string` (XML)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -1596,7 +1576,7 @@ function set_voice(voice)
 end
 ```
 
-### set_line(line)
+### set\_line(line)
 
 Builds payload to update voice line settings.
 
@@ -1610,8 +1590,8 @@ CWMP
 
 Return:
 
-- `value`: `string` (XML)
-- `err`: `nil` or `string`
+* `value`: `string` (XML)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -1621,7 +1601,7 @@ function set_line(line)
 end
 ```
 
-### get_cellular()
+### get\_cellular()
 
 Builds payload to fetch cellular information.
 
@@ -1635,8 +1615,8 @@ None.
 
 Return:
 
-- `value`: `string` (XML)
-- `err`: `nil` or `string`
+* `value`: `string` (XML)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -1646,7 +1626,7 @@ function get_cellular()
 end
 ```
 
-### parse_get_cellular(response)
+### parse\_get\_cellular(response)
 
 Parses cellular information response.
 
@@ -1660,8 +1640,8 @@ CWMP and USP
 
 Return:
 
-- `value`: `table` (`[]Cellular`)
-- `err`: `nil` or `string`
+* `value`: `table` (`[]Cellular`)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -1677,7 +1657,7 @@ function parse_get_cellular(response)
 end
 ```
 
-### set_cellular(cellular)
+### set\_cellular(cellular)
 
 Builds payload to update cellular settings.
 
@@ -1691,8 +1671,8 @@ CWMP and USP
 
 Return:
 
-- `value`: `string` (XML)
-- `err`: `nil` or `string`
+* `value`: `string` (XML)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -1702,7 +1682,7 @@ function set_cellular(cellular)
 end
 ```
 
-### get_xdsl()
+### get\_xdsl()
 
 Builds payload to fetch xDSL information.
 
@@ -1716,8 +1696,8 @@ None.
 
 Return:
 
-- `value`: `string` (XML)
-- `err`: `nil` or `string`
+* `value`: `string` (XML)
+* `err`: `nil` or `string`
 
 Example:
 
@@ -1727,7 +1707,7 @@ function get_xdsl()
 end
 ```
 
-### parse_xdsl(response)
+### parse\_xdsl(response)
 
 Parses xDSL information response.
 
@@ -1741,8 +1721,8 @@ CWMP
 
 Return:
 
-- `value`: `table` (`[]XDSL`)
-- `err`: `nil` or `string`
+* `value`: `table` (`[]XDSL`)
+* `err`: `nil` or `string`
 
 Example:
 
