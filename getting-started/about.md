@@ -34,7 +34,7 @@ This table compares the features available in Oktopus Community Edition versus E
 | Multiple Transports (MQTT, STOMP, WebSockets) | ✅         | ✅                  |
 | Device Discovery & Configuration              | ✅         | ✅                  |
 | Custom Message Templates                      | ✅         | ✅                  |
-| Overview Dashboard                            | ✅         | ✅ (wiht more data) |
+| Overview Dashboard                            | ✅         | ✅ (with more data) |
 | Basic User Management                         | ✅         | ✅                  |
 | REST API                                      | ✅         | ✅                  |
 | **Enterprise Features**                       |           |                    |
