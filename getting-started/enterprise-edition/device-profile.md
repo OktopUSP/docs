@@ -1,13 +1,28 @@
 ---
 description: Vendor Lua hooks for devices manager (TR-069 and USP CPEs).
-cover: >-
-  https://images.unsplash.com/photo-1515879218367-8466d910aaa4?crop=entropy&cs=srgb&fm=jpg&ixid=M3wxOTcwMjR8MHwxfHNlYXJjaHwxfHxjb2RlfGVufDB8fHx8MTczMjI5NjY0OXww&ixlib=rb-4.0.3&q=85
-coverY: 0
+layout:
+  width: default
+  title:
+    visible: true
+  description:
+    visible: true
+  tableOfContents:
+    visible: true
+  outline:
+    visible: true
+  pagination:
+    visible: true
+  metadata:
+    visible: true
+  tags:
+    visible: true
 ---
 
 # Profiles
 
-Introduction to how Lua scripts are executed by Oktopus: [scripts.md](scripts.md "mention")&#x20;
+How Lua scripts are executed by Oktopus: [scripts.md](scripts.md "mention")&#x20;
+
+Profiles define the mapping between device-specific data models (TR-069/USP) and the Oktopus common API, enabling QoE analysis and dynamic UI generation.
 
 ## Function Contract
 

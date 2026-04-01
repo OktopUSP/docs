@@ -14,9 +14,10 @@
   * [Network](getting-started/community-edition/network.md)
   * [Developer Guide](getting-started/community-edition/developer-guide.md)
 * [Enterprise Edition](getting-started/enterprise-edition/README.md)
+  * [Services](getting-started/enterprise-edition/services.md)
   * [Scripts](getting-started/enterprise-edition/scripts.md)
   * [Profiles](getting-started/enterprise-edition/device-profile.md)
-  * [MCP Server [WIP]](getting-started/enterprise-edition/mcp-server.md)
+  * [MCP Server \[WIP\]](getting-started/enterprise-edition/mcp-server.md)
 * [Comparisions](getting-started/comparisions.md)
 * [Integrations](getting-started/integrations.md)
 
