@@ -1,5 +1,8 @@
 ---
 description: A set of parameters to define the CPE configuration.
+cover: >-
+  https://images.unsplash.com/photo-1554098415-4052459dc340?crop=entropy&cs=srgb&fm=jpg&ixid=M3wxOTcwMjR8MHwxfHNlYXJjaHwxfHxyb3V0ZXIlMjBzdXBwb3J0fGVufDB8fHx8MTc3NTQ4MjQwM3ww&ixlib=rb-4.1.0&q=85
+coverY: 0
 ---
 
 # Services

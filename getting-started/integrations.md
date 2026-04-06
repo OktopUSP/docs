@@ -12,4 +12,8 @@ To integrate Oktopus into your ecosystem, you can rely on [Oktopus Controller RE
 
 ### NATS
 
-For advanced users who may need real time information and have experience with PUB/SUB messagery concepts, it's also possible to use NATS.
+For advanced users who may need real-time information and have experience with PUB/SUB messaging concepts, it's also possible to use NATS.
+
+### MCP Server
+
+Standardized way to connect AI assistants to your application, allowing intelligent systems to interact seamlessly with your data and functionality. Unlike direct REST API calls or direct messaging connections, [Oktopus MCP server](enterprise-edition/mcp-server.md) acts as an intelligent intermediary that exposes your application's features as discoverable "tools" that AI models can understand and use naturally within conversations.
