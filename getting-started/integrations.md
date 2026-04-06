@@ -2,7 +2,7 @@
 
 Alright, you've just set up Oktopus to manage all your multi-vendor devices, hoping it to be a one platform, with one UI to solve all your problems, but then suddenly you realize that you have other systems and software for different purposes, but you wish all those solutions to converge into a cohesive ecosystem.
 
-For this matter, Oktopus provides two alternatives:
+For this matter, Oktopus provides some alternatives:
 
 ### REST API
 
@@ -16,4 +16,4 @@ For advanced users who may need real-time information and have experience with P
 
 ### MCP Server
 
-Standardized way to connect AI assistants to your application, allowing intelligent systems to interact seamlessly with your data and functionality. Unlike direct REST API calls or direct messaging connections, [Oktopus MCP server](enterprise-edition/mcp-server.md) acts as an intelligent intermediary that exposes your application's features as discoverable "tools" that AI models can understand and use naturally within conversations.
+Available in the Commercial Edition, it is a standardized way to connect AI assistants to your application, allowing intelligent systems to interact seamlessly with your data and functionality. Unlike direct REST API calls or direct messaging connections, [Oktopus MCP server](enterprise-edition/mcp-server.md) acts as an intelligent intermediary that exposes your application's features as discoverable "tools" that AI models can understand and use naturally within conversations.
