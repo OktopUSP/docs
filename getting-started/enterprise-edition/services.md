@@ -9,6 +9,8 @@ coverY: 0
 
 The services are used in conjunction with TR-x69 discovery mechanisms to achieve Z**ero Touch Provisioning** flows. The CPE is added to the system beforehand, and the proper service is attached to it. When the field technician plugs the CPE into the network infrastructure, the CPE is provisioned with the parameters defined in the ACS specific to that customer.
 
+{% embed url="https://youtu.be/AnQlSJmgIGo" %}
+
 ## Service Definition
 
 A service definition is a set of parameters, variables, and operations that dictate the communication structure with the CPE when applying the service to its configuration.
