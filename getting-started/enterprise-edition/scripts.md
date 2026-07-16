@@ -710,6 +710,139 @@ else
 end
 ```
 
+### http\_request()
+
+Make an HTTP call to a third-party REST API to gather or send data. Useful for integrating scripts with external systems (billing, ticketing, monitoring, etc).
+
+Only `http`/`https` URLs are accepted; URLs with embedded credentials (e.g. `http://user:pass@host/`) are rejected; this function can only reach external/public hosts.
+
+#### Params:
+
+1.  Method \[string]
+
+    HTTP method, e.g. `"GET"`, `"POST"`, `"PUT"`, `"PATCH"`, `"DELETE"`. Defaults to `"GET"` if empty.
+2.  URL \[string]
+
+    Full request URL. Must start with `http://` or `https://`.
+3.  Headers \[table] (optional)
+
+    Table of header name/value pairs to send with the request.
+4.  Body \[string] (optional)
+
+    Request body. Commonly used with `POST`/`PUT`/`PATCH`. Use [json\_encode()](scripts.md#json_encode) to build a JSON body.
+
+Return:
+
+A _table_ is always returned:
+
+```json
+{
+    "ok": true,
+    "status_code": 200,
+    "body": "{\"plan\": \"gold\"}",
+    "headers": {
+        "Content-Type": "application/json"
+    },
+    "error_message": ""
+}
+```
+
+* `ok` is `true` when the request completed with a `2xx` status code.
+* `error_message` is populated when the request could not be completed at all (invalid URL, blocked target, timeout, connection error) — it does not mean the remote API returned an HTTP error.
+* Use `body` together with [json\_decode()](scripts.md#json_decode) to parse JSON responses.
+
+Example:
+
+{% tabs %}
+{% tab title="GET" %}
+```lua
+local response = http_request("GET", "https://api.example.com/customers/12345", {
+    ["Authorization"] = "Bearer some-api-token",
+    ["Accept"] = "application/json",
+}, "")
+
+if response.ok == false then
+    print("HTTP request failed | status: " .. tostring(response.status_code) .. " | error: " .. tostring(response.error_message))
+    return
+end
+
+local data, err = json_decode(response.body)
+if err ~= nil then
+    print("Failed to decode JSON response: " .. err)
+    return
+end
+
+print("Customer plan: " .. tostring(data["plan"]))
+```
+{% endtab %}
+
+{% tab title="POST" %}
+```lua
+local payload, encErr = json_encode({ status = "active", updated_by = "lua-script" })
+if encErr ~= nil then
+    print("Failed to encode JSON payload: " .. encErr)
+    return
+end
+
+local response = http_request("POST", "https://api.example.com/customers/12345", {
+    ["Authorization"] = "Bearer some-api-token",
+    ["Content-Type"] = "application/json",
+}, payload)
+
+if response.ok then
+    print("Customer updated successfully")
+else
+    print("Failed to update customer | status: " .. tostring(response.status_code))
+end
+```
+{% endtab %}
+{% endtabs %}
+
+### json\_decode()
+
+Parse a JSON string into a Lua table (or scalar value). Commonly used to read the `body` returned by [http\_request()](scripts.md#http_request).
+
+#### Params:
+
+1. JSON string \[string]
+
+Return:
+
+Two values are returned: the decoded value (table, string, number, boolean or `nil`), and an error message \[string] that is `nil` when decoding succeeds.
+
+Example:
+
+```lua
+local data, err = json_decode('{"sn": "HUAWNFYC-35454645", "online": true}')
+if err ~= nil then
+    print("Failed to decode JSON: " .. err)
+else
+    print("sn: " .. data.sn)
+end
+```
+
+### json\_encode()
+
+Convert a Lua table (or scalar value) into a JSON string. Commonly used to build the `body` sent through [http\_request()](scripts.md#http_request).
+
+#### Params:
+
+1. Value \[table, string, number or boolean]
+
+Return:
+
+Two values are returned: the encoded JSON \[string], and an error message \[string] that is `nil` when encoding succeeds.
+
+Example:
+
+```lua
+local json, err = json_encode({ sn = "HUAWNFYC-35454645", online = true })
+if err ~= nil then
+    print("Failed to encode JSON: " .. err)
+else
+    print(json)
+end
+```
 
 
 
