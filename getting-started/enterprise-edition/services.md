@@ -472,18 +472,40 @@ end
 
 ## Service Instances
 
-The service instance is the attachment of a service to a CPE, defining the specific variable values for that equipment. This will be applied the first time the CPE connects to the platform and any time it is factory reset.
+The service instance is the attachment of a service to a CPE, defining the specific variable values for that equipment. It's applied automatically whenever the CPE sends one of the CWMP events configured on its service definition — for example, on first connection or after a factory reset — or on demand at any time, see [Manual Execution](#manual-execution) below.
 
-### Event
+### Trigger Events
 
-Oktopus listens to CPE events and applies the services configuration on the equipment when an event of "0 BOOSTRAP" — first connection­ or factory reset — is triggered by the CPE.
+Each service definition declares, via its `events` field, which CWMP events cause Oktopus to automatically apply it to the CPEs attached to it. A definition can list one or more of the standard TR-069 event codes:
+
+| Code | Event                         |
+| ---- | ----------------------------- |
+| 0    | BOOTSTRAP                     |
+| 1    | BOOT                          |
+| 2    | PERIODIC                      |
+| 3    | SCHEDULED                     |
+| 4    | VALUE CHANGE                  |
+| 5    | KICKED                        |
+| 6    | CONNECTION REQUEST            |
+| 7    | TRANSFER COMPLETE             |
+| 8    | DIAGNOSTICS COMPLETE          |
+| 9    | REQUEST DOWNLOAD              |
+| 10   | AUTONOMOUS TRANSFER COMPLETE  |
+
+The most common choice is `0 - BOOTSTRAP`, which fires on the CPE's first connection or after a factory reset — this is what makes zero-touch provisioning "zero touch." A definition isn't limited to one event: for example, listing both `0` and `2` re-applies the service both on first contact and whenever the CPE issues a Periodic Inform.
+
+A service definition can also declare **no events at all**. In that case it never runs automatically — it only executes when explicitly triggered, see [Manual Execution](#manual-execution) below.
+
+### Manual Execution
+
+Independent of its configured trigger events (if any), a service instance can always be executed on demand, immediately, without waiting for its trigger event to fire. This is the **only** way a manual-only service definition (one with no `events` configured) is ever executed.
 
 ### Status
 
 The service attached to the CPE has a few statuses:
 
-* Pending = It's waiting for an event to start running and being applied to the equipment.
-* Running = The event has triggered, and the script is being executed.
+* Pending = It's waiting for a trigger event (or a manual execution) to start running and being applied to the equipment.
+* Running = The instance was triggered — by an event or manually — and the script is being executed.
 * Provisioned = Execution was a success, the CPE received all the messages.&#x20;
 * Failed = An issue happened during the execution of the script.
 
