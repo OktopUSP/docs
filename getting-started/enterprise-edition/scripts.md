@@ -844,6 +844,173 @@ else
 end
 ```
 
+### get\_service\_instances()
+
+List the [service instances](services.md#service-instances) attached to a device.
+
+#### Params:
+
+1.  Serial Number \[string]
+
+    The CPE unique identifier.
+
+Return:
+
+A table with `ok` \[boolean], `error_message` \[string], `error_code` \[number] and, on success, `instances` \[table] — an array of tables, each with `id`, `device_id`, `service_id`, `status` and `variables`:
+
+```json
+{
+    "ok": true,
+    "error_message": "",
+    "error_code": 200,
+    "instances": [
+        {
+            "id": "665f1b2e8c2a4a1b2c3d4e5f",
+            "device_id": "HUAWNFYC-35454645",
+            "service_id": "665f1a1e8c2a4a1b2c3d4e5e",
+            "status": "provisioned",
+            "variables": { "pppoe_username": "customer123" }
+        }
+    ]
+}
+```
+
+Example:
+
+```lua
+local result = get_service_instances("HUAWNFYC-35454645")
+if not result.ok then
+    print("Failed to list service instances: " .. result.error_message)
+else
+    for _, instance in ipairs(result.instances) do
+        print(instance.id .. " -> " .. instance.status)
+    end
+end
+```
+
+### create\_service\_instance()
+
+Attach a service definition to a device, creating a new service instance.
+
+#### Params:
+
+1. Serial Number \[string] — the CPE unique identifier.
+2. Service Definition ID \[string].
+3. Variables \[table, optional] — the service-specific variable values for this device.
+
+Return:
+
+A table with `ok` \[boolean], `error_message` \[string] and `error_code` \[number]. The created instance's id is not returned — call [get\_service\_instances()](scripts.md#get_service_instances) to look it up.
+
+Example:
+
+```lua
+local result = create_service_instance("HUAWNFYC-35454645", "665f1a1e8c2a4a1b2c3d4e5e", {
+    pppoe_username = "customer123",
+    pppoe_password = "s3cr3t",
+})
+if not result.ok then
+    print("Failed to create service instance: " .. result.error_message)
+end
+```
+
+### edit\_service\_instance()
+
+Replace an existing service instance's device and variables. The service definition id cannot be changed.
+
+#### Params:
+
+1. Service Instance ID \[string].
+2. Serial Number \[string] — the CPE unique identifier.
+3. Service Definition ID \[string] — must match the instance's current service definition.
+4. Variables \[table, optional] — the new service-specific variable values.
+
+Return:
+
+A table with `ok` \[boolean], `error_message` \[string] and `error_code` \[number].
+
+Example:
+
+```lua
+local result = edit_service_instance(
+    "665f1b2e8c2a4a1b2c3d4e5f",
+    "HUAWNFYC-35454645",
+    "665f1a1e8c2a4a1b2c3d4e5e",
+    { pppoe_username = "customer123", pppoe_password = "new-password" }
+)
+if not result.ok then
+    print("Failed to edit service instance: " .. result.error_message)
+end
+```
+
+### delete\_service\_instance()
+
+Delete a service instance.
+
+#### Params:
+
+1. Service Instance ID \[string].
+
+Return:
+
+A table with `ok` \[boolean], `error_message` \[string] and `error_code` \[number].
+
+Example:
+
+```lua
+local result = delete_service_instance("665f1b2e8c2a4a1b2c3d4e5f")
+if not result.ok then
+    print("Failed to delete service instance: " .. result.error_message)
+end
+```
+
+### apply\_service\_instance()
+
+Run a service instance's provisioning script against its device right away, instead of waiting for its trigger event (see [Manual Execution](services.md#manual-execution)).
+
+#### Params:
+
+1. Service Instance ID \[string].
+
+Return:
+
+A table with `ok` \[boolean], `error_message` \[string], `error_code` \[number] and, on success, `status` \[string] (`"provisioned"` or `"failed"`). `ok` reflects whether the request itself succeeded; `status` is the actual provisioning outcome — a script can legitimately fail provisioning even though the request succeeded (`ok = true`, `status = "failed"`).
+
+Example:
+
+```lua
+local result = apply_service_instance("665f1b2e8c2a4a1b2c3d4e5f")
+if not result.ok then
+    print("Failed to apply service instance: " .. result.error_message)
+elseif result.status ~= "provisioned" then
+    print("Service instance provisioning failed")
+else
+    print("Service instance provisioned")
+end
+```
+
+### apply\_service\_instance\_and\_forget()
+
+Trigger a service instance's provisioning script the same way [apply\_service\_instance()](scripts.md#apply_service_instance) does, but don't wait for it to run to completion — the request is enqueued and the function returns immediately. Because it doesn't wait for a response, it can't report the final `status`, and `ok` only reflects whether the message was enqueued locally, not whether the zero-touch-provisioning service actually received or ran it.
+
+Use this when applying a service instance whose script may run long (e.g. it calls [sleep()](scripts.md#sleep) or does several sequential CPE round trips) and the caller doesn't need to wait for the outcome.
+
+#### Params:
+
+1. Service Instance ID \[string].
+
+Return:
+
+A table with `ok` \[boolean], `error_message` \[string] and `error_code` \[number]. There is no `status` field.
+
+Example:
+
+```lua
+local result = apply_service_instance_and_forget("665f1b2e8c2a4a1b2c3d4e5f")
+if not result.ok then
+    print("Failed to enqueue service instance apply: " .. result.error_message)
+end
+```
 
 
 
