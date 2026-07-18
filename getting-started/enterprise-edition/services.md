@@ -135,6 +135,97 @@ local pppoe_password = get_variable_value("pppoe_password")
 
 #### CPE Interaction Functions
 
+**`send_cwmp_message(device_id, message_body, method, block_queue)`**
+
+Sends a CWMP message to the device and **blocks until the CPE answers** (or the request times out), unlike `send_cwmp_message_and_forget` below, which returns as soon as the message is handed off to the ACS adapter without waiting for — or confirming — the CPE actually applied it. Use this function when the script needs to read back a value or confirm a `Set` actually took effect.
+
+**Parameters:**
+
+* `device_id` (string): The serial number of the target device
+* `message_body` (string): XML-formatted CWMP message
+* `method` (number): CWMP message type, used to decode the response:
+  * `0` = GetParameterValues
+  * `1` = SetParameterValues
+  * `2` = AddObject
+  * `3` = DeleteObject
+  * `4` = GetParameterNames
+* `block_queue` (boolean, optional): whether to block the device's message queue until this request is answered
+
+**Returns:**
+
+* If the device isn't found, isn't online, or the request fails/times out: a _table_ with `error_message` and `error_code`.
+* Otherwise, the return shape depends on `method`:
+  * `0` (Get): a _table_ mapping each requested parameter path to its value.
+  * `1` (Set): a _boolean_ indicating success.
+  * `2` (Add): a _table_ with `instance_number` and `status`.
+  * `3` (Delete): a _boolean_ indicating success.
+  * `4` (GetParameterNames): a _table_ of parameter names.
+
+**Example:**
+
+```lua
+-- Set a parameter, then verify it was actually applied on the CPE
+local set_msg = [[
+<?xml version="1.0" encoding="UTF-8"?>
+<soap:Envelope xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:cwmp="urn:dslforum-org:cwmp-1-0" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <soap:Header/>
+  <soap:Body soap:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+    <cwmp:SetParameterValues>
+      <ParameterList soapenc:arrayType="cwmp:ParameterValueStruct[1]">
+        <ParameterValueStruct>
+          <Name>InternetGatewayDevice.WANDevice.1.WANConnectionDevice.1.WANPPPConnection.1.Username</Name>
+          <Value>]] .. get_variable_value("pppoe_username") .. [[</Value>
+        </ParameterValueStruct>
+      </ParameterList>
+      <ParameterKey></ParameterKey>
+    </cwmp:SetParameterValues>
+  </soap:Body>
+</soap:Envelope>
+]]
+
+local set_result = send_cwmp_message(get_device_id(), set_msg, 1)
+if type(set_result) == "table" or set_result == false then
+    print("Failed to set PPPoE username")
+    set_provisioning_status("failed")
+    return
+end
+
+-- Give the CPE time to apply it, then read it back to confirm
+sleep(10)
+
+local get_msg = [[
+<?xml version="1.0" encoding="UTF-8"?>
+<soap:Envelope xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:cwmp="urn:dslforum-org:cwmp-1-0" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <soap:Header/>
+  <soap:Body soap:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+    <cwmp:GetParameterValues>
+      <ParameterNames soapenc:arrayType="xsd:string[1]">
+        <string>InternetGatewayDevice.WANDevice.1.WANConnectionDevice.1.WANPPPConnection.1.Username</string>
+      </ParameterNames>
+    </cwmp:GetParameterValues>
+  </soap:Body>
+</soap:Envelope>
+]]
+
+local verification = send_cwmp_message(get_device_id(), get_msg, 0)
+if verification["error_message"] ~= nil then
+    print("Failed to verify PPPoE username: " .. verification["error_message"])
+    set_provisioning_status("failed")
+    return
+end
+
+local param = "InternetGatewayDevice.WANDevice.1.WANConnectionDevice.1.WANPPPConnection.1.Username"
+if verification[param] == get_variable_value("pppoe_username") then
+    print("PPPoE username verified successfully")
+    set_provisioning_status("provisioned")
+else
+    print("PPPoE username verification failed, got: " .. tostring(verification[param]))
+    set_provisioning_status("failed")
+end
+```
+
+***
+
 **`send_cwmp_message_and_forget(device_id, message_body, timeout)`**
 
 Enqueue a CWMP message to the device and does not wait for a response.
