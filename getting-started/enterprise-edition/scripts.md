@@ -506,11 +506,11 @@ If the CPE was not found in the database the function returns a boolean with fal
     "status": 2,
     "cwmp": true,
     "usp": false,
-    "data_model": "TR098"
+    "data_model": "TR-098"
 }
 ```
 
-`data_model` reflects the CWMP root data model reported by the CPE, either `"TR098"` (`InternetGatewayDevice.`) or `"TR181"` (`Device.`); it is empty for USP-only devices.
+`data_model` reflects the CWMP root data model reported by the CPE, either `"TR-098"` (`InternetGatewayDevice.`) or `"TR-181"` (`Device.`); it is empty for USP-only devices.
 
 Example:
 
