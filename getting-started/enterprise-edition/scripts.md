@@ -460,6 +460,8 @@ Listen to TR-069 events as defined in the standard.
    CPE unique identifier. If it's not set or the value is "\*", then it listens to all CPEs event(s).
 3. Callback function (required)
 4. Number of events to process in parallel \[integer] (optional)
+5. Discard if processing \[boolean] (optional)\
+   When `true`, an incoming event for a device that already has an event being processed (i.e. still running the callback) is discarded instead of waiting for a free worker slot. Useful to avoid piling up stale events for a slow or unresponsive device. Defaults to `false`, which queues the event until a worker slot frees up.
 
 Return:
 
@@ -478,7 +480,18 @@ function listen_to_cwmp_event_callback(cwmp_event)
         print(key .. ": " .. tostring(value))
     end
 end
-listen_to_cwmp_event(listen_to_cwmp_event_callback)
+listen_to_cwmp_event("*", "*", listen_to_cwmp_event_callback)
+```
+
+To process up to 10 events concurrently, and discard new events arriving for a device that's still being processed:
+
+```lua
+function listen_to_cwmp_event_callback(cwmp_event)
+    for key, value in pairs(cwmp_event) do
+        print(key .. ": " .. tostring(value))
+    end
+end
+listen_to_cwmp_event("*", "*", listen_to_cwmp_event_callback, 10, true)
 ```
 
 ### get\_device()
