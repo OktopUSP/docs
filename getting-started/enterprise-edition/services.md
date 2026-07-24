@@ -154,6 +154,11 @@ Sends a CWMP message to the device and **blocks until the CPE answers** (or the 
 **Returns:**
 
 * If the device isn't found, isn't online, or the request fails/times out: a _table_ with `error_message` and `error_code`.
+* If the CPE answers with a SOAP/CWMP `Fault` (regardless of `method`): a _table_ with:
+  * `error_message` (string): the top-level `FaultString`
+  * `error_code` (string): the top-level `FaultCode` (e.g. `"9003"`)
+  * `raw_response` (string): the full raw XML response received from the CPE
+  * `parameter_faults` (table, optional): present for `SetParameterValues` faults — an array where each entry has `parameter_name`, `fault_code`, and `fault_string` for the specific parameter that was rejected
 * Otherwise, the return shape depends on `method`:
   * `0` (Get): a _table_ mapping each requested parameter path to its value.
   * `1` (Set): a _boolean_ indicating success.
