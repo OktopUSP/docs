@@ -659,6 +659,36 @@ else
 end
 ```
 
+### set\_device\_model()
+
+Update the model attribute of a device in the database.
+
+#### Params:
+
+1.  Serial Number \[string]
+
+    The CPE unique identifier.
+2.  Model \[string]
+
+    The new model value to set.
+
+Return:
+
+_Bool_ value indicating _true_ if the operation was successfull or _false_ if there was an error.
+
+Example:
+
+```lua
+local sn = "HUAWNFYC-35454645"
+local model = "WS7001-40"
+
+if set_device_model(sn, model) then
+  print("device " .. sn .. " model updated to " .. model)
+else
+  print("error to update device " .. sn .. " model")
+end
+```
+
 ### get\_all\_devices()
 
 Retrieve all devices saved on the database.
