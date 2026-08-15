@@ -17,6 +17,7 @@
   * [Services](getting-started/enterprise-edition/services.md)
   * [Scripts](getting-started/enterprise-edition/scripts.md)
   * [Profiles](getting-started/enterprise-edition/device-profile.md)
+  * [QoE Analysis](getting-started/enterprise-edition/qoe-analysis.md)
   * [MCP Server](getting-started/enterprise-edition/mcp-server.md)
 * [Comparisions](getting-started/comparisions.md)
 * [Integrations](getting-started/integrations.md)
