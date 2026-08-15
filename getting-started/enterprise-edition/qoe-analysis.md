@@ -6,7 +6,7 @@ description: >-
 
 # QoE Analysis
 
-Quality of Experience (QoE) analysis is Oktopus's automated, always-on health monitoring for every CPE in your fleet. Instead of waiting for a customer to call in, Oktopus periodically pulls metrics straight from each device, compares them against its own recent history, specific health thresholds, and turns that into a single **Overall Health Score** plus specific alarms whenever something degrades.
+Quality of Experience (QoE) analysis is Oktopus's automated, always-on health monitoring for every CPE in your fleet. Instead of waiting for a customer to call in, Oktopus periodically pulls metrics straight from each device, compares them against its own recent history, health thresholds, and turns that into a single **Overall Health Score** plus specific alarms whenever something degrades.
 
 ## How It Works
 
@@ -87,4 +87,4 @@ If a vendor's profile doesn't implement a given function, that component is simp
 * **First score**: appears on the **next** scrape cycle after the baseline — with the default 30-minute interval, that's roughly 30-60 minutes after the device starts reporting data.
 * **Trend-based alarms** (like `PersistentBadSignal`) need the condition to repeat across several scrapes before firing, so they naturally take longer to surface than one-off threshold breaches — a client with a weak signal has to be seen in that state repeatedly, not just once.
 * **Baselines roll forward**: ping and throughput baselines are computed from a rolling window of recent data (7 days by default), so scores stay responsive to real, recent conditions rather than a single stale reading from weeks ago.
-* **Retention**: raw time-series data expires automatically (90 days by default) and alarm history is kept for a configurable period (7 days by default).
+* **Retention**: raw time-series data expires automatically and alarm history is kept for 7 days.
