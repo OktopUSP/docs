@@ -19,6 +19,7 @@
   * [Profiles](getting-started/enterprise-edition/device-profile.md)
   * [QoE Analysis](getting-started/enterprise-edition/qoe-analysis.md)
   * [MCP Server](getting-started/enterprise-edition/mcp-server.md)
+  * [Single Sign-On (SSO)](getting-started/enterprise-edition/sso.md)
 * [Comparisions](getting-started/comparisions.md)
 * [Integrations](getting-started/integrations.md)
 
