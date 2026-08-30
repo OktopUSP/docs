@@ -29,6 +29,19 @@ A "custom function", is as a function called from LUA which translates to a Go f
 
 The "custom functions" will be detailed above in the next topics as just "functions" and separated into domain areas. We hope to provide usefull examples, and the limitation is on each person creativity.&#x20;
 
+### Event listener concurrency
+
+[listen\_to\_cwmp\_event()](scripts.md#listen_to_cwmp_event) and [listen\_to\_new\_device()](scripts.md#listen_to_new_device) are _listeners_: they subscribe to a stream of events and run your callback once per event. How a listener processes events concurrently matters when you write the script.
+
+Each unit of parallelism is a **fully isolated Lua VM** running its own copy of the script. When a listener asks for parallelism `N`, Oktopus starts `N` independent VMs and load-balances incoming events across them — every event is handled by exactly one VM, and each VM handles one event at a time. The VMs never share Lua state with each other.
+
+What that means for your script:
+
+* **Top-level code runs once per VM.** Keep the top level to declaring constants and functions and the `listen_to_*` call itself. Real work done at the top level (an `http_request()`, a `print`, initialising a counter) happens `N` times.
+* **Callbacks cannot share mutable Lua state.** A table or variable that a callback updates is local to one VM, not shared across the pool. Persist anything that must be shared through an external system ([http\_request()](scripts.md#http_request) to your own API, the device database, a [service instance](services.md#service-instances)).
+* **Parallelism is a hard resource limit.** Each VM is a real interpreter with its own memory. The requested value is capped by the `MAX_LISTENER_PARALLELISM` setting (default `64`); larger requests are clamped and a warning is logged.
+* Running more than one instance of the scripts service is safe — the instances share one pool per listener and balance events between them.
+
 ## Functions
 
 ### send\_usp\_message()
@@ -459,9 +472,10 @@ Listen to TR-069 events as defined in the standard.
 2. Serial Number \[string] (optional)\
    CPE unique identifier. If it's not set or the value is "\*", then it listens to all CPEs event(s).
 3. Callback function (required)
-4. Number of events to process in parallel \[integer] (optional)
+4. Parallelism \[integer] (optional)\
+   Number of isolated Lua VMs the listener runs to process events concurrently. Defaults to `1` (one event at a time). Capped by the `MAX_LISTENER_PARALLELISM` setting (default `64`). See [Event listener concurrency](scripts.md#event-listener-concurrency).
 5. Discard if processing \[boolean] (optional)\
-   When `true`, an incoming event for a device that already has an event being processed (i.e. still running the callback) is discarded instead of waiting for a free worker slot. Useful to avoid piling up stale events for a slow or unresponsive device. Defaults to `false`, which queues the event until a worker slot frees up.
+   When `true`, an incoming event for a device that already has an event being processed (i.e. still running the callback, on any VM) is discarded instead of being handled. Useful to avoid piling up stale events for a slow or unresponsive device. Defaults to `false`.
 
 Return:
 
@@ -545,21 +559,24 @@ Receive all new device attributes that connect to Oktopus, independent of the pr
 
 #### Params:
 
-1. Callback function with new device data
+1.  Callback function with new device data (required)
 
-```json
-{
-    "sn": "HUAWNFYC-35454645",
-    "model": "WS7001-40",
-    "vendor": "Huawei Technologies Co., Ltd.",
-    "version": "",
-    "product_class": "Huawei",
-    "alias": "",
-    "status": 2,
-    "cwmp": true,
-    "usp": false
-}
-```
+    ```json
+    {
+        "sn": "HUAWNFYC-35454645",
+        "model": "WS7001-40",
+        "vendor": "Huawei Technologies Co., Ltd.",
+        "version": "",
+        "product_class": "Huawei",
+        "alias": "",
+        "status": 2,
+        "cwmp": true,
+        "usp": false
+    }
+    ```
+2.  Parallelism \[integer] (optional)
+
+    Number of isolated Lua VMs the listener runs to process events concurrently, as for [listen\_to\_cwmp\_event()](scripts.md#listen_to_cwmp_event). Defaults to `1`. See [Event listener concurrency](scripts.md#event-listener-concurrency).
 
 Example:
 
@@ -569,7 +586,7 @@ function listen_to_new_device_callback(new_device)
     print(key .. ": " .. tostring(value))
   end
 end
-listen_to_new_device("*", "*", listen_to_new_device_callback)
+listen_to_new_device(listen_to_new_device_callback)
 ```
 
 ### sleep()
