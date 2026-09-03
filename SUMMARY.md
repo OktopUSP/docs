@@ -17,7 +17,7 @@
   * [Services](getting-started/enterprise-edition/services.md)
   * [Scripts](getting-started/enterprise-edition/scripts.md)
   * [Profiles](getting-started/enterprise-edition/device-profile.md)
-  * [Bulk Device Manager](getting-started/enterprise-edition/bulk-device-manager.md)
+  * [Device Telemetry](getting-started/enterprise-edition/bulk-device-manager.md)
   * [QoE Analysis](getting-started/enterprise-edition/qoe-analysis.md)
   * [MCP Server](getting-started/enterprise-edition/mcp-server.md)
   * [Single Sign-On (SSO)](getting-started/enterprise-edition/sso.md)

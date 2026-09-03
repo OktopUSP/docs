@@ -1,8 +1,33 @@
 ---
 description: >-
   Let your users sign in to Oktopus through your existing identity provider
-  (Keycloak, Auth0, Okta, Azure AD, and other OIDC-compliant providers)
-  instead of managing separate Oktopus passwords.
+  (Keycloak, Auth0, Okta, Azure AD, and other OIDC-compliant providers) instead
+  of managing separate Oktopus passwords.
+cover: >-
+  https://images.unsplash.com/photo-1633265486064-086b219458ec?crop=entropy&cs=srgb&fm=jpg&ixid=M3wxOTcwMjR8MHwxfHNlYXJjaHw1fHxTZWN1cml0eXxlbnwwfHx8fDE3ODg0NzcxNTF8MA&ixlib=rb-4.1.0&q=85
+coverY: 0
+layout:
+  width: default
+  cover:
+    visible: true
+    size: full
+    mask: none
+  title:
+    visible: true
+  description:
+    visible: true
+  tableOfContents:
+    visible: true
+  outline:
+    visible: true
+  pagination:
+    visible: true
+  metadata:
+    visible: true
+  tags:
+    visible: true
+  actions:
+    visible: true
 ---
 
 # Single Sign-On (SSO)
@@ -53,10 +78,10 @@ Signing out of Oktopus also ends the session at your identity provider (RP-initi
 
 Three environment variables must be set on the controller for SSO to be available at all:
 
-| Variable | Purpose |
-| --- | --- |
-| `PUBLIC_API_URL` | The externally reachable base URL of your Oktopus controller (e.g. `https://api.yourdomain.com`). Used to build the callback URL that must be registered as an allowed redirect URI on your identity provider's client. |
-| `FRONTEND_URL` | The base URL of your Oktopus frontend (e.g. `https://app.yourdomain.com`). Used to build the post-login and post-logout redirects. |
+| Variable             | Purpose                                                                                                                                                                                                                                                                                                                                    |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `PUBLIC_API_URL`     | The externally reachable base URL of your Oktopus controller (e.g. `https://api.yourdomain.com`). Used to build the callback URL that must be registered as an allowed redirect URI on your identity provider's client.                                                                                                                    |
+| `FRONTEND_URL`       | The base URL of your Oktopus frontend (e.g. `https://app.yourdomain.com`). Used to build the post-login and post-logout redirects.                                                                                                                                                                                                         |
 | `SSO_ENCRYPTION_KEY` | A long, random secret used to encrypt your identity provider's client secret at rest. **Generate this once and keep it stable** — rotating it invalidates the stored client secret, requiring you to re-enter it in the SSO settings. Losing or changing it accidentally is the most common cause of SSO suddenly failing after a restart. |
 
 {% hint style="warning" %}
@@ -67,15 +92,15 @@ Three environment variables must be set on the controller for SSO to be availabl
 
 Once the environment variables above are set, an admin of your platform's **Root tenant** configures SSO from **Settings → Single Sign-On** — this page is only visible to Root-tenant admins, since the setting applies platform-wide.
 
-| Field | Notes |
-| --- | --- |
-| **Enabled** | Turns on the "Continue with SSO" button for every user on the platform. |
-| **Issuer URL** | Your identity provider's OIDC issuer, e.g. `https://keycloak.example.com/realms/your-realm`. It must serve a standard `/.well-known/openid-configuration` discovery document — this is probed on save, so a misconfigured URL fails immediately instead of at the next login attempt. |
-| **Client ID** | The OIDC client/application ID registered on your identity provider. |
-| **Client Secret** | Encrypted at rest with `SSO_ENCRYPTION_KEY`. Leave it blank on a later update to keep the currently stored secret. |
-| **Default Tenant** | Required. Every brand-new SSO user is automatically added to this tenant — picked from a dropdown of every tenant on the platform. |
-| **Default Role** | Required. The role assigned to every new SSO user within the Default Tenant, picked from that tenant's own roles. |
-| **Enforced** | Hides the password login fields on the login page by default, nudging everyone toward SSO. |
+| Field              | Notes                                                                                                                                                                                                                                                                                 |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Enabled**        | Turns on the "Continue with SSO" button for every user on the platform.                                                                                                                                                                                                               |
+| **Issuer URL**     | Your identity provider's OIDC issuer, e.g. `https://keycloak.example.com/realms/your-realm`. It must serve a standard `/.well-known/openid-configuration` discovery document — this is probed on save, so a misconfigured URL fails immediately instead of at the next login attempt. |
+| **Client ID**      | The OIDC client/application ID registered on your identity provider.                                                                                                                                                                                                                  |
+| **Client Secret**  | Encrypted at rest with `SSO_ENCRYPTION_KEY`. Leave it blank on a later update to keep the currently stored secret.                                                                                                                                                                    |
+| **Default Tenant** | Required. Every brand-new SSO user is automatically added to this tenant — picked from a dropdown of every tenant on the platform.                                                                                                                                                    |
+| **Default Role**   | Required. The role assigned to every new SSO user within the Default Tenant, picked from that tenant's own roles.                                                                                                                                                                     |
+| **Enforced**       | Hides the password login fields on the login page by default, nudging everyone toward SSO.                                                                                                                                                                                            |
 
 {% hint style="info" %}
 **Enforced** hides the password fields by default, but native Oktopus users created through the software itself, can still switch back to password login from the login page if needed.
