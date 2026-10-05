@@ -6,7 +6,7 @@ For this matter, Oktopus provides some alternatives:
 
 ### REST API
 
-To integrate Oktopus into your ecosystem, you can rely on [Oktopus Controller REST API](https://documenter.getpostman.com/view/18932104/2s93eR3vQY). It's documented in Postman, with many usage examples in different programming languages, and lots of possibilities.&#x20;
+To integrate Oktopus into your ecosystem, you can rely on [Oktopus Controller REST API](https://api.oktopus.app.br). It's documented with Bruno, with many usage examples in different programming languages, and lots of possibilities.&#x20;
 
 {% embed url="https://youtu.be/HXxYKSMdx_E?si=8IXs9Np5tQTGJ3HQ" %}
 

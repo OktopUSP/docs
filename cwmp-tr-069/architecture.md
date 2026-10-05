@@ -10,7 +10,7 @@ Although there are some workarounds for the NAT problem as to use [XMPP](https:/
 
 ## Messages
 
-Here are the main messages you can send to a CPE and to interact with it. All of them are available in the [Oktopus REST API ](https://documenter.getpostman.com/view/18932104/2s93eR3vQY#96986790-3e2c-44fd-bc8c-9a6208f01516)> Device > CWMP Native Messages.
+Here are the main messages you can send to a CPE and to interact with it. All of them are available in the [Oktopus REST API](https://api.oktopus.app.br)> Device > CWMP Native Messages.
 
 * GetParameterNames
 * GetParameterValues
