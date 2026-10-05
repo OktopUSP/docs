@@ -362,7 +362,7 @@ When adding features, update:
 * **Main Repository**: [github.com/OktopUSP/oktopus](https://github.com/OktopUSP/oktopus)
 * **Documentation**: [github.com/OktopUSP/docs](https://github.com/OktopUSP/docs)
 * **Community Slack**: Join the [Oktopus Slack](https://join.slack.com/t/oktopustr-369/shared_invite/zt-1znmrbr52-3AXgOlSeQTPQW8_Qhn3C4g)
-* **Rest API Spec**: [Oktopus Postman Documentation](https://documenter.getpostman.com/view/18932104/2s93eR3vQY)
+* **Rest API Spec**: [Oktopus REST API Documentation](https://api.oktopus.app.br)
 * **USP Specification**: Broadband Forum TR-369
 * **CWMP Specification**: Broadband Forum TR-069
 
