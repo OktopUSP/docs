@@ -607,6 +607,108 @@ while true do
 end
 ```
 
+### cron()
+
+Run a callback on a schedule, e.g. every day at 03:00 or every Monday at 08:30. Unlike a `while true` loop with [sleep()](scripts.md#sleep), runs happen at fixed times of the day and don't drift.
+
+`cron()` never returns while the script is running, the same way the listeners don't. It must be the last statement of the script, a script can have only one `cron()` call, and it can't be combined with [listen\_to\_cwmp\_event()](scripts.md#listen_to_cwmp_event) or [listen\_to\_new\_device()](scripts.md#listen_to_new_device): whichever comes first blocks the other.
+
+#### Params:
+
+1.  Expression \[string]
+
+    Standard 5-field cron expression: `minute hour day-of-month month day-of-week`. The shortcuts `@hourly`, `@daily`, `@weekly`, `@monthly` and `@every <duration>` (e.g. `@every 30m`) are also accepted.
+
+    ```
+    "0 3 * * *"     every day at 03:00
+    "30 8 * * 1"    every Monday at 08:30
+    "*/15 * * * *"  every 15 minutes
+    "0 0 1 * *"     on the first day of each month at 00:00
+    ```
+2.  Callback function (required)
+
+    Receives a table describing the current run (see Return).
+3.  Options \[table] (optional)
+
+    * `timezone` \[string]: IANA time zone the expression is evaluated in, e.g. `"America/Sao_Paulo"`. Defaults to `"UTC"`. Don't use a `CRON_TZ=` prefix inside the expression, use this option instead.
+    * `duration` \[integer or string]: length of the run window, in seconds like [sleep()](scripts.md#sleep) (`7200`) or as a duration string (`"2h"`, `"90m"`). See [Run window](scripts.md#run-window).
+    * `run_on_start` \[boolean]: also run once as soon as the script starts, instead of waiting for the first scheduled time. Defaults to `false`.
+
+Return:
+
+The callback receives a table:
+
+```json
+{
+    "unix": 1791439200,
+    "iso": "2026-10-08T03:00:00-03:00",
+    "ends_at": 1791446400
+}
+```
+
+* `unix` and `iso` are the time the run was scheduled to start, `iso` in the configured `timezone`.
+* `ends_at` is the end of the run window as a unix timestamp. It's only present when `duration` is set.
+* `window_open()` is a function that returns `false` once `ends_at` has passed. Without `duration` it always returns `true`.
+
+#### Run window
+
+A cron expression only sets when a run starts; the callback then runs until it returns. To limit work to a time window, e.g. from 03:00 to 05:00, set `duration` and call `window_open()` between units of work. The callback is never interrupted, so a device is never left half-processed, but a run can end a little after `ends_at`.
+
+If the script starts inside a window — it was edited, reactivated or the service restarted at 04:00 for a 03:00–05:00 window — the run resumes right away and still ends at 05:00. `@every` schedules have no fixed start time, so they don't resume.
+
+{% hint style="info" %}
+The Lua `os` library isn't available to scripts, so use `window_open()` rather than `os.time()` to check the window.
+{% endhint %}
+
+#### Behaviour
+
+* Runs never overlap: if a run is still going when the next one is due, that run is skipped, not delayed.
+* An error inside the callback is written to the script log and the schedule continues.
+* An invalid expression, timezone or duration makes the script fail at startup, with the error in the script log.
+* Every instance of the scripts service runs every active script, so with more than one instance the job runs once per instance.
+
+Example:
+
+{% tabs %}
+{% tab title="Daily" %}
+```lua
+cron("0 3 * * *", function(run)
+    print("Daily job started at " .. run.iso)
+
+    local devices = get_all_devices()
+    for i = 1, #devices do
+        refresh_device_parameters(devices[i].sn)
+    end
+end, { timezone = "America/Sao_Paulo" })
+```
+{% endtab %}
+
+{% tab title="Time window" %}
+```lua
+-- every day from 03:00 to (at most) 05:00, São Paulo time
+cron("0 3 * * *", function(run)
+    local devices = get_all_devices()
+    for i = 1, #devices do
+        if not run.window_open() then
+            print("Window closed, stopping until tomorrow")
+            break
+        end
+        refresh_device_parameters(devices[i].sn)
+    end
+end, { timezone = "America/Sao_Paulo", duration = "2h" })
+```
+{% endtab %}
+
+{% tab title="Run on start" %}
+```lua
+-- run once when the script starts, then every 6 hours
+cron("0 */6 * * *", function(run)
+    print("Running at " .. run.iso)
+end, { run_on_start = true })
+```
+{% endtab %}
+{% endtabs %}
+
 ### create\_or\_update\_device\_credential()
 
 #### Params:
@@ -751,6 +853,138 @@ for i = 1, #devices do
     print("  SN: " .. device.sn)
 end
 ```
+
+### list\_devices()
+
+List the devices that match a set of filters, one page at a time. It accepts the same filters as the device list in the Oktopus API and UI. Only devices of the script's own organization are returned.
+
+#### Params:
+
+1.  Filters \[table] (optional)
+
+    All filters are optional and combined with AND. Empty strings are ignored.
+
+    | Filter          | Type    | Matches                                                                    |
+    | --------------- | ------- | -------------------------------------------------------------------------- |
+    | `sn`            | string  | Exact serial number / USP agent endpoint id                                |
+    | `sn_v2`         | string  | Exact device serial number                                                 |
+    | `vendor`        | string  | Exact vendor                                                               |
+    | `model`         | string  | Exact model                                                                |
+    | `version`       | string  | Exact software version                                                     |
+    | `type`          | string  | Exact product class                                                        |
+    | `alias`         | string  | Alias containing the text, case insensitive                                |
+    | `status`        | integer | `0` offline, `1` associating, `2` online, `3` unknown                      |
+    | `protocol`      | string  | `"tr069"` (CWMP) or `"tr369"` (USP)                                        |
+    | `datamodel`     | string  | `"TR-181"` or `"TR-098"`                                                   |
+    | `ip`            | string  | Exact public IP                                                            |
+    | `connection_ip` | string  | Connection IP starting with the text                                       |
+    | `pppoe_user`    | string  | Exact PPPoE username                                                       |
+    | `wan_mac`       | string  | Exact WAN MAC address                                                      |
+    | `label`         | table   | Devices with all the labels listed, e.g. `{ { name = "City", value = "SP" } }` |
+
+    `sn` and `sn_v2` look up a single device, so they can't be combined with other filters.
+
+    Sorting and pagination options:
+
+    * `status_order`, `last_seen_order` or `uptime_order` \[string]: `"asc"` or `"desc"`. Only one sort can be used at a time. Defaults to `status_order = "asc"`.
+    * `page_number` \[integer]: page to return, starting at `0`. Defaults to `0`.
+    * `page_size` \[integer]: devices per page, from `1` to `100`. Defaults to `20`.
+
+    An unknown filter name or a value of the wrong type returns an error instead of listing devices.
+
+Return:
+
+A _table_ is always returned:
+
+```json
+{
+    "ok": true,
+    "error_message": "",
+    "error_code": 200,
+    "total": 45,
+    "page": 0,
+    "size": 20,
+    "pages": 3,
+    "devices": [
+        {
+            "sn": "HUAWNFYC-35454645",
+            "sn_v2": "35454645",
+            "model": "WS7001-40",
+            "vendor": "Huawei Technologies Co., Ltd.",
+            "version": "",
+            "product_class": "Huawei",
+            "alias": "",
+            "status": 2,
+            "cwmp": true,
+            "usp": false,
+            "data_model": "TR-181",
+            "pppoe_user": "customer123",
+            "public_ip": "200.10.20.30",
+            "ipv6": "",
+            "connection_ip": "200.10.20.30",
+            "wan_mac": "AA:BB:CC:DD:EE:FF",
+            "label": "[{\"name\":\"City\",\"value\":\"SP\"}]",
+            "uptime": 3600,
+            "last_seen": "2026-10-08T12:00:00Z",
+            "created_at": "2025-03-14T09:30:00Z"
+        }
+    ]
+}
+```
+
+* `total` is the number of devices matching the filters, across all pages; `pages` is the number of pages for the chosen `page_size`.
+* When no device matches, or `page_number` is past the last page, `ok` is `true` and `devices` is empty.
+* When `ok` is `false`, `error_message` and `error_code` explain why: `400` for invalid filters, `503` when the device service isn't available.
+* `last_seen` and `created_at` are RFC 3339 dates in UTC, and are absent when unknown.
+
+Example:
+
+{% tabs %}
+{% tab title="Single page" %}
+```lua
+local result = list_devices({ vendor = "Zyxel", status = 2, protocol = "tr069" })
+if not result.ok then
+    print("Failed to list devices: " .. result.error_message)
+    return
+end
+
+print(result.total .. " devices found")
+for _, device in ipairs(result.devices) do
+    print(device.sn .. " | " .. device.model .. " | " .. device.version)
+end
+```
+{% endtab %}
+
+{% tab title="All pages" %}
+```lua
+local page = 0
+while true do
+    local result = list_devices({
+        model = "EX5601-T0",
+        label = { { name = "City", value = "SP" } },
+        page_number = page,
+        page_size = 100,
+    })
+    if not result.ok then
+        print("Failed to list devices: " .. result.error_message)
+        break
+    end
+    if #result.devices == 0 then
+        break
+    end
+
+    for _, device in ipairs(result.devices) do
+        refresh_device_parameters(device.sn)
+    end
+    page = page + 1
+end
+```
+{% endtab %}
+{% endtabs %}
+
+{% hint style="info" %}
+Pages are read one at a time, so devices that change while the script runs can move between pages. If the changes your script makes remove devices from the filter (e.g. filtering by `version` and upgrading the firmware), always request `page_number = 0` until no devices are left, otherwise part of the devices are skipped. In that case, stop once a page only returns devices the script already tried, so devices that fail don't keep the loop running forever.
+{% endhint %}
 
 ### refresh\_device\_parameters()
 
