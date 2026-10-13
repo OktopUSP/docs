@@ -56,7 +56,10 @@ What that means for your script:
     Request body to be sent to the CPE.\
     Current supported bodies are : \
     \- Get\
-    \- Set
+    \- Set\
+    \- Add\
+    \- Delete\
+    \- Operate
 
 Return:
 
