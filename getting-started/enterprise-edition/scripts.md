@@ -808,6 +808,118 @@ else
 end
 ```
 
+### get\_device\_labels()
+
+Get the labels of a device.
+
+Labels are `name`:`value` pairs, and a label can have labels of its own in `children`, forming a tree (e.g. `condominium:residencial > block:A > floor:331`). Labels named `connection` are added and removed by Oktopus from the results of the Connection Requests sent to the device (`connection:timeout`, `connection:cpe busy`, ...).
+
+#### Params:
+
+1.  Serial Number \[string]
+
+    The CPE unique identifier.
+
+Return:
+
+A table with `ok` \[boolean], `error_message` \[string], `error_code` \[number] and, when `ok` is true, `labels` \[table]: a list of labels, each one with `name` \[string], `value` \[string] and, when it has labels of its own, `children` \[table] in the same format. A device without labels returns an empty list. An unknown device returns `error_code` 404.
+
+[get\_device()](scripts.md#get_device) also returns the labels, in its `label` field, as JSON text.
+
+Example:
+
+```lua
+local function print_labels(labels, indent)
+    indent = indent or ""
+    for _, label in ipairs(labels) do
+        print(indent .. label.name .. ":" .. label.value)
+        if label.children then
+            print_labels(label.children, indent .. "  ")
+        end
+    end
+end
+
+local result = get_device_labels("HUAWNFYC-35454645")
+if result.ok then
+    print_labels(result.labels)
+else
+    print("Failed to get labels: " .. result.error_message)
+end
+```
+
+### change\_device\_labels()
+
+Add, remove and move labels of a device, leaving its other labels as they are.
+
+The changes are applied to the labels stored when the call is handled, so a `connection` label Oktopus adds or removes at the same time is kept. Prefer it to [set\_device\_labels()](scripts.md#set_device_labels) when the script only cares about some labels.
+
+#### Params:
+
+1.  Serial Number \[string]
+
+    The CPE unique identifier.
+2.  Changes \[table]
+
+    *   `add` \[table, optional]: labels to add, each one a table with `name` and `value` and, to nest it, `parent`: a table with the `name` and `value` of a label the device has or that is added in the same call. Adding a label the device already has moves it, with its children, under `parent`, or to the top level without `parent`.
+    *   `remove` \[table, optional]: labels to remove, each one a table with `name` and `value`. Their children move to the removed label's parent. Removing a label the device doesn't have changes nothing.
+
+Names and values are strings of up to 100 characters; numbers are taken as text (`value = 331` is `"331"`). A `name`:`value` pair appears once per device, a label can't be nested under itself or one of its children, `connection` labels stay at the top level, and a device has at most 50 labels.
+
+Return:
+
+A table with `ok` \[boolean], `error_message` \[string] and `error_code` \[number]. When a change breaks a rule, `error_code` is 400, `error_message` says why and no label is changed.
+
+Example:
+
+```lua
+local result = change_device_labels("HUAWNFYC-35454645", {
+    add = {
+        { name = "condominium", value = "residencial" },
+        { name = "block", value = "A", parent = { name = "condominium", value = "residencial" } },
+        { name = "floor", value = "331", parent = { name = "block", value = "A" } },
+    },
+    remove = {
+        { name = "plan", value = "300 mega" },
+    },
+})
+if not result.ok then
+    print("Failed to change labels: " .. result.error_message)
+end
+```
+
+### set\_device\_labels()
+
+Replace all the labels of a device, the `connection` ones included, with a list of labels.
+
+#### Params:
+
+1.  Serial Number \[string]
+
+    The CPE unique identifier.
+2.  Labels \[table]
+
+    A list of labels in the format [get\_device\_labels()](scripts.md#get_device_labels) returns: each one a table with `name`, `value` and, optionally, `children`. An empty list removes all the labels.
+
+The same rules as [change\_device\_labels()](scripts.md#change_device_labels) apply.
+
+Return:
+
+A table with `ok` \[boolean], `error_message` \[string] and `error_code` \[number].
+
+Example:
+
+```lua
+local result = set_device_labels("HUAWNFYC-35454645", {
+    { name = "condominium", value = "residencial", children = {
+        { name = "block", value = "A" },
+    } },
+    { name = "plan", value = "500 mega" },
+})
+if not result.ok then
+    print("Failed to set labels: " .. result.error_message)
+end
+```
+
 ### get\_all\_devices()
 
 Retrieve all devices saved on the database.
