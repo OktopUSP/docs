@@ -667,7 +667,7 @@ Set through the `usp_events` field, which lists one or both of these USP notific
 | `onboard`     | `OnBoardRequest` | On its first connection to the controller, or after a factory reset  |
 | `event.Boot!` | `Boot!` Event    | Every time the device boots                                           |
 
-`onboard` is the USP equivalent of `0 - BOOTSTRAP`. Scripts talk to USP devices with [`send_usp_message`](#cpe-interaction-functions).
+`onboard` is the USP equivalent of `0 - BOOTSTRAP`. A device only sends `Boot!` if it has a subscription for it: an entry in `Device.LocalAgent.Subscription.` with `NotifType` set to `Event` and `ReferenceList` set to `Device.Boot!`. Scripts talk to USP devices with [`send_usp_message`](#cpe-interaction-functions).
 
 Example of a service definition triggered when a USP device onboards:
 
