@@ -31,7 +31,7 @@ The "custom functions" will be detailed above in the next topics as just "functi
 
 ### Event listener concurrency
 
-[listen\_to\_cwmp\_event()](scripts.md#listen_to_cwmp_event) and [listen\_to\_new\_device()](scripts.md#listen_to_new_device) are _listeners_: they subscribe to a stream of events and run your callback once per event. How a listener processes events concurrently matters when you write the script.
+[listen\_to\_cwmp\_event()](scripts.md#listen_to_cwmp_event), [listen\_to\_usp\_event()](scripts.md#listen_to_usp_event) and [listen\_to\_new\_device()](scripts.md#listen_to_new_device) are _listeners_: they subscribe to a stream of events and run your callback once per event. How a listener processes events concurrently matters when you write the script.
 
 Each unit of parallelism is a **fully isolated Lua VM** running its own copy of the script. When a listener asks for parallelism `N`, Oktopus starts `N` independent VMs and load-balances incoming events across them — every event is handled by exactly one VM, and each VM handles one event at a time. The VMs never share Lua state with each other.
 
@@ -56,7 +56,10 @@ What that means for your script:
     Request body to be sent to the CPE.\
     Current supported bodies are : \
     \- Get\
-    \- Set
+    \- Set\
+    \- Add\
+    \- Delete\
+    \- Operate
 
 Return:
 
@@ -508,6 +511,67 @@ end
 listen_to_cwmp_event("*", "*", listen_to_cwmp_event_callback, 10, true)
 ```
 
+### listen\_to\_usp\_event()
+
+Listen to TR-369 (USP) notifications sent by the devices: `OnBoardRequest` and `Event` notifications.
+
+A device sends `OnBoardRequest` on its own, but it only sends an `Event` it has a subscription for. For example, to receive `Boot!`, the device needs an entry in `Device.LocalAgent.Subscription.` with `NotifType` set to `Event` and `ReferenceList` set to `Device.Boot!`, which a script can create with [send\_usp\_message()](scripts.md#send_usp_message).
+
+#### Params:
+
+1.  Event \[string] (optional)\
+    Possible events:
+
+    ```
+    "onboard"            - OnBoardRequest
+    "event.<event_name>" - Event with that name, e.g. "event.Boot!", "event.Periodic!"
+    "event.*"            - Any Event
+    ```
+
+    If no value is set or the value is "\*", than it listens to all events.
+2. Agent Endpoint ID \[string] (optional)\
+   USP device unique identifier. If it's not set or the value is "\*", then it listens to all devices event(s).
+3. Callback function (required)
+4. Parallelism \[integer] (optional)\
+   Number of isolated Lua VMs the listener runs to process events concurrently, as for [listen\_to\_cwmp\_event()](scripts.md#listen_to_cwmp_event). Defaults to `1`. See [Event listener concurrency](scripts.md#event-listener-concurrency).
+5. Discard if processing \[boolean] (optional)\
+   When `true`, an incoming event for a device that already has an event being processed is discarded instead of being handled. Defaults to `false`.
+
+Return:
+
+`notify` is the USP Notify message as sent by the device, in JSON (protojson) format.
+
+```json
+{
+    "serial_number": "os::012345-ABC",
+    "event": "event.Boot!",
+    "notify": {
+        "subscriptionId": "boot",
+        "event": {
+            "objPath": "Device.",
+            "eventName": "Boot!",
+            "params": {
+                "Cause": "LocalReboot",
+                "FirmwareUpdated": "false"
+            }
+        }
+    }
+}
+```
+
+Example:
+
+```lua
+function listen_to_usp_event_callback(usp_event)
+    if usp_event.event == "onboard" then
+        print("Device onboarded: " .. usp_event.serial_number)
+    else
+        print("Device " .. usp_event.serial_number .. " sent " .. usp_event.notify.event.eventName)
+    end
+end
+listen_to_usp_event("*", "*", listen_to_usp_event_callback)
+```
+
 ### get\_device()
 
 Get device attributes from its unique identifier.
@@ -611,7 +675,7 @@ end
 
 Run a callback on a schedule, e.g. every day at 03:00 or every Monday at 08:30. Unlike a `while true` loop with [sleep()](scripts.md#sleep), runs happen at fixed times of the day and don't drift.
 
-`cron()` never returns while the script is running, the same way the listeners don't. It must be the last statement of the script, a script can have only one `cron()` call, and it can't be combined with [listen\_to\_cwmp\_event()](scripts.md#listen_to_cwmp_event) or [listen\_to\_new\_device()](scripts.md#listen_to_new_device): whichever comes first blocks the other.
+`cron()` never returns while the script is running, the same way the listeners don't. It must be the last statement of the script, a script can have only one `cron()` call, and it can't be combined with [listen\_to\_cwmp\_event()](scripts.md#listen_to_cwmp_event), [listen\_to\_usp\_event()](scripts.md#listen_to_usp_event) or [listen\_to\_new\_device()](scripts.md#listen_to_new_device): whichever comes first blocks the other.
 
 #### Params:
 

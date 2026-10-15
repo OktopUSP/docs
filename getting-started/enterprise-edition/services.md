@@ -272,6 +272,68 @@ end
 
 ***
 
+**`send_usp_message(device_id, message_body)`**
+
+Sends a TR-369 (USP) message to the device and **blocks until the device answers** (or the request times out). The device must be online and connected to the controller through at least one USP MTP (MQTT or WebSocket).
+
+**Parameters:**
+
+* `device_id` (string): The USP agent endpoint ID of the target device (e.g. `os::012345-ABC`)
+* `message_body` (string): The USP message in JSON format (protojson). Supported requests: Get, Set, Add, Delete and Operate
+
+**Returns:**
+
+* If the device isn't found, isn't online, the request times out or the device answers with an error: a _table_ with `error_message` and `error_code`.
+* Otherwise, a _table_ whose keys are the full parameter paths of the answer:
+  * Get: each returned parameter with its value, e.g. `result["Device.DeviceInfo.SerialNumber"]`
+  * Set: each updated parameter with its new value
+  * Add: the unique keys of the created instance
+  * Delete: each deleted path, with an empty value
+  * Operate: no keys when the command succeeds
+
+**Example:**
+
+```lua
+-- Set the Wi-Fi SSID, then verify it was actually applied on the device
+local set_msg = [[
+{
+  "header": {"msgId": "set-ssid", "msgType": "SET"},
+  "body": {"request": {"set": {
+    "allowPartial": false,
+    "updateObjs": [{
+      "objPath": "Device.WiFi.SSID.1.",
+      "paramSettings": [{"param": "SSID", "value": "]] .. get_variable_value("ssid") .. [[", "required": true}]
+    }]
+  }}}
+}
+]]
+
+local set_result = send_usp_message(get_device_id(), set_msg)
+if set_result["error_message"] ~= nil then
+    print("Failed to set SSID: " .. set_result["error_message"])
+    set_provisioning_status("failed")
+    return
+end
+
+local get_msg = [[
+{
+  "header": {"msgId": "get-ssid", "msgType": "GET"},
+  "body": {"request": {"get": {"paramPaths": ["Device.WiFi.SSID.1.SSID"]}}}
+}
+]]
+
+local verification = send_usp_message(get_device_id(), get_msg)
+if verification["Device.WiFi.SSID.1.SSID"] == get_variable_value("ssid") then
+    print("SSID verified successfully")
+    set_provisioning_status("provisioned")
+else
+    print("SSID verification failed, got: " .. tostring(verification["Device.WiFi.SSID.1.SSID"]))
+    set_provisioning_status("failed")
+end
+```
+
+***
+
 #### Utility Functions
 
 **`sleep(seconds)`**
@@ -568,11 +630,17 @@ end
 
 ## Service Instances
 
-The service instance is the attachment of a service to a CPE, defining the specific variable values for that equipment. It's applied automatically whenever the CPE sends one of the CWMP events configured on its service definition — for example, on first connection or after a factory reset — or on demand at any time, see [Manual Execution](#manual-execution) below.
+The service instance is the attachment of a service to a CPE, defining the specific variable values for that equipment. It's applied automatically whenever the CPE sends one of the events configured on its service definition — for example, on first connection or after a factory reset — or on demand at any time, see [Manual Execution](#manual-execution) below.
+
+For a TR-369 (USP) device, the instance's device ID must be the device's USP agent endpoint ID (e.g. `os::012345-ABC`).
 
 ### Trigger Events
 
-Each service definition declares, via its `events` field, which CWMP events cause Oktopus to automatically apply it to the CPEs attached to it. A definition can list one or more of the standard TR-069 event codes:
+Each service definition picks a **protocol**, TR-069 (CWMP) or TR-369 (USP), and the events of that protocol that cause Oktopus to automatically apply it to the CPEs attached to it. A definition uses one protocol only: it can't be triggered by both CWMP and USP events.
+
+#### TR-069 (CWMP)
+
+Set through the `events` field, which lists one or more of the standard TR-069 event codes:
 
 | Code | Event                         |
 | ---- | ----------------------------- |
@@ -590,11 +658,35 @@ Each service definition declares, via its `events` field, which CWMP events caus
 
 The most common choice is `0 - BOOTSTRAP`, which fires on the CPE's first connection or after a factory reset — this is what makes zero-touch provisioning "zero touch." A definition isn't limited to one event: for example, listing both `0` and `2` re-applies the service both on first contact and whenever the CPE issues a Periodic Inform.
 
-A service definition can also declare **no events at all**. In that case it never runs automatically — it only executes when explicitly triggered, see [Manual Execution](#manual-execution) below.
+#### TR-369 (USP)
+
+Set through the `usp_events` field, which lists one or both of these USP notifications:
+
+| Value         | Notification     | When the device sends it                                              |
+| ------------- | ---------------- | --------------------------------------------------------------------- |
+| `onboard`     | `OnBoardRequest` | On its first connection to the controller, or after a factory reset  |
+| `event.Boot!` | `Boot!` Event    | Every time the device boots                                           |
+
+`onboard` is the USP equivalent of `0 - BOOTSTRAP`. A device only sends `Boot!` if it has a subscription for it: an entry in `Device.LocalAgent.Subscription.` with `NotifType` set to `Event` and `ReferenceList` set to `Device.Boot!`. Scripts talk to USP devices with [`send_usp_message`](#cpe-interaction-functions).
+
+Example of a service definition triggered when a USP device onboards:
+
+```json
+{
+  "name": "usp-onboarding",
+  "script": "...",
+  "variables": [],
+  "usp_events": ["onboard"]
+}
+```
+
+#### Manual Apply
+
+A service definition marked as **Manual Apply** has no trigger events, so it never runs automatically — it only executes when explicitly triggered, see [Manual Execution](#manual-execution) below. In the service definition form, checking **Manual Apply** disables the protocol and event choices. Through the API, it is a definition with both `events` and `usp_events` empty.
 
 ### Manual Execution
 
-Independent of its configured trigger events (if any), a service instance can always be executed on demand, immediately, without waiting for its trigger event to fire. This is the **only** way a manual-only service definition (one with no `events` configured) is ever executed.
+Independent of its configured trigger events (if any), a service instance can always be executed on demand, immediately, without waiting for its trigger event to fire. This is the **only** way a Manual Apply service definition is ever executed.
 
 ### Status
 
@@ -609,13 +701,15 @@ The service attached to the CPE has a few statuses:
 
 After learning the concepts, let's understand how it works in a real use case.&#x20;
 
-### Configure the CPE to connect to the ACS
+### Configure the CPE to connect to the ACS or USP Controller
 
-The CPE must have a way to connect to the Controller system. You can use one of these options:
+The CPE must have a way to connect to the Controller system. For TR-069, you can use one of these options:
 
 * Firmware with ACS pre-configured
 * DHCP with option 43
 * PPPoE reply with ACS server URL
+
+For TR-369, the agent must be configured to reach the USP Controller through one of its MTPs (MQTT or WebSocket), for example with the firmware pre-configured.
 
 {% stepper %}
 {% step %}
@@ -627,7 +721,7 @@ Manually insert a new device with its unique identifier (e.g, serial number, age
 {% step %}
 ### Create a service definition
 
-Write the Lua scripts and necessary variables to apply that service to the CPE.
+Write the Lua scripts and necessary variables to apply that service to the CPE, and choose the protocol and the events that trigger it, or mark it as Manual Apply.
 {% endstep %}
 
 {% step %}
@@ -639,6 +733,6 @@ Associate the CPE with a service, with its specific variable values for that dev
 {% step %}
 ### Plug the CPE into the network
 
-As the CPE already has the ACS configured and a connection to it, all services will be provisioned when it establishes communication with the controller system, and the device will come online with the customer's specific configuration.
+As the CPE already has the ACS or USP Controller configured and a connection to it, all services will be provisioned when it establishes communication with the controller system, and the device will come online with the customer's specific configuration.
 {% endstep %}
 {% endstepper %}
