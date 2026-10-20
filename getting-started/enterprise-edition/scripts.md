@@ -73,7 +73,7 @@ Every device table returned by the functions also tells which protocols the CPE 
 To check whether a message can reach the CPE right now, use `usp_online` / `cwmp_online`, not `usp` / `cwmp`:
 
 ```lua
-local device = get_device("S240Y12079892")
+local device = get_device("S240Y00000002")
 if type(device) ~= "table" then
     print("device not found")
 elseif device.usp_online then
@@ -661,9 +661,9 @@ If the CPE was not found in the database the function returns a boolean with fal
 {% tab title="Dual-stack" %}
 ```json
 {
-    "sn": "S240Y45001031",
-    "sn_v2": "S240Y45001031",
-    "usp_endpoint_id": "os::909F22-S240Y45001031",
+    "sn": "S240Y00000001",
+    "sn_v2": "S240Y00000001",
+    "usp_endpoint_id": "os::AABBCC-S240Y00000001",
     "model": "EX5601-T0",
     "vendor": "Zyxel",
     "version": "V5.70(ACDZ.6.2)C0",
@@ -962,7 +962,7 @@ Example:
 
 ```lua
 -- after the CPE is connected over TR-369 and CWMP was disabled on it
-local serial_number = "S240Y45001031"
+local serial_number = "S240Y00000001"
 local ok, err = remove_device_protocol(serial_number, "cwmp")
 if ok then
   print(serial_number .. " | TR-069 side removed, device kept on TR-369")
@@ -1141,9 +1141,9 @@ List of device objects.
         "preferred_protocol": "cwmp"
     },
     {
-        "sn": "S240Y12079892",
-        "sn_v2": "S240Y12079892",
-        "usp_endpoint_id": "os::909F22-S240Y12079892",
+        "sn": "S240Y00000002",
+        "sn_v2": "S240Y00000002",
+        "usp_endpoint_id": "os::AABBCC-S240Y00000002",
         "model": "EX5601-T0",
         "vendor": "Zyxel",
         "version": "V5.70(ACDZ.6.2)C0",
