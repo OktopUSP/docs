@@ -42,15 +42,61 @@ What that means for your script:
 * **Parallelism is a hard resource limit.** Each VM is a real interpreter with its own memory. The requested value is capped by the `MAX_LISTENER_PARALLELISM` setting (default `64`); larger requests are clamped and a warning is logged.
 * Running more than one instance of the scripts service is safe — the instances share one pool per listener and balance events between them.
 
+### Devices on TR-069 and TR-369
+
+A CPE is **one device** in Oktopus, whether it connects over TR-069 (CWMP), TR-369 (USP) or both at the same time (_dual-stack_). Each device has three identifiers:
+
+| Field             | What it is                                                                                                   |
+| ----------------- | ------------------------------------------------------------------------------------------------------------ |
+| `sn`              | The device key: the serial number the ACS knows the CPE by, or the serial number reported over USP for a TR-369-only CPE |
+| `sn_v2`           | The serial number the CPE reports (over USP, or the same as `sn`)                                            |
+| `usp_endpoint_id` | The USP Agent Endpoint ID (e.g. `os::012345-ABC`); empty for a TR-069-only CPE                                |
+
+**Every function that takes a device identifier accepts any of the three.** Each protocol is still addressed with its own identifier behind the scenes: [send\_cwmp\_message()](scripts.md#send_cwmp_message) talks to the ACS with the serial number and [send\_usp\_message()](scripts.md#send_usp_message) talks to the agent with the Endpoint ID, whatever identifier the script passes.
+
+{% hint style="warning" %}
+Don't use `sn` where the protocol needs the Endpoint ID. Values written to the CPE that carry the Endpoint ID — such as the MQTT topics `oktopus/usp/v1/agent/<id>`, `oktopus/usp/v1/notify/<id>` and `oktopus/usp/v1/bulkdata/<id>` — must use `usp_endpoint_id`. Before the dual-stack release `sn` held the Endpoint ID for TR-369 devices; it now holds the serial number.
+{% endhint %}
+
+Every device table returned by the functions also tells which protocols the CPE has and which ones are online:
+
+| Field                | Type    | Meaning                                                                                                                        |
+| -------------------- | ------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `status`             | integer | The device as a whole: `2` (online) when at least one of its connections is online                                            |
+| `protocol`           | string  | `"tr069"`, `"tr369"` or `"dual-stack"`                                                                                         |
+| `cwmp`               | boolean | The CPE is known to the ACS (TR-069), even if that connection is down right now                                                 |
+| `usp`                | boolean | The CPE is known over TR-369, even if that connection is down right now                                                         |
+| `cwmp_online`        | boolean | The TR-069 connection is online                                                                                                |
+| `usp_online`         | boolean | The TR-369 connection is online                                                                                                |
+| `preferred_protocol` | string  | The protocol to talk to the CPE with: `"usp"` when TR-369 is online, otherwise `"cwmp"` when the ACS knows the CPE, otherwise `"usp"` |
+
+To check whether a message can reach the CPE right now, use `usp_online` / `cwmp_online`, not `usp` / `cwmp`:
+
+```lua
+local device = get_device("S240Y12079892")
+if type(device) ~= "table" then
+    print("device not found")
+elseif device.usp_online then
+    -- TR-369 is up: talk USP; topics carry the Endpoint ID
+    print("notify topic: oktopus/usp/v1/notify/" .. device.usp_endpoint_id)
+elseif device.cwmp_online then
+    -- TR-369 is down (or the CPE is TR-069 only): use send_cwmp_message()
+    print("using TR-069 for " .. device.sn)
+elseif device.cwmp then
+    -- no connection is up: send_cwmp_async_message() delivers on the next Inform
+    print("queueing for the next TR-069 session of " .. device.sn)
+end
+```
+
 ## Functions
 
 ### send\_usp\_message()
 
 #### Params:
 
-1.  Serial Number \[string]
+1.  Device identifier \[string]
 
-    The CPE unique identifier.
+    Serial number, `sn_v2` or USP Agent Endpoint ID of the CPE (see [Devices on TR-069 and TR-369](scripts.md#devices-on-tr-069-and-tr-369)). The message is sent to the CPE's Endpoint ID; the TR-369 connection must be online (`usp_online`).
 2.  JSON payload \[string]
 
     Request body to be sent to the CPE.\
@@ -265,9 +311,9 @@ end
 
 #### Params:
 
-1.  Serial Number \[string]
+1.  Device identifier \[string]
 
-    The CPE unique identifier.
+    Serial number, `sn_v2` or USP Agent Endpoint ID of the CPE (see [Devices on TR-069 and TR-369](scripts.md#devices-on-tr-069-and-tr-369)). The RPC is sent to the ACS with the serial number the ACS knows the CPE by, so a dual-stack CPE can be addressed by its Endpoint ID too.
 2.  XML payload \[string]
 
     Request body to be sent to the CPE.
@@ -472,8 +518,8 @@ Listen to TR-069 events as defined in the standard.
     ```
 
     If no value is set or the value is "\*", than it listens to all events.
-2. Serial Number \[string] (optional)\
-   CPE unique identifier. If it's not set or the value is "\*", then it listens to all CPEs event(s).
+2. Device identifier \[string] (optional)\
+   Serial number, `sn_v2` or USP Agent Endpoint ID of the CPE. If it's not set or the value is "\*", then it listens to all CPEs event(s).
 3. Callback function (required)
 4. Parallelism \[integer] (optional)\
    Number of isolated Lua VMs the listener runs to process events concurrently. Defaults to `1` (one event at a time). Capped by the `MAX_LISTENER_PARALLELISM` setting (default `64`). See [Event listener concurrency](scripts.md#event-listener-concurrency).
@@ -488,6 +534,8 @@ Return:
     "event": "0"
 }
 ```
+
+`serial_number` is the serial number the ACS knows the CPE by (the device `sn`).
 
 Example:
 
@@ -529,8 +577,8 @@ A device sends `OnBoardRequest` on its own, but it only sends an `Event` it has 
     ```
 
     If no value is set or the value is "\*", than it listens to all events.
-2. Agent Endpoint ID \[string] (optional)\
-   USP device unique identifier. If it's not set or the value is "\*", then it listens to all devices event(s).
+2. Device identifier \[string] (optional)\
+   USP Agent Endpoint ID, serial number or `sn_v2` of the CPE. If it's not set or the value is "\*", then it listens to all devices event(s).
 3. Callback function (required)
 4. Parallelism \[integer] (optional)\
    Number of isolated Lua VMs the listener runs to process events concurrently, as for [listen\_to\_cwmp\_event()](scripts.md#listen_to_cwmp_event). Defaults to `1`. See [Event listener concurrency](scripts.md#event-listener-concurrency).
@@ -539,7 +587,7 @@ A device sends `OnBoardRequest` on its own, but it only sends an `Event` it has 
 
 Return:
 
-`notify` is the USP Notify message as sent by the device, in JSON (protojson) format.
+`notify` is the USP Notify message as sent by the device, in JSON (protojson) format. `serial_number` is the USP Agent Endpoint ID of the device that sent it (its `usp_endpoint_id`).
 
 ```json
 {
@@ -574,32 +622,67 @@ listen_to_usp_event("*", "*", listen_to_usp_event_callback)
 
 ### get\_device()
 
-Get device attributes from its unique identifier.
+Get device attributes from any of its identifiers.
 
 #### Params:
 
-1.  Serial Number \[string]
+1.  Device identifier \[string]
 
-    The CPE unique identifier.
+    Serial number, `sn_v2` or USP Agent Endpoint ID of the CPE. All of them return the same device (see [Devices on TR-069 and TR-369](scripts.md#devices-on-tr-069-and-tr-369)).
 
 Return:
 
 If the CPE was not found in the database the function returns a boolean with false value. In case the CPE is found it returns a table with all attributes:
 
+{% tabs %}
+{% tab title="TR-069" %}
 ```json
 {
     "sn": "HUAWNFYC-35454645",
+    "sn_v2": "HUAWNFYC-35454645",
+    "usp_endpoint_id": "",
     "model": "WS7001-40",
     "vendor": "Huawei Technologies Co., Ltd.",
     "version": "",
     "product_class": "Huawei",
     "alias": "",
     "status": 2,
+    "protocol": "tr069",
     "cwmp": true,
     "usp": false,
+    "cwmp_online": true,
+    "usp_online": false,
+    "preferred_protocol": "cwmp",
     "data_model": "TR-098"
 }
 ```
+{% endtab %}
+
+{% tab title="Dual-stack" %}
+```json
+{
+    "sn": "S240Y45001031",
+    "sn_v2": "S240Y45001031",
+    "usp_endpoint_id": "os::909F22-S240Y45001031",
+    "model": "EX5601-T0",
+    "vendor": "Zyxel",
+    "version": "V5.70(ACDZ.6.2)C0",
+    "product_class": "EX5601-T0",
+    "alias": "",
+    "status": 2,
+    "protocol": "dual-stack",
+    "cwmp": true,
+    "usp": true,
+    "cwmp_online": false,
+    "usp_online": true,
+    "preferred_protocol": "usp",
+    "data_model": "TR-181"
+}
+```
+{% endtab %}
+{% endtabs %}
+
+See [Devices on TR-069 and TR-369](scripts.md#devices-on-tr-069-and-tr-369) for the meaning of the identifier and protocol fields.
 
 `data_model` reflects the CWMP root data model reported by the CPE, either `"TR-098"` (`InternetGatewayDevice.`) or `"TR-181"` (`Device.`); it is empty for USP-only devices.
 
@@ -628,16 +711,24 @@ Receive all new device attributes that connect to Oktopus, independent of the pr
     ```json
     {
         "sn": "HUAWNFYC-35454645",
+        "sn_v2": "HUAWNFYC-35454645",
+        "usp_endpoint_id": "",
         "model": "WS7001-40",
         "vendor": "Huawei Technologies Co., Ltd.",
         "version": "",
         "product_class": "Huawei",
         "alias": "",
         "status": 2,
+        "protocol": "tr069",
         "cwmp": true,
-        "usp": false
+        "usp": false,
+        "cwmp_online": true,
+        "usp_online": false,
+        "preferred_protocol": "cwmp"
     }
     ```
+
+    A CPE already known on one protocol that connects over the other one is the same device, not a new one.
 2.  Parallelism \[integer] (optional)
 
     Number of isolated Lua VMs the listener runs to process events concurrently, as for [listen\_to\_cwmp\_event()](scripts.md#listen_to_cwmp_event). Defaults to `1`. See [Event listener concurrency](scripts.md#event-listener-concurrency).
@@ -819,13 +910,15 @@ end
 
 ### delete\_device()
 
-Remove device from database.
+Remove the device from the database, **with all its connections**: a dual-stack CPE loses both its TR-069 and its TR-369 side, and the ACS forgets it. The device shows up again only when it reconnects, without its alias, labels or map location.
+
+To drop only one protocol of a CPE — e.g. its TR-069 side after migrating it to TR-369 — use [remove\_device\_protocol()](scripts.md#remove_device_protocol) instead.
 
 #### Params:
 
-1.  Serial Number \[string]
+1.  Device identifier \[string]
 
-    The unique identifier of the CPE to be removed.
+    Serial number, `sn_v2` or USP Agent Endpoint ID of the CPE to be removed.
 
 Return:
 
@@ -839,6 +932,42 @@ if delete_device(sn) then
   print("device " .. sn .. " successfully deleted")
 else
   print("error to delete device ".. sn)
+end
+```
+
+### remove\_device\_protocol()
+
+Remove one protocol from a device and keep the other one. Use it after migrating a CPE from TR-069 to TR-369 (or the other way round), so the device keeps its TR-369 side, alias, labels and map location while its old connection is dropped.
+
+* `"cwmp"` removes the TR-069 side: the ACS forgets the CPE and the device is no longer `cwmp`. If the CPE calls the ACS again, it is registered back on the same device.
+* `"usp"` removes the TR-369 side: its connections and its Endpoint ID.
+
+The device status is recalculated from the connection left. If the CPE had no other protocol, the device is removed, as with [delete\_device()](scripts.md#delete_device).
+
+#### Params:
+
+1.  Device identifier \[string]
+
+    Serial number, `sn_v2` or USP Agent Endpoint ID of the CPE.
+2.  Protocol \[string]
+
+    `"cwmp"` or `"usp"`.
+
+Return:
+
+* `true` when the protocol was removed.
+* `false` and an error message otherwise, e.g. `"Device not found (code 404)"`, `"device is not linked on that protocol (code 400)"` or a usage error for an invalid protocol.
+
+Example:
+
+```lua
+-- after the CPE is connected over TR-369 and CWMP was disabled on it
+local serial_number = "S240Y45001031"
+local ok, err = remove_device_protocol(serial_number, "cwmp")
+if ok then
+  print(serial_number .. " | TR-069 side removed, device kept on TR-369")
+else
+  print(serial_number .. " | failed to remove the TR-069 side: " .. err)
 end
 ```
 
@@ -992,32 +1121,47 @@ Return:
 
 List of device objects.
 
-<pre class="language-json"><code class="lang-json"><strong>[
-</strong><strong>    {
-</strong>        "sn": "HUAWNFYC-35454645",
+```json
+[
+    {
+        "sn": "HUAWNFYC-35454645",
+        "sn_v2": "HUAWNFYC-35454645",
+        "usp_endpoint_id": "",
         "model": "WS7001-40",
         "vendor": "Huawei Technologies Co., Ltd.",
         "version": "",
         "product_class": "Huawei",
         "alias": "",
         "status": 2,
+        "protocol": "tr069",
         "cwmp": true,
-        "usp": false
+        "usp": false,
+        "cwmp_online": true,
+        "usp_online": false,
+        "preferred_protocol": "cwmp"
     },
     {
-        "sn": "HUAWNFYC-test",
-        "model": "WS7001-40",
-        "vendor": "Huawei Technologies Co., Ltd.",
-        "version": "",
-        "product_class": "Huawei",
+        "sn": "S240Y12079892",
+        "sn_v2": "S240Y12079892",
+        "usp_endpoint_id": "os::909F22-S240Y12079892",
+        "model": "EX5601-T0",
+        "vendor": "Zyxel",
+        "version": "V5.70(ACDZ.6.2)C0",
+        "product_class": "EX5601-T0",
         "alias": "",
         "status": 2,
-        "cwmp": true,
-        "usp": false
+        "protocol": "tr369",
+        "cwmp": false,
+        "usp": true,
+        "cwmp_online": false,
+        "usp_online": true,
+        "preferred_protocol": "usp"
     },
     ...
 ]
-</code></pre>
+```
+
+A dual-stack CPE is listed once.
 
 Example:
 
@@ -1042,7 +1186,7 @@ List the devices that match a set of filters, one page at a time. It accepts the
 
     | Filter          | Type    | Matches                                                                    |
     | --------------- | ------- | -------------------------------------------------------------------------- |
-    | `sn`            | string  | Exact serial number / USP agent endpoint id                                |
+    | `sn`            | string  | Exact serial number or USP Agent Endpoint ID                               |
     | `sn_v2`         | string  | Exact device serial number                                                 |
     | `vendor`        | string  | Exact vendor                                                               |
     | `model`         | string  | Exact model                                                                |
@@ -1050,7 +1194,7 @@ List the devices that match a set of filters, one page at a time. It accepts the
     | `type`          | string  | Exact product class                                                        |
     | `alias`         | string  | Alias containing the text, case insensitive                                |
     | `status`        | integer | `0` offline, `1` associating, `2` online, `3` unknown                      |
-    | `protocol`      | string  | `"tr069"` (CWMP) or `"tr369"` (USP)                                        |
+    | `protocol`      | string  | `"tr069"` (known to the ACS), `"tr369"` (known over USP) or `"dual-stack"` (both) |
     | `datamodel`     | string  | `"TR-181"` or `"TR-098"`                                                   |
     | `ip`            | string  | Exact public IP                                                            |
     | `connection_ip` | string  | Connection IP starting with the text                                       |
@@ -1059,6 +1203,8 @@ List the devices that match a set of filters, one page at a time. It accepts the
     | `label`         | table   | Devices with all the labels listed, e.g. `{ { name = "City", value = "SP" } }` |
 
     `sn` and `sn_v2` look up a single device, so they can't be combined with other filters.
+
+    With `protocol`, `status` is the status of that protocol's connection: `{ protocol = "tr369", status = 2 }` lists the CPEs whose TR-369 connection is online, including dual-stack CPEs whose TR-069 side is offline. Without `protocol`, `status` is the status of the device as a whole.
 
     Sorting and pagination options:
 
@@ -1085,14 +1231,19 @@ A _table_ is always returned:
         {
             "sn": "HUAWNFYC-35454645",
             "sn_v2": "35454645",
+            "usp_endpoint_id": "",
             "model": "WS7001-40",
             "vendor": "Huawei Technologies Co., Ltd.",
             "version": "",
             "product_class": "Huawei",
             "alias": "",
             "status": 2,
+            "protocol": "tr069",
             "cwmp": true,
             "usp": false,
+            "cwmp_online": true,
+            "usp_online": false,
+            "preferred_protocol": "cwmp",
             "data_model": "TR-181",
             "pppoe_user": "customer123",
             "public_ip": "200.10.20.30",
@@ -1493,6 +1644,8 @@ The scripts below are adapted from real-world scenario automations built by Okto
 
 Some CPE vendors ship devices with a proprietary, disabled-by-default USP agent running alongside the TR-069 agent (e.g. Zyxel's `X_ZYXEL_Enable` parameter). This is a common pattern to migrate such a fleet from CWMP to USP without a firmware upgrade: listen for CWMP events, bootstrap the on-board USP agent entirely through CWMP `SetParameterValues`/`AddObject` calls, confirm the device shows up connected over USP, then disable CWMP so the device is fully USP-managed going forward.
 
+While the migration runs the CPE is one dual-stack device: when the USP agent connects, its TR-369 side joins the device the ACS already knows. The script therefore checks `usp_online` (not `usp`, which is already `true` for a CPE known over TR-369 whose agent is down) and ends with [remove\_device\_protocol()](scripts.md#remove_device_protocol), which drops only the TR-069 side — [delete\_device()](scripts.md#delete_device) would remove the whole CPE, TR-369 side included.
+
 ```lua
 -- ---- Fill in with your own environment settings ----
 local PASSWORD_LENGTH = 30
@@ -1576,16 +1729,25 @@ local function build_set_parameter_values_xml(params)
 </soap:Envelope>]]
 end
 
--- Polls get_device() until the CPE shows up connected over USP, or gives up
+-- Polls get_device() until the CPE's TR-369 connection is online, or gives up
 local function is_device_connected_to_usp(usp_agent_endpoint_id)
     for attempt = 1, MAX_ATTEMPTS_TO_GET_DEVICE do
         sleep(TIME_TO_WAIT_FOR_USP_DEVICE_CONNECTION * attempt)
         local device = get_device(usp_agent_endpoint_id)
-        if type(device) == "table" then
-            return device.usp == true
+        if type(device) == "table" and device.usp_online then
+            return true
         end
     end
     return false
+end
+
+-- Drops the TR-069 side of the CPE and keeps its TR-369 side
+local function remove_cwmp_side(serial_number)
+    local ok, err = remove_device_protocol(serial_number, "cwmp")
+    if not ok then
+        print("SN: " .. serial_number .. " | failed to remove the TR-069 side | " .. tostring(err))
+    end
+    return ok
 end
 
 local function migrate_cpe_to_usp(serial_number)
@@ -1602,9 +1764,9 @@ local function migrate_cpe_to_usp(serial_number)
     end
 
     local existing_device = get_device(usp_agent_endpoint_id)
-    if type(existing_device) == "table" and existing_device.usp then
-        print("SN: " .. serial_number .. " | already migrated, cleaning up old CWMP record")
-        delete_device(serial_number)
+    if type(existing_device) == "table" and existing_device.usp_online then
+        print("SN: " .. serial_number .. " | already connected over USP, removing the TR-069 side")
+        remove_cwmp_side(serial_number)
         return
     end
 
@@ -1763,8 +1925,9 @@ local function migrate_cpe_to_usp(serial_number)
     }
 }]]) -- Zyxel-specific: persist the current config to ROM-D so it survives a reboot
 
-    delete_device(serial_number)
-    print("SN: " .. serial_number .. " | migration complete, old CWMP record removed")
+    if remove_cwmp_side(serial_number) then
+        print("SN: " .. serial_number .. " | migration complete, TR-069 side removed")
+    end
 end
 
 -- Runs the migration for every CPE the next time it sends a CWMP event (e.g. Inform)
@@ -1780,6 +1943,8 @@ This flow is vendor-specific in a few places — namely the `X_ZYXEL_Enable` and
 ### Provision USP settings across an existing fleet
 
 Once devices are on USP, a common pattern is a script that walks every device with [get\_all\_devices()](scripts.md#get_all_devices) and applies a USP configuration if it isn't already present — useful for periodically rolling out a new setting to a whole fleet.
+
+Both examples write MQTT topics that must carry the USP Agent Endpoint ID, so they use `device.usp_endpoint_id` — `device.sn` is the serial number — and only touch devices whose TR-369 connection is online (`usp_online`).
 
 {% tabs %}
 {% tab title="Bulk Data Collection" %}
@@ -1857,8 +2022,9 @@ local uspEnableBulkDataCollection = [[{
 local devices = get_all_devices()
 for i = 1, #devices do
     local device = devices[i]
-    if device.status == 2 and device.usp then -- online and connected over USP
-        local usp_agent_endpoint_id = device.sn
+    if device.usp_online then -- TR-369 connection online
+        -- topics carry the Endpoint ID, not the serial number in device.sn
+        local usp_agent_endpoint_id = device.usp_endpoint_id
 
         local profile = send_usp_message(usp_agent_endpoint_id, build_get_bulk_data_profile_msg())
         local already_provisioned = profile["error_message"] == nil and next(profile) ~= nil
@@ -1949,8 +2115,9 @@ end
 local devices = get_all_devices()
 for i = 1, #devices do
     local device = devices[i]
-    if device.status == 2 and device.usp then -- online and connected over USP
-        local usp_agent_endpoint_id = device.sn
+    if device.usp_online then -- TR-369 connection online
+        -- topics carry the Endpoint ID, not the serial number in device.sn
+        local usp_agent_endpoint_id = device.usp_endpoint_id
 
         local topic_result = send_usp_message(usp_agent_endpoint_id, build_set_mqtt_notify_topic_msg(usp_agent_endpoint_id))
         if topic_result["error_message"] ~= nil then

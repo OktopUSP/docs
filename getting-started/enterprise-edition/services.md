@@ -32,7 +32,7 @@ These variables are automatically available to scripts:
 
 | Variable              | Type   | Description                                                              |
 | --------------------- | ------ | ------------------------------------------------------------------------ |
-| `device_id`           | string | The serial number or unique identifier of the target device              |
+| `device_id`           | string | The device ID of the service instance being provisioned (see [Service Instances](#service-instances)) |
 | `variables`           | table  | A table containing service-specific variables passed during provisioning |
 | `provisioning_status` | string | Must be set to indicate the final status (see below)                     |
 
@@ -95,7 +95,7 @@ end
 
 **`get_device_id()`**
 
-Retrieves the device serial number or identifier currently being provisioned.
+Retrieves the device ID of the service instance being provisioned: the serial number for a TR-069 (CWMP) definition, the USP Agent Endpoint ID for a TR-369 (USP) definition.
 
 **Parameters:** None
 
@@ -141,7 +141,7 @@ Sends a CWMP message to the device and **blocks until the CPE answers** (or the 
 
 **Parameters:**
 
-* `device_id` (string): The serial number of the target device
+* `device_id` (string): Serial number, `sn_v2` or USP Agent Endpoint ID of the target device; the RPC is sent to the ACS with the serial number it knows the CPE by
 * `message_body` (string): XML-formatted CWMP message
 * `method` (number): CWMP message type, used to decode the response:
   * `0` = GetParameterValues
@@ -237,7 +237,7 @@ Enqueue a CWMP message to the device and does not wait for a response.
 
 **Parameters:**
 
-* `device_id` (string): The serial number of the target device
+* `device_id` (string): Serial number, `sn_v2` or USP Agent Endpoint ID of the target device; the RPC is sent to the ACS with the serial number it knows the CPE by
 * `message_body` (string): XML-formatted CWMP message
 * `timeout` (number): Timeout in seconds (for the operation)
 
@@ -278,7 +278,7 @@ Sends a TR-369 (USP) message to the device and **blocks until the device answers
 
 **Parameters:**
 
-* `device_id` (string): The USP agent endpoint ID of the target device (e.g. `os::012345-ABC`)
+* `device_id` (string): USP Agent Endpoint ID (e.g. `os::012345-ABC`), serial number or `sn_v2` of the target device; the message is sent to the CPE's Endpoint ID
 * `message_body` (string): The USP message in JSON format (protojson). Supported requests: Get, Set, Add, Delete and Operate
 
 **Returns:**
@@ -422,7 +422,7 @@ Triggers a parameter refresh on the device, forcing it to send an updated parame
 
 **Parameters:**
 
-* `device_id` (string): The serial number of the device
+* `device_id` (string): Serial number, `sn_v2` or USP Agent Endpoint ID of the device
 
 **Returns:**
 
@@ -632,7 +632,7 @@ end
 
 The service instance is the attachment of a service to a CPE, defining the specific variable values for that equipment. It's applied automatically whenever the CPE sends one of the events configured on its service definition — for example, on first connection or after a factory reset — or on demand at any time, see [Manual Execution](#manual-execution) below.
 
-For a TR-369 (USP) device, the instance's device ID must be the device's USP agent endpoint ID (e.g. `os::012345-ABC`).
+The instance's device ID must be the identifier the events of the definition's protocol carry: the serial number the ACS knows the CPE by for a TR-069 (CWMP) definition, and the USP Agent Endpoint ID (e.g. `os::012345-ABC`) for a TR-369 (USP) definition. A CPE connected over both protocols is a single device in Oktopus, but each instance is matched with that protocol's identifier; the functions called by the script accept any identifier of the CPE.
 
 ### Trigger Events
 
