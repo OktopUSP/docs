@@ -1046,6 +1046,8 @@ Add, remove and move labels of a device, leaving its other labels as they are.
 
 The changes are applied to the labels stored when the call is handled, so a `connection` label Oktopus adds or removes at the same time is kept. Prefer it to [set\_device\_labels()](scripts.md#set_device_labels) when the script only cares about some labels.
 
+Also available as a **Change Device Labels** node in the Scripts Flow (visual) builder, under the Devices category.
+
 #### Params:
 
 1.  Serial Number \[string]
