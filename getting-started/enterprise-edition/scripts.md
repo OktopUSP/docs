@@ -620,6 +620,78 @@ end
 listen_to_usp_event("*", "*", listen_to_usp_event_callback)
 ```
 
+### listen\_to\_qoe\_event()
+
+Listen to the QoE (network quality) events of the script's organization. A QoE event is published whenever the health of a CPE metric, or of the whole organization, changes band, so a script can react to it, for example by sending a message with [notify()](scripts.md#notify).
+
+#### Params:
+
+1. Metric \[string] (optional)\
+   One of `overall`, `ping`, `throughput`, `wifi_signal`, `hardware`, `channel_noise`, `pon`, `cellular`, `stability`, `interface_errors`. If no value is set or the value is "\*", it listens to all metrics.
+2. Kind \[string] (optional)\
+   CPE events: `degraded` (the metric dropped to poor or bad), `persistent` (still degraded after more evaluations) and `recovered`. Organization events: `network_degraded` and `network_recovered`. If no value is set or the value is "\*", it listens to all kinds.
+3. Callback function (required)
+4. Parallelism \[integer] (optional)\
+   Number of isolated Lua VMs the listener runs to process events concurrently. Defaults to `1`. Capped by the `MAX_LISTENER_PARALLELISM` setting (default `64`). See [Event listener concurrency](scripts.md#event-listener-concurrency).
+5. Discard if processing \[boolean] (optional)\
+   When `true`, an event is discarded while another event of the same CPE (or, for organization events, of the same organization) is still being processed. Defaults to `false`.
+6. Include simulated events \[boolean] (optional)\
+   When `true`, the listener also receives the simulated events sent when a rule is tested in the AI Engineer page. Defaults to `false`.
+
+Return:
+
+The callback receives the event as a table. A CPE event:
+
+```json
+{
+    "id": "qev_01JC8Z6Q4M3T",
+    "scope": "device",
+    "kind": "degraded",
+    "metric": "hardware",
+    "org": "66a0f1c2e4b0a1b2c3d4e5f6",
+    "sn": "EX220-22F1A9",
+    "device": {
+        "vendor": "TP-Link",
+        "model": "EX220",
+        "firmware": "1.2.3",
+        "protocol": "cwmp",
+        "alias": ""
+    },
+    "score": 19,
+    "previous_score": 72,
+    "category": "bad",
+    "previous_category": "good",
+    "overall_score": 48,
+    "consecutive": 1,
+    "since": "2026-11-07T18:00:00Z",
+    "inputs": {
+        "cpuPercent": 94,
+        "memoryPercent": 81
+    },
+    "origin": "scheduled",
+    "evaluated_at": "2026-11-07T18:00:00Z"
+}
+```
+
+An organization event has `scope` `network`, no `sn`, `device` or `inputs`, and a `network` table with `dimension` (`org` or `model_firmware`), `model`, `firmware`, `total`, `evaluated`, `bad_share` and `previous_bad_share`.
+
+`inputs` only carries the values synapse had for that evaluation (e.g. `cpuPercent`, `memoryPercent`, `temperatureC`, `pingRttMs`, `pingLossPercent`, `downloadMbps`, `uploadMbps`, `wifiRssiDbm`, `noiseDbm`, `ponRxDbm`, `ponTxDbm`, `reboots`, `errorRatePercent`). `previous_score` is absent on the first evaluation, and `mock` is `true` on simulated events.
+
+Example:
+
+```lua
+function on_qoe_event(event)
+    print(event.sn .. " " .. event.metric .. " " .. event.kind .. " score " .. tostring(event.score))
+end
+listen_to_qoe_event("hardware", "degraded", on_qoe_event)
+```
+
+To handle up to 4 events at the same time and drop new events of a CPE that is still being handled:
+
+```lua
+listen_to_qoe_event("*", "*", on_qoe_event, 4, true)
+```
+
 ### get\_device()
 
 Get device attributes from any of its identifiers.
@@ -1633,6 +1705,92 @@ Example:
 local result = apply_service_instance_and_forget("665f1b2e8c2a4a1b2c3d4e5f")
 if not result.ok then
     print("Failed to enqueue service instance apply: " .. result.error_message)
+end
+```
+
+### notify()
+
+Send a message to notification channels of the organization (Slack, webhook, e-mail), configured in **Settings › Notifications**. The call waits while the channels are delivered, retries included, so it can take a few seconds when a channel is failing.
+
+#### Params:
+
+1. Channel IDs \[string or table] (required)\
+   A channel ID, or a list of channel IDs. The IDs are shown in Settings › Notifications.
+2. Message \[table] (required)
+   * `title` \[string] and `text` \[string]: at least one of them is required
+   * `severity` \[string] (optional): `info` (default), `warning` or `error`
+   * `fields` \[table] (optional): `name = value` pairs shown with the message; numbers and booleans are written as text
+   * `topic` \[string] (optional): groups the message in the deliveries list. Defaults to `script`
+
+Return:
+
+A table with `ok` \[boolean], `error_message` \[string], `error_code` \[number] and, when the notifier answered, `deliveries`: one entry per channel with `channel_id`, `type`, `status` (`sent` or `failed`), `error` and `at`.
+
+```json
+{
+    "ok": true,
+    "error_message": "",
+    "error_code": 200,
+    "deliveries": [
+        {
+            "channel_id": "66f1c2e4b0a1b2c3d4e5f601",
+            "type": "slack",
+            "status": "sent",
+            "error": "",
+            "at": "2026-11-07T18:00:02Z"
+        }
+    ]
+}
+```
+
+`error_code` is `400` for an invalid argument or an unknown channel, `503` when the notifier is not running and `504` when it does not answer in time.
+
+Example:
+
+```lua
+local result = notify({ "66f1c2e4b0a1b2c3d4e5f601", "66f1c2e4b0a1b2c3d4e5f602" }, {
+    title = "CPE EX220-22F1A9: hardware degraded",
+    text = "CPU at 94% for 3 evaluations",
+    severity = "warning",
+    fields = { CPE = "EX220-22F1A9", Score = 19 },
+})
+if not result.ok then
+    print("notify failed: " .. result.error_message)
+end
+```
+
+Notify on every degraded CPE metric:
+
+```lua
+listen_to_qoe_event("*", "degraded", function(event)
+    notify("66f1c2e4b0a1b2c3d4e5f601", {
+        title = event.sn .. ": " .. event.metric .. " " .. event.category,
+        text = "Health score " .. tostring(event.score),
+        severity = "warning",
+    })
+end)
+```
+
+### device\_qoe()
+
+Get the last QoE (network quality) evaluation of a CPE.
+
+#### Params:
+
+1. Serial number \[string] (required)
+
+Return:
+
+The evaluation as a table, with the health score of each metric (`overallHealthScore`, `pingHealthScore`, `throughputHealthScore`, `badSignalHealthScore`, `hardwareHealthScore`, `channelNoiseHealthScore`, `ponHealthScore`, `cellularHealthScore`, `stabilityHealthScore`, `interfaceErrorsHealthScore`) and the inputs synapse used. On failure it returns a table with `error_message` \[string] and `error_code` \[number]: `400` empty serial number, `404` CPE never evaluated, `503` service not running, `504` timeout. Check `error_message` before reading the scores.
+
+Example:
+
+```lua
+local qoe = device_qoe("EX220-22F1A9")
+if qoe.error_message then
+    print("No QoE: " .. qoe.error_message)
+else
+    print("Overall health: " .. tostring(qoe.overallHealthScore))
 end
 ```
 
