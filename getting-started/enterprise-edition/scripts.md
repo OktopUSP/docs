@@ -1710,12 +1710,12 @@ end
 
 ### notify()
 
-Send a message to notification channels of the organization (Slack, webhook, e-mail), configured in **Settings › Notifications**. The call waits while the channels are delivered, retries included, so it can take a few seconds when a channel is failing.
+Send a message through connectors of the organization (Slack, webhook, e-mail), configured in **Settings › Connectors**. The call waits while the connectors are delivered, retries included, so it can take a few seconds when a connector is failing.
 
 #### Params:
 
-1. Channel IDs \[string or table] (required)\
-   A channel ID, or a list of channel IDs. The IDs are shown in Settings › Notifications.
+1. Connector IDs \[string or table] (required)\
+   A connector ID, or a list of connector IDs. In the Flow view, the **Notify** step lists the connectors by name and writes their IDs in the code; through the API they are the `id` of each connector returned by `GET /api/notifications/channels`. The ID does not change when a connector is renamed.
 2. Message \[table] (required)
    * `title` \[string] and `text` \[string]: at least one of them is required
    * `severity` \[string] (optional): `info` (default), `warning` or `error`
@@ -1724,7 +1724,7 @@ Send a message to notification channels of the organization (Slack, webhook, e-m
 
 Return:
 
-A table with `ok` \[boolean], `error_message` \[string], `error_code` \[number] and, when the notifier answered, `deliveries`: one entry per channel with `channel_id`, `type`, `status` (`sent` or `failed`), `error` and `at`.
+A table with `ok` \[boolean], `error_message` \[string], `error_code` \[number] and, when the notifier answered, `deliveries`: one entry per connector with `channel_id`, `type`, `status` (`sent` or `failed`), `error` and `at`.
 
 ```json
 {
@@ -1743,7 +1743,7 @@ A table with `ok` \[boolean], `error_message` \[string], `error_code` \[number] 
 }
 ```
 
-`error_code` is `400` for an invalid argument or an unknown channel, `503` when the notifier is not running and `504` when it does not answer in time.
+`error_code` is `400` for an invalid argument, an unknown connector or a message with neither `title` nor `text`, `503` when the notifier is not running and `504` when it does not answer in time.
 
 Example:
 
